@@ -14,18 +14,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+   @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String listUsers(Map<String, Object> map) {
 
         map.put("userList", userService.listUsers());
 
         return "users";
     }
-
-    @RequestMapping("/index")
-    public String home() {
-        return "redirect:/";
-    }
-
 
 }

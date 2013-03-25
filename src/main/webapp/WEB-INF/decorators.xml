@@ -9,5 +9,8 @@
           <pattern>/*</pattern>
     </decorator>
 
+    <decorator name="out" page="out.jsp">
+        <pattern>/login.jsp*</pattern>
+    </decorator>
 
 </decorators>
