@@ -8,10 +8,9 @@
 
     <table>
         <tr>
-            <td><form:label path="surname_1">
-                Фамилия
-            </form:label></td>
-            <td><form:input path="surname_1" /></td>
+            <td><form:label path="surname_1">Фамилия</form:label></td>
+            <td><form:errors path="surname_1" />
+                <form:input path="surname_1" /></td>
         </tr>
         <tr>
             <td><form:label path="surname_2">
@@ -26,8 +25,7 @@
             <td><form:input path="name_3" /></td>
         </tr>
         <tr>
-            <td colspan="2"><input type="submit"
-                                   value="Сохранить" /></td>
+            <td colspan="2"><input type="submit" value="Сохранить" /></td>
         </tr>
     </table>
 </form:form>

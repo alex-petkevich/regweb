@@ -1,6 +1,10 @@
 package regweb.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -25,12 +29,17 @@ public class Form {
     @Column(name = "IS_REGISTERED")
     private boolean is_registered;
 
+    @NotEmpty
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "SURNAME_1")
     private String surname_1;
 
+    @NotNull
     @Column(name = "SURNAME_2")
     private String surname_2;
 
+    @NotNull
     @Column(name = "NAME_3")
     private String name_3;
 

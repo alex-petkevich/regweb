@@ -10,6 +10,7 @@ import regweb.domain.Form;
 import regweb.service.FormService;
 import regweb.service.UserService;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
@@ -29,6 +30,15 @@ public class FormController {
     @RequestMapping(value = "/addform", method = RequestMethod.GET)
     public String addForm(Map<String, Object> map) {
         map.put("form", new Form());
+        return "add";
+    }
+
+    @RequestMapping(value = "/addform", method = RequestMethod.POST)
+    public String processForm(@Valid Form form,BindingResult result, Map model) {
+        if (result.hasErrors()) {
+            return "add";
+        }
+        model.put("form", form);
         return "add";
     }
 
