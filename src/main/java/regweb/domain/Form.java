@@ -1,10 +1,11 @@
 package regweb.domain;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "FORMS")
-public class Form {
+public class Form implements Serializable {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,17 +30,15 @@ public class Form {
     @Column(name = "IS_REGISTERED")
     private boolean is_registered;
 
-    @NotEmpty
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Length(min=1,max=100, message="errors.requiredfield")
     @Column(name = "SURNAME_1")
     private String surname_1;
 
-    @NotNull
+    @Length(min=1,max=100, message="errors.requiredfield")
     @Column(name = "SURNAME_2")
     private String surname_2;
 
-    @NotNull
+    @Length(min=1,max=100, message="errors.requiredfield")
     @Column(name = "NAME_3")
     private String name_3;
 

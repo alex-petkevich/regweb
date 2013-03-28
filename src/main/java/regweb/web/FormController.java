@@ -3,6 +3,9 @@ package regweb.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.EscapedErrors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +21,9 @@ public class FormController {
 
     @Autowired
     private FormService formService;
+    
+    @Autowired
+    private Validator validator;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String listForms(Map<String, Object> map) {

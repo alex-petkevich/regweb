@@ -7,6 +7,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     
     <title><decorator:title default="Регистрация пользователей"/></title>
+    <script type="text/javascript" src="js/lib/jquery.js"></script>
+    <script type="text/javascript" src="js/lib/jquery-ui.js"></script>
+    <link type="text/css" href="css/style.css" rel="stylesheet" />
+    <link type="text/css" href="css/jquery-ui.css" rel="stylesheet" />
+
     <decorator:head/>
 </head>
 <body>
