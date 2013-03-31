@@ -1,0 +1,73 @@
+/*********************
+	HTML Elements
+*********************/
+*{
+	margin:0;
+	padding:0;
+}
+img, div,a { behavior: url(css/iepngfix.htc) }
+body{
+	font-size: 12px;
+	font-family: Arial, Tahoma, Verdana;
+}
+a, a:visited{
+	text-decoration:none;
+}
+img{
+	border:0;
+	margin:1px;
+}
+p{
+	padding:3px;
+}
+h2{
+
+}
+input{
+	padding:2px;
+}
+select{
+	padding:2px;
+}
+
+#container {
+    margin: 0 auto;
+    width: 700px;
+}
+form{
+	padding:10px;
+}
+
+.errors {color: red;}
+
+.table-title {
+    font-size: 14px;
+    background-color: #ccc;
+    line-height: 28px;
+    font-weight: bold;
+}
+
+.table-form {
+    border-spacing:5px;
+    width: 700px;
+}
+.table-form td {
+    border-bottom: 1px solid #aaaaaa;
+    line-height: 28px;
+    padding-left: 5px;
+    padding-right: 5px;  
+    vertical-align: top;
+}
+
+.table-form input[type=text] {
+    width: 400px;
+}
+.sign {
+    font-weight: bold;
+}
+#passissuedate_14, #passexpiration_15, #startvisa_29, #endvisa_30 {
+    width: 180px;
+}
+#lenvisa_25 {
+    width: 50px;
+}

@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -30,36 +32,47 @@ public class Form implements Serializable {
     @Column(name = "IS_REGISTERED")
     private boolean is_registered;
 
-    @Length(min=1,max=100, message="errors.requiredfield")
+    @Size(min=1,max=100, message="{errors.requiredfield}")
     @Column(name = "SURNAME_1")
     private String surname_1;
 
-    @Length(min=1,max=100, message="errors.requiredfield")
+    @Size(min=1,max=100, message="{errors.requiredfield}")
     @Column(name = "SURNAME_2")
     private String surname_2;
 
-    @Length(min=1,max=100, message="errors.requiredfield")
+    @Size(min=1,max=100, message="{errors.requiredfield}")
     @Column(name = "NAME_3")
     private String name_3;
 
+    @Size(min=1,max=100, message="{errors.requiredfield}")
     @Column(name = "BIRTHDATE_4")
     private String birthdate_4;
 
+    @Size(min=1,max=100, message="{errors.requiredfield}")
     @Column(name = "PLACEDATE_5")
     private String placedate_5;
 
+    @Size(min=1,max=100, message="{errors.requiredfield}")
+    @Column(name = "COUNTRY_6")
+    private String country_6;
+
+    @Size(min=1,max=100, message="{errors.requiredfield}")
     @Column(name = "CITIZENSHIP_7")
     private String citizenship_7;
 
+    @Size(min=1,max=100, message="{errors.requiredfield}")
     @Column(name = "CITIZENSHIP_BORN_8")
     private String citizenship_born_8;
 
+    @Size(min=1,max=100, message="{errors.requiredfield}")
     @Column(name = "SEX_9")
-    private Integer sex_9;
+    private String sex_9;
 
+    @Size(min=1,max=100, message="{errors.requiredfield}")
     @Column(name = "FAMILY_10")
     private String family_10;
 
+    @Size(min=1,max=100, message="{errors.requiredfield}")
     @Column(name = "IDENTNUM_11")
     private String identnum_11;
 
@@ -130,7 +143,7 @@ public class Form implements Serializable {
     private String tel_17;
 
     @Column(name = "COUNTRYVISITOR_18")
-    private boolean countryvisitor_18;
+    private String countryvisitor_18;
 
     @Column(name = "VISITDOC_18")
     private String visitdoc_18;
@@ -168,6 +181,11 @@ public class Form implements Serializable {
     @Column(name = "TITLE_20")
     private String title_20;
 
+    @Pattern(regexp = "^(?:[a-zA-Z0-9_'^&/+-])+(?:\\.(?:[a-zA-Z0-9_'^&/+-])+)" +
+            "*@(?:(?:\\[?(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))\\.)" +
+            "{3}(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\]?)|(?:[a-zA-Z0-9-]+\\.)" +
+            "+(?:[a-zA-Z]){2,}\\.?)$",
+            message = "errors.email")
     @Column(name = "EMAIL_20")
     private String email_20;
 
@@ -176,6 +194,9 @@ public class Form implements Serializable {
 
     @Column(name = "FAX_20")
     private String fax_20;
+
+    @Column(name = "GOALOTHER_21")
+    private String goalother_21;
 
     @Column(name = "GOAL_21")
     private String goal_21;
@@ -340,11 +361,11 @@ public class Form implements Serializable {
         this.citizenship_born_8 = citizenship_born_8;
     }
 
-    public Integer getSex_9() {
+    public String getSex_9() {
         return sex_9;
     }
 
-    public void setSex_9(Integer sex_9) {
+    public void setSex_9(String sex_9) {
         this.sex_9 = sex_9;
     }
 
@@ -540,11 +561,11 @@ public class Form implements Serializable {
         this.tel_17 = tel_17;
     }
 
-    public boolean isCountryvisitor_18() {
+    public String getCountryvisitor_18() {
         return countryvisitor_18;
     }
 
-    public void setCountryvisitor_18(boolean countryvisitor_18) {
+    public void setCountryvisitor_18(String countryvisitor_18) {
         this.countryvisitor_18 = countryvisitor_18;
     }
 
@@ -866,5 +887,21 @@ public class Form implements Serializable {
 
     public void setMoney_type_33(String money_type_33) {
         this.money_type_33 = money_type_33;
+    }
+
+    public String getCountry_6() {
+        return country_6;
+    }
+
+    public void setCountry_6(String country_6) {
+        this.country_6 = country_6;
+    }
+
+    public String getGoalother_21() {
+        return goalother_21;
+    }
+
+    public void setGoalother_21(String goalother_21) {
+        this.goalother_21 = goalother_21;
     }
 }
