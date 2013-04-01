@@ -3,10 +3,9 @@ package regweb.dao.impl;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import regweb.dao.FormDAO;
-import regweb.dao.UserDAO;
 import regweb.domain.Form;
-import regweb.domain.User;
 
 import java.util.List;
 
@@ -21,23 +20,33 @@ public class FormDAOImpl implements FormDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Override
-    public void addForm(Form form) {
-        sessionFactory.getCurrentSession().save(form);
+    @Transactional
+    public void save(Form form) {
+        sessionFactory.getCurrentSession().saveOrUpdate(form);
+        sessionFactory.getCurrentSession().flush();
     }
 
-    @Override
+    @Transactional
     public List<Form> listForms() {
         return sessionFactory.getCurrentSession().createQuery("from Form")
                 .list();
     }
 
-    @Override
+    @Transactional
     public void removeForm(Integer id) {
         Form form = (Form) sessionFactory.getCurrentSession().load(
-                User.class, id);
+                Form.class, id);
         if (null != form) {
             sessionFactory.getCurrentSession().delete(form);
         }
+    }
+
+    @Transactional
+    public Form getForm(Integer id) {
+        if (id == null)
+            id = 0;
+
+        return (Form) sessionFactory.getCurrentSession().load(
+                Form.class, id);
     }
 }

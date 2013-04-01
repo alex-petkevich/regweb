@@ -1,7 +1,6 @@
 package regweb.service;
 
 import regweb.domain.Form;
-import regweb.domain.User;
 
 import java.util.List;
 
@@ -12,9 +11,11 @@ import java.util.List;
  */
 public interface FormService {
 
-    public void addForm(Form form);
+    public void save(Form form);
 
     public List<Form> listForms();
 
     public void removeForm(Integer id);
+
+    public Form getForm(Integer id);
 }

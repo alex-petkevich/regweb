@@ -43,8 +43,7 @@ public class ConstLists {
         "Размещение",
         "Предоплачен транспорт",
         "Обеспечиваются все расходы во время пребывания",
-        "Иные (указать)",
-        "Страхование поездки / медицинское страхование. Действительно до (год-месяц-день)"
+        "Иные (указать)"
     );
 
     public static final Map<String, String> countryPosList = new LinkedHashMap<String , String>() {{
@@ -66,6 +65,11 @@ public class ConstLists {
         put("1", "Однократного въезда");
         put("2", "Двукратного въезда");
         put("3", "Многократного въезда");
+    }};
+
+    public static final Map<String, String> expenciesList = new LinkedHashMap<String , String>() {{
+        put("1", "Сам заявитель");
+        put("2", "Спонсор (приглашающее лицо, предприятие, организация), указать");
     }};
 
     public static final Map<String, String> docTypeList = new LinkedHashMap<String , String>() {{

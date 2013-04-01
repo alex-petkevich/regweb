@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import regweb.dao.FormDAO;
-import regweb.dao.UserDAO;
 import regweb.domain.Form;
-import regweb.domain.User;
 import regweb.service.FormService;
-import regweb.service.UserService;
 
 import java.util.List;
 
@@ -23,8 +20,8 @@ public class FormServiceImpl implements FormService {
     private FormDAO formDAO;
 
     @Transactional
-    public void addForm(Form form) {
-        formDAO.addForm(form);
+    public void save(Form form) {
+        formDAO.save(form);
     }
 
     @Transactional
@@ -35,5 +32,10 @@ public class FormServiceImpl implements FormService {
     @Transactional
     public void removeForm(Integer id) {
         formDAO.removeForm(id);
+    }
+
+    @Transactional
+    public Form getForm(Integer id) {
+        return formDAO.getForm(id);
     }
 }

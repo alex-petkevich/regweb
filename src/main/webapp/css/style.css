@@ -65,7 +65,7 @@ form{
 .sign {
     font-weight: bold;
 }
-#passissuedate_14, #passexpiration_15, #startvisa_29, #endvisa_30 {
+#passissuedate_14, #passexpiration_15, #startvisa_29, #endvisa_30, #prevvisastart1_26, #prevvisastart2_26, #prevvisastart3_26, #prevvisaend1_26,#prevvisaend2_26, #prevvisaend3_26 {
     width: 180px;
 }
 #lenvisa_25 {

@@ -1,14 +1,12 @@
 package regweb.domain;
 
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Author: Alexander Petkevich aka mrdoggy
@@ -19,8 +17,8 @@ import java.util.Date;
 @Table(name = "FORMS")
 public class Form implements Serializable {
     @Id
+    @GeneratedValue
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "USER_ID")
@@ -32,62 +30,69 @@ public class Form implements Serializable {
     @Column(name = "IS_REGISTERED")
     private boolean is_registered;
 
-    @Size(min=1,max=100, message="{errors.requiredfield}")
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "SURNAME_1")
     private String surname_1;
 
-    @Size(min=1,max=100, message="{errors.requiredfield}")
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "SURNAME_2")
     private String surname_2;
 
-    @Size(min=1,max=100, message="{errors.requiredfield}")
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "NAME_3")
     private String name_3;
 
-    @Size(min=1,max=100, message="{errors.requiredfield}")
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "BIRTHDATE_4")
     private String birthdate_4;
 
-    @Size(min=1,max=100, message="{errors.requiredfield}")
+    @Size(min=1,max=50, message="{errors.requiredfield}")
     @Column(name = "PLACEDATE_5")
     private String placedate_5;
 
-    @Size(min=1,max=100, message="{errors.requiredfield}")
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "COUNTRY_6")
     private String country_6;
 
-    @Size(min=1,max=100, message="{errors.requiredfield}")
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "CITIZENSHIP_7")
     private String citizenship_7;
 
-    @Size(min=1,max=100, message="{errors.requiredfield}")
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "CITIZENSHIP_BORN_8")
     private String citizenship_born_8;
 
-    @Size(min=1,max=100, message="{errors.requiredfield}")
+    @Size(min=1,max=3, message="{errors.requiredfield}")
     @Column(name = "SEX_9")
     private String sex_9;
 
-    @Size(min=1,max=100, message="{errors.requiredfield}")
+    @Size(min=1,max=4, message="{errors.requiredfield}")
     @Column(name = "FAMILY_10")
     private String family_10;
 
-    @Size(min=1,max=100, message="{errors.requiredfield}")
+    @Size(min=14,max=14, message="{errors.requiredfield}")
     @Column(name = "IDENTNUM_11")
     private String identnum_11;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "PASSDATA_12")
     private String passdata_12;
 
+    @Size(min=9,max=9, message="{errors.requiredfield}")
     @Column(name = "PASSNUM_13")
     private String passnum_13;
 
+    @Pattern(regexp = "^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$",
+            message = "{errors.date}")
     @Column(name = "PASSISSUEDATE_14")
     private String passissuedate_14;
 
+    @Pattern(regexp = "^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$",
+            message = "{errors.date}")
     @Column(name = "PASSEXPIRATION_15")
     private String passexpiration_15;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "PASSBY_16")
     private String passby_16;
 
@@ -118,30 +123,43 @@ public class Form implements Serializable {
     @Column(name = "ADDRESS_CHILD")
     private String address_child;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "COUNTRY_17")
     private String country_17;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "STATE_17")
     private String state_17;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "CITY_17")
     private String city_17;
 
+    @Size(min=1,max=6, message="{errors.requiredfield}")
     @Column(name = "INDEX_17")
     private String index_17;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "ADDRESS_17")
     private String address_17;
 
+    @Pattern(regexp = "^(?:[a-zA-Z0-9_'^&/+-])+(?:\\.(?:[a-zA-Z0-9_'^&/+-])+)" +
+            "*@(?:(?:\\[?(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))\\.)" +
+            "{3}(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\]?)|(?:[a-zA-Z0-9-]+\\.)" +
+            "+(?:[a-zA-Z]){2,}\\.?)$",
+            message = "{errors.email}")
     @Column(name = "EMAIL_17")
     private String email_17;
 
+    @Size(min=1,max=20, message="{errors.requiredfield}")
     @Column(name = "PREFTEL_17")
     private String preftel_17;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "TEL_17")
     private String tel_17;
 
+    @Size(min=1,max=3, message="{errors.requiredfield}")
     @Column(name = "COUNTRYVISITOR_18")
     private String countryvisitor_18;
 
@@ -151,41 +169,45 @@ public class Form implements Serializable {
     @Column(name = "EXPDATE_18")
     private String expdate_18;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "PROFESSION_19")
     private String profession_19;
 
     @Column(name = "EMPLOYEE_20")
     private String employee_20;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "COUNTRY_20")
     private String country_20;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "STATE_20")
     private String state_20;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "CITY_20")
     private String city_20;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "INDEX_20")
     private String index_20;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "ADDRESS_20")
     private String address_20;
 
+    @Size(min=1,max=20, message="{errors.requiredfield}")
     @Column(name = "PREFTEL_20")
     private String preftel_20;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "TEL_20")
     private String tel_20;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "TITLE_20")
     private String title_20;
 
-    @Pattern(regexp = "^(?:[a-zA-Z0-9_'^&/+-])+(?:\\.(?:[a-zA-Z0-9_'^&/+-])+)" +
-            "*@(?:(?:\\[?(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))\\.)" +
-            "{3}(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\]?)|(?:[a-zA-Z0-9-]+\\.)" +
-            "+(?:[a-zA-Z]){2,}\\.?)$",
-            message = "errors.email")
     @Column(name = "EMAIL_20")
     private String email_20;
 
@@ -198,32 +220,56 @@ public class Form implements Serializable {
     @Column(name = "GOALOTHER_21")
     private String goalother_21;
 
+    @ElementCollection
     @Column(name = "GOAL_21")
-    private String goal_21;
+    private List<String> goal_21 = new ArrayList<String>();
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "DEST_COUNTRY_22")
     private String dest_country_22;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "FIRST_COUNTRY_23")
     private String first_country_23;
 
+    @Size(min=1,max=2, message="{errors.requiredfield}")
     @Column(name = "TYPEVISA_24")
-    private Integer typevisa_24;
+    private String typevisa_24;
 
+    @Size(min=1,max=2, message="{errors.requiredfield}")
     @Column(name = "LENVISA_25")
-    private Integer lenvisa_25;
+    private String lenvisa_25;
 
+    @Pattern(regexp = "^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$",
+            message = "{errors.date}")
     @Column(name = "STARTVISA_29")
     private String startvisa_29;
 
+    @Pattern(regexp = "^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$",
+            message = "{errors.date}")
     @Column(name = "ENDVISA_30")
     private String endvisa_30;
 
-    @Column(name = "PREVVISAS_26")
-    private String prevvisas_26;
+    @Column(name = "PREVVISASTART1_26")
+    private String prevvisastart1_26;
+
+    @Column(name = "PREVVISAEND1_26")
+    private String prevvisaend1_26;
+
+    @Column(name = "PREVVISASTART2_26")
+    private String prevvisastart2_26;
+
+    @Column(name = "PREVVISAEND2_26")
+    private String prevvisaend2_26;
+
+    @Column(name = "PREVVISASTART3_26")
+    private String prevvisastart3_26;
+
+    @Column(name = "PREVVISAEND3_26")
+    private String prevvisaend3_26;
 
     @Column(name = "INVITE_31")
-    private Integer invite_31;
+    private String invite_31;
 
     @Column(name = "TITLE_31")
     private String title_31;
@@ -234,18 +280,23 @@ public class Form implements Serializable {
     @Column(name = "SURNAME_31")
     private String surname_31;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "COUNTRY_31")
     private String country_31;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "CITY_31")
     private String city_31;
 
+    @Size(min=1,max=10, message="{errors.requiredfield}")
     @Column(name = "INDEX_31")
     private String index_31;
 
+    @Size(min=1,max=20, message="{errors.requiredfield}")
     @Column(name = "PREFTEL_31")
     private String preftel_31;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "TEL_31")
     private String tel_31;
 
@@ -255,23 +306,37 @@ public class Form implements Serializable {
     @Column(name = "FAX_31")
     private String fax_31;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "ADDRESS_31")
     private String address_31;
 
+    @Size(min=1,max=5, message="{errors.requiredfield}")
     @Column(name = "BUILDING_31")
     private String building_31;
 
+    @Size(min=1,max=5, message="{errors.requiredfield}")
     @Column(name = "FLAT_31")
     private String flat_31;
 
     @Column(name = "EMAIL_31")
     private String email_31;
 
+    @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "EXPENCIES_33")
     private String expencies_33;
 
+    @Column(name = "EXPENCIESOTHER_33")
+    private String expenciesother_33;
+
+    @ElementCollection
     @Column(name = "MONEY_TYPE_33")
-    private String money_type_33;
+    private List<String> money_type_33 = new ArrayList<String>();
+
+    @Column(name = "MONEY_TYPE_OTHER_33")
+    private String money_type_other_33;
+
+    @Column(name = "INSHURANCE_33")
+    private String inshurance_33;
 
     public Integer getId() {
         return id;
@@ -689,11 +754,11 @@ public class Form implements Serializable {
         this.fax_20 = fax_20;
     }
 
-    public String getGoal_21() {
+    public List getGoal_21() {
         return goal_21;
     }
 
-    public void setGoal_21(String goal_21) {
+    public void setGoal_21(List goal_21) {
         this.goal_21 = goal_21;
     }
 
@@ -713,19 +778,19 @@ public class Form implements Serializable {
         this.first_country_23 = first_country_23;
     }
 
-    public Integer getTypevisa_24() {
+    public String getTypevisa_24() {
         return typevisa_24;
     }
 
-    public void setTypevisa_24(Integer typevisa_24) {
+    public void setTypevisa_24(String typevisa_24) {
         this.typevisa_24 = typevisa_24;
     }
 
-    public Integer getLenvisa_25() {
+    public String getLenvisa_25() {
         return lenvisa_25;
     }
 
-    public void setLenvisa_25(Integer lenvisa_25) {
+    public void setLenvisa_25(String lenvisa_25) {
         this.lenvisa_25 = lenvisa_25;
     }
 
@@ -745,19 +810,59 @@ public class Form implements Serializable {
         this.endvisa_30 = endvisa_30;
     }
 
-    public String getPrevvisas_26() {
-        return prevvisas_26;
+    public String getPrevvisastart1_26() {
+        return prevvisastart1_26;
     }
 
-    public void setPrevvisas_26(String prevvisas_26) {
-        this.prevvisas_26 = prevvisas_26;
+    public void setPrevvisastart1_26(String prevvisastart1_26) {
+        this.prevvisastart1_26 = prevvisastart1_26;
     }
 
-    public Integer getInvite_31() {
+    public String getPrevvisaend1_26() {
+        return prevvisaend1_26;
+    }
+
+    public void setPrevvisaend1_26(String prevvisaend1_26) {
+        this.prevvisaend1_26 = prevvisaend1_26;
+    }
+
+    public String getPrevvisastart2_26() {
+        return prevvisastart2_26;
+    }
+
+    public void setPrevvisastart2_26(String prevvisastart2_26) {
+        this.prevvisastart2_26 = prevvisastart2_26;
+    }
+
+    public String getPrevvisaend2_26() {
+        return prevvisaend2_26;
+    }
+
+    public void setPrevvisaend2_26(String prevvisaend2_26) {
+        this.prevvisaend2_26 = prevvisaend2_26;
+    }
+
+    public String getPrevvisastart3_26() {
+        return prevvisastart3_26;
+    }
+
+    public void setPrevvisastart3_26(String prevvisastart3_26) {
+        this.prevvisastart3_26 = prevvisastart3_26;
+    }
+
+    public String getPrevvisaend3_26() {
+        return prevvisaend3_26;
+    }
+
+    public void setPrevvisaend3_26(String prevvisaend3_26) {
+        this.prevvisaend3_26 = prevvisaend3_26;
+    }
+
+    public String getInvite_31() {
         return invite_31;
     }
 
-    public void setInvite_31(Integer invite_31) {
+    public void setInvite_31(String invite_31) {
         this.invite_31 = invite_31;
     }
 
@@ -881,11 +986,11 @@ public class Form implements Serializable {
         this.expencies_33 = expencies_33;
     }
 
-    public String getMoney_type_33() {
+    public List getMoney_type_33() {
         return money_type_33;
     }
 
-    public void setMoney_type_33(String money_type_33) {
+    public void setMoney_type_33(List money_type_33) {
         this.money_type_33 = money_type_33;
     }
 
@@ -903,5 +1008,29 @@ public class Form implements Serializable {
 
     public void setGoalother_21(String goalother_21) {
         this.goalother_21 = goalother_21;
+    }
+
+    public String getExpenciesother_33() {
+        return expenciesother_33;
+    }
+
+    public void setExpenciesother_33(String expenciesother_33) {
+        this.expenciesother_33 = expenciesother_33;
+    }
+
+    public String getMoney_type_other_33() {
+        return money_type_other_33;
+    }
+
+    public void setMoney_type_other_33(String money_type_other_33) {
+        this.money_type_other_33 = money_type_other_33;
+    }
+
+    public String getInshurance_33() {
+        return inshurance_33;
+    }
+
+    public void setInshurance_33(String inshurance_33) {
+        this.inshurance_33 = inshurance_33;
     }
 }

@@ -367,11 +367,36 @@
                 <form:input cssClass="datepicker" path="endvisa_30" /></td>
         </tr>
         <tr>
-            <td colspan="2"><form:label path="prevvisas_26" cssClass="sign">26. Шенгенские визы, выданные за последние три года</form:label><br/>
-                (в виде: дата_начала дата_окончания.Каждая виза с новой строки. Три последних визы )
-                <div class="errors"> <form:errors path="prevvisas_26" /></div>
-                <form:textarea rows="5" cols="65" path="prevvisas_26" /></td>
+            <td colspan="2"><b>26. Шенгенские визы, выданные за последние три года</b></td>
+        </tr>
+        <tr>
+            <td>
+                <b>от:</b>
+                <div class="errors"> <form:errors path="prevvisastart1_26" /></div>
+                <form:input cssClass="datepicker w180" path="prevvisastart1_26" /></td>
+            <td>
+                <b>до:</b>
+                <div class="errors"> <form:errors path="prevvisaend1_26" /></div>
+                <form:input cssClass="datepicker w180" path="prevvisaend1_26" /></td>
            
+        </tr>
+        <tr>
+            <td>
+                <div class="errors"> <form:errors path="prevvisastart2_26" /></div>
+                <form:input cssClass="datepicker" path="prevvisastart2_26" /></td>
+            <td>
+                <div class="errors"> <form:errors path="prevvisaend2_26" /></div>
+                <form:input cssClass="datepicker" path="prevvisaend2_26" /></td>
+
+        </tr>
+        <tr>
+            <td>
+                <div class="errors"> <form:errors path="prevvisastart3_26" /></div>
+                <form:input cssClass="datepicker" path="prevvisastart3_26" /></td>
+            <td>
+                <div class="errors"> <form:errors path="prevvisaend3_26" /></div>
+                <form:input cssClass="datepicker" path="prevvisaend3_26" /></td>
+
         </tr>
         <tr>
             <td colspan="2" class="table-title">Данные принимающего лица</td>
@@ -438,24 +463,47 @@
                 <form:input path="address_31" /></td>
         </tr>
         <tr>
-            <td colspan="2"><form:label path="building_31" cssClass="sign">Email </form:label><br/>
+            <td colspan="2"><form:label path="building_31" cssClass="sign">Номер дома </form:label><br/>
                 <div class="errors"> <form:errors path="building_31" /></div>
                 <form:input path="building_31" /></td>
         </tr>
         <tr>
-            <td colspan="2"><form:label path="flat_31" cssClass="sign">Номер дома </form:label><br/>
+            <td colspan="2"><form:label path="flat_31" cssClass="sign">Номер квартиры </form:label><br/>
                 <div class="errors"> <form:errors path="flat_31" /></div>
                 <form:input path="flat_31" /></td>
         </tr>
         <tr>
-            <td colspan="2"><form:label path="email_31" cssClass="sign">Номер квартиры </form:label><br/>
+            <td colspan="2"><form:label path="email_31" cssClass="sign">Email </form:label><br/>
                 <div class="errors"> <form:errors path="email_31" /></div>
                 <form:input path="email_31" /></td>
         </tr>
+        <tr>
+            <td colspan="2" class="table-title">Данные лица, несущего расходы</td>
+        </tr>
+        <tr>
+            <td colspan="2"><form:label path="expencies_33" cssClass="sign">33. Расходы заявителя на проезд и во время пребывания оплачивает</form:label><br/>
+                <div class="errors"> <form:errors path="expencies_33" /></div>
+                <form:radiobuttons delimiter="<br>" items="${expenciesList}" path="expencies_33" /><br>
+                <form:input path="expenciesother_33" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><form:label path="money_type_33" cssClass="sign">Средства на покрытие расходов на пребывание: </form:label><br/>
+                <div class="errors"> <form:errors path="money_type_33" /></div>
+                <form:checkboxes delimiter="<br>" items="${moneyList}"  path="money_type_33" />
+                <br>
+                <form:input path="money_type_other_33" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><form:label path="inshurance_33" cssClass="sign">Страхование поездки / медицинское страхование. Действительно до (год-месяц-день) </form:label><br/>
+                <div class="errors"> <form:errors path="inshurance_33" /></div>
+                <form:input path="inshurance_33" cssClass="datepicker" /></td>
+        </tr>
+
 
         <tr>
             <td colspan="2"><input type="submit" value="Сохранить" /></td>
         </tr>
     </table>
-</form:form>
+</form:form>   <br /><br /><br />
 </body>

@@ -3,20 +3,15 @@ package regweb.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.EscapedErrors;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import regweb.ConstLists;
 import regweb.domain.Form;
 import regweb.service.FormService;
-import regweb.service.UserService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.Map;
 
 @Controller
@@ -47,8 +42,32 @@ public class FormController {
         model.put("inputCountriesList", ConstLists.inputCountriesList);
         model.put("qtyList", ConstLists.qtyList);
         model.put("invList", ConstLists.invList);
+        model.put("expenciesList", ConstLists.expenciesList);
+        model.put("moneyList", ConstLists.moneyList);
 
         model.put("form", new Form());
+        return "add";
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editForm(Map<String, Object> model, @PathVariable("id") Integer id) {
+        model.put("sexList", ConstLists.sexList);
+        model.put("mStatusList", ConstLists.mStatusList);
+        model.put("countiresOldList", ConstLists.countriesOldList);
+        model.put("countiresList", ConstLists.countriesList);
+        model.put("docTypeList", ConstLists.docTypeList);
+        model.put("countryPosList", ConstLists.countryPosList);
+        model.put("professionList", ConstLists.professionList);
+        model.put("employeeList", ConstLists.employeeList);
+        model.put("goalsList", ConstLists.goalsList);
+        model.put("inputCountriesList", ConstLists.inputCountriesList);
+        model.put("qtyList", ConstLists.qtyList);
+        model.put("invList", ConstLists.invList);
+        model.put("expenciesList", ConstLists.expenciesList);
+        model.put("moneyList", ConstLists.moneyList);
+
+        Form form = formService.getForm(id);
+        model.put("form", form);
         return "add";
     }
 
@@ -66,12 +85,16 @@ public class FormController {
         model.put("inputCountriesList", ConstLists.inputCountriesList);
         model.put("qtyList", ConstLists.qtyList);
         model.put("invList", ConstLists.invList);
-        
+        model.put("expenciesList", ConstLists.expenciesList);
+        model.put("moneyList", ConstLists.moneyList);
+
         if (result.hasErrors()) {
             return "add";
         }
+        form.setAdded(new Date());
+        formService.save(form);
         model.put("form", form);
-        return "add";
+        return "redirect:/";
     }
 
     @RequestMapping("/index")

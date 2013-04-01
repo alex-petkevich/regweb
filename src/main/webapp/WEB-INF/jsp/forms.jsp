@@ -18,7 +18,7 @@
             <tr>
                 <td>${form.added}</td>
                 <td>${form.surname_1}</td>
-                <td>${form.name_1}</td>
+                <td>${form.name_3}</td>
                 <td>${form.passnum_13}</td>
                 <td>${form.is_registered}</td>
                 <td><a href="edit/${form.id}">[o]</a> <a href="delete/${form.id}">[x]</a></td>
