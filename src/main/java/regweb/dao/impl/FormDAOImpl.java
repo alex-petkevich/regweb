@@ -34,7 +34,7 @@ public class FormDAOImpl implements FormDAO {
 
     @Transactional
     public void removeForm(Integer id) {
-        Form form = (Form) sessionFactory.getCurrentSession().load(
+        Form form = (Form) sessionFactory.getCurrentSession().get(
                 Form.class, id);
         if (null != form) {
             sessionFactory.getCurrentSession().delete(form);
@@ -46,7 +46,7 @@ public class FormDAOImpl implements FormDAO {
         if (id == null)
             id = 0;
 
-        return (Form) sessionFactory.getCurrentSession().load(
+        return (Form) sessionFactory.getCurrentSession().get(
                 Form.class, id);
     }
 }
