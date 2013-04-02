@@ -39,7 +39,7 @@
                     <input type="text" class="field small-field datepicker" />
                     <label>&nbsp;по:&nbsp;</label>
                     <input type="text" class="field small-field datepicker" />
-                    <label>&nbsp;не зарегистрированные:&nbsp;</label>
+                    <label>&nbsp;новые:&nbsp;</label>
                     <input type="checkbox" class="field small-field" />
                     <input type="submit" class="button" value="поиск" />
                     <input type="submit" class="button" value="сброс" />
@@ -62,12 +62,12 @@
                     <c:forEach items="${formsList}" var="form">
                         <tr>
                             <td width="13"><input type="checkbox" class="checkbox" /></td>
-                            <td><fmt:formatDate dateStyle="full" pattern="dd.MM.yyyy HH:mm" value="${form.added}"/></td>
-                            <td>${form.surname_1}</td>
-                            <td>${form.name_3}</td>
-                            <td>${form.passnum_13}</td>
-                            <td><c:if test="${form.is_registered}">готово</c:if></td>
-                            <td><a href="edit/${form.id}" class="ico edit">x</a> <a href="delete/${form.id}"  class="ico del">x</a></td>
+                            <td<c:if test="${form.is_registered}"> class="reged"</c:if>><fmt:formatDate dateStyle="full" pattern="dd.MM.yyyy HH:mm" value="${form.added}"/></td>
+                            <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.surname_1}</td>
+                            <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.name_3}</td>
+                            <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.passnum_13}</td>
+                            <td<c:if test="${form.is_registered}"> class="reged"</c:if>><c:if test="${form.is_registered}">готово</c:if></td>
+                            <td<c:if test="${form.is_registered}"> class="reged"</c:if>><a href="edit/${form.id}" class="ico edit">x</a> <a href="delete/${form.id}"  class="ico del">x</a></td>
                         </tr>
                     </c:forEach>
                 </table>
