@@ -1,32 +1,55 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <title><decorator:title default="Регистрация пользователей"/></title>
-    <script type="text/javascript" src="js/lib/jquery.js"></script>
-    <script type="text/javascript" src="js/lib/jquery-ui.js"></script>
-    <link type="text/css" href="css/style.css" rel="stylesheet" />
-    <link type="text/css" href="css/jquery-ui.css" rel="stylesheet" />
+    <script type="text/javascript" src="<spring:url value="/js/jquery.js" />"></script>
+    <script type="text/javascript" src="<spring:url value="/js/jquery-ui.js" />"></script>
+    <link type="text/css" href="<spring:url value="/css/style.css" />" rel="stylesheet" />
+    <link type="text/css" href="<spring:url value="/css/jquery-ui.css" />" rel="stylesheet" />
     <decorator:head/>
 </head>
 <body>
+<!-- Header -->
+<div id="header">
+    <div class="shell">
+        <!-- Logo + Top Nav -->
+        <div id="top">
+            <h1><a href="#">Начальная страница</a></h1>
+        </div>
+        <!-- End Logo + Top Nav -->
 
-<div id="container">
-
-    <div id="header">
-        <h1> Начальная страница </h1>
-    </div>
-    <div id="content">
-        <decorator:body/>
-    </div>
-
-    <div id="footer">
+        <!-- End Main Nav -->
     </div>
 </div>
+<!-- End Header -->
 
+<!-- Container -->
+<div id="container">
+    <div class="shell">
+
+        <decorator:body/>
+
+
+        <!-- Main -->
+    </div>
+</div>
+<!-- End Container -->
+
+<!-- Footer -->
+<div id="footer">
+    <div class="shell">
+        <span class="left">&copy; 2010 - mrdoggy</span>
+		<span class="right">
+			Developed by <a href="http://mrdoggy.info" target="_blank" title="">mrdoggy.info</a>
+		</span>
+    </div>
+</div>
+<!-- End Footer -->
 
 </body>
 </html>

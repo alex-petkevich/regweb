@@ -104,16 +104,17 @@ public class FormController {
         }
         Form prevForm = formService.getForm(form.getId());
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
-        if (form.getId() == null  || copy!=null) {
+        if (form.getId() == null  || !copy.equals("")) {
             form.setAdded(new Date());
             form.setUser_id(authentic.getName());
             form.setId(null);
+            form.setIs_registered(false);
         } else {
             form.setAdded(prevForm.getAdded());
             form.setUser_id(prevForm.getUser_id());
         }
         formService.save(form);
-        if (copy!=null) {
+        if (!copy.equals("")) {
             return "redirect:/edit/"+form.getId();
         } else {
             return "redirect:/";

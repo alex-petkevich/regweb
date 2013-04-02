@@ -7,7 +7,13 @@
         : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message} </font>
 </c:if>
 <form method="POST" action="<c:url value="/j_spring_security_check" />">
-    <table>
+    <div class="box">
+        <!-- Box Head -->
+        <div class="box-head">
+            <h2>Вход</h2>
+        </div>
+
+        <table>
         <tr>
             <td align="right">логин</td>
             <td><input type="text" name="j_username" /></td>
@@ -20,9 +26,12 @@
             <td align="right">запомнить</td>
             <td><input type="checkbox" name="_spring_security_remember_me" /></td>
         </tr>
-        <tr>
-            <td colspan="2" align="right"><input type="submit" value="Login" />
-                <input type="reset" value="Reset" /></td>
-        </tr>
+        
     </table>
+
+        <div class="buttons"> <input type="submit" class="button" value="Войти" />
+
+        </div>
+    </div>
+
 </form>
