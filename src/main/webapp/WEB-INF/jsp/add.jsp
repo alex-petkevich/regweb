@@ -1,6 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -74,8 +75,9 @@
     </script>
 </head>
 <body>
-<form:form method="post" action="addform" commandName="form">
-
+<spring:url value="/addform" var="postUrl" />
+<form:form method="post" action="${postUrl}" commandName="form">
+<form:hidden path="id" />
     <table class="table-form">
         <tr>
             <td colspan="2" class="table-title">Персональные данные</td>
@@ -502,7 +504,7 @@
 
 
         <tr>
-            <td colspan="2"><input type="submit" value="Сохранить" /></td>
+            <td colspan="2"><input type="submit" value="Сохранить" /> <c:if test="${not empty form.id}"><input type="submit" name="copy" value="Скопировать в новую анкету" /></c:if></td>
         </tr>
     </table>
 </form:form>   <br /><br /><br />

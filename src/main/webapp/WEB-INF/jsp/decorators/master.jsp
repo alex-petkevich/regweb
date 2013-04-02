@@ -1,16 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     
     <title><decorator:title default="Регистрация пользователей"/></title>
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/jquery-ui.js"></script>
-    <link type="text/css" href="css/style.css" rel="stylesheet" />
-    <link type="text/css" href="css/jquery-ui.css" rel="stylesheet" />
+    <script type="text/javascript" src="<spring:url value="/js/jquery.js" />"></script>
+    <script type="text/javascript" src="<spring:url value="/js/jquery-ui.js" />"></script>
+    <link type="text/css" href="<spring:url value="/css/style.css" />" rel="stylesheet" />
+    <link type="text/css" href="<spring:url value="/css/jquery-ui.css" />" rel="stylesheet" />
 
     <decorator:head/>
 </head>

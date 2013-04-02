@@ -25,7 +25,7 @@ CREATE TABLE `form_goal_21` (
 
 /*Data for the table `form_goal_21` */
 
-insert  into `form_goal_21`(`form_id`,`goal_21`) values (4,'Иная (указать)');
+insert  into `form_goal_21`(`form_id`,`goal_21`) values (4,'Иная (указать)'),(5,'Иная (указать)'),(5,'Туризм'),(6,'Деловая'),(6,'Иная (указать)'),(8,'Деловая'),(8,'Иная (указать)');
 
 /*Table structure for table `form_money_type_33` */
 
@@ -40,7 +40,7 @@ CREATE TABLE `form_money_type_33` (
 
 /*Data for the table `form_money_type_33` */
 
-insert  into `form_money_type_33`(`form_id`,`money_type_33`) values (4,'Иные (указать)'),(4,'Кредитная карточка'),(4,'Наличные деньги');
+insert  into `form_money_type_33`(`form_id`,`money_type_33`) values (4,'Иные (указать)'),(4,'Кредитная карточка'),(4,'Наличные деньги'),(5,'Иные (указать)'),(5,'Кредитная карточка'),(5,'Наличные деньги'),(6,'Иные (указать)'),(6,'Кредитная карточка'),(6,'Наличные деньги'),(6,'Размещение'),(8,'Иные (указать)'),(8,'Кредитная карточка'),(8,'Наличные деньги'),(8,'Размещение');
 
 /*Table structure for table `forms` */
 
@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS `forms`;
 
 CREATE TABLE `forms` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT '0',
+  `user_id` varchar(255) DEFAULT NULL,
   `added` datetime DEFAULT NULL,
   `is_registered` tinyint(1) DEFAULT '0',
   `surname_1` varchar(255) DEFAULT NULL,
@@ -135,11 +135,11 @@ CREATE TABLE `forms` (
   `money_type_other_33` varchar(255) DEFAULT NULL,
   `inshurance_33` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `forms` */
 
-insert  into `forms`(`id`,`user_id`,`added`,`is_registered`,`surname_1`,`surname_2`,`name_3`,`birthdate_4`,`placedate_5`,`country_6`,`citizenship_7`,`citizenship_born_8`,`sex_9`,`family_10`,`identnum_11`,`passdata_12`,`passnum_13`,`passissuedate_14`,`passexpiration_15`,`passby_16`,`is_children`,`citizenship_child`,`name_child`,`surname_child`,`country_child`,`state_child`,`city_child`,`index_child`,`address_child`,`country_17`,`state_17`,`city_17`,`index_17`,`address_17`,`email_17`,`preftel_17`,`tel_17`,`countryvisitor_18`,`visitdoc_18`,`expdate_18`,`profession_19`,`employee_20`,`country_20`,`state_20`,`city_20`,`index_20`,`address_20`,`preftel_20`,`tel_20`,`title_20`,`email_20`,`preffax_20`,`fax_20`,`goal_21`,`goalother_21`,`dest_country_22`,`first_country_23`,`typevisa_24`,`lenvisa_25`,`startvisa_29`,`endvisa_30`,`prevvisastart1_26`,`prevvisaend1_26`,`prevvisastart2_26`,`prevvisaend2_26`,`prevvisastart3_26`,`prevvisaend3_26`,`invite_31`,`title_31`,`name_31`,`surname_31`,`country_31`,`city_31`,`index_31`,`preftel_31`,`tel_31`,`preffax_31`,`fax_31`,`address_31`,`building_31`,`flat_31`,`email_31`,`expencies_33`,`expenciesother_33`,`money_type_33`,`money_type_other_33`,`inshurance_33`) values (4,NULL,'2013-04-01 16:45:01',0,'asdfasdf','afadsfasdf','asdfasdfasdf','1983-03-30','asdfasdf','AZE','XXA','ABW','M','SP','33333333333333','1','fffffffff','2013-04-16','2013-04-15','sadfasdfasdfasdf',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'DZA','Asdfasfsd','sdfasdfdas','333333','asdfasdfdfadf','asfasdf@cccc.cc','23','23523523543','Nie','','','32','PRA','AUS','sadfasdf','asdfasdf','333333','asdfsdfasdf','333','asdfasdfas','afsdfasfasdf','','233','232323232',NULL,'asfasdfdasf','AUT','IRL',3,33,'2013-04-09','2015-04-09','2009-04-07','2013-04-25','2006-04-19','2013-04-16','','',2,'asdfasfdasdf',NULL,NULL,'XXA','asdfadsf','333333','333','333333','','','asfasdfasdf','333','33','asdfa@ccc.cc','1','',NULL,'asdfasdf','2013-04-02');
+insert  into `forms`(`id`,`user_id`,`added`,`is_registered`,`surname_1`,`surname_2`,`name_3`,`birthdate_4`,`placedate_5`,`country_6`,`citizenship_7`,`citizenship_born_8`,`sex_9`,`family_10`,`identnum_11`,`passdata_12`,`passnum_13`,`passissuedate_14`,`passexpiration_15`,`passby_16`,`is_children`,`citizenship_child`,`name_child`,`surname_child`,`country_child`,`state_child`,`city_child`,`index_child`,`address_child`,`country_17`,`state_17`,`city_17`,`index_17`,`address_17`,`email_17`,`preftel_17`,`tel_17`,`countryvisitor_18`,`visitdoc_18`,`expdate_18`,`profession_19`,`employee_20`,`country_20`,`state_20`,`city_20`,`index_20`,`address_20`,`preftel_20`,`tel_20`,`title_20`,`email_20`,`preffax_20`,`fax_20`,`goal_21`,`goalother_21`,`dest_country_22`,`first_country_23`,`typevisa_24`,`lenvisa_25`,`startvisa_29`,`endvisa_30`,`prevvisastart1_26`,`prevvisaend1_26`,`prevvisastart2_26`,`prevvisaend2_26`,`prevvisastart3_26`,`prevvisaend3_26`,`invite_31`,`title_31`,`name_31`,`surname_31`,`country_31`,`city_31`,`index_31`,`preftel_31`,`tel_31`,`preffax_31`,`fax_31`,`address_31`,`building_31`,`flat_31`,`email_31`,`expencies_33`,`expenciesother_33`,`money_type_33`,`money_type_other_33`,`inshurance_33`) values (4,NULL,'2013-04-01 16:45:01',0,'asdfasdf','afadsfasdf','asdfasdfasdf','1983-03-30','asdfasdf','AZE','XXA','ABW','M','SP','33333333333333','1','fffffffff','2013-04-16','2013-04-15','sadfasdfasdfasdf',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'DZA','Asdfasfsd','sdfasdfdas','333333','asdfasdfdfadf','asfasdf@cccc.cc','23','23523523543','Nie','','','32','PRA','AUS','sadfasdf','asdfasdf','333333','asdfsdfasdf','333','asdfasdfas','afsdfasfasdf','','233','232323232',NULL,'asfasdfdasf','AUT','IRL',3,33,'2013-04-09','2015-04-09','2009-04-07','2013-04-25','2006-04-19','2013-04-16','','',2,'asdfasfdasdf',NULL,NULL,'XXA','asdfadsf','333333','333','333333','','','asfasdfasdf','333','33','asdfa@ccc.cc','1','',NULL,'asdfasdf','2013-04-02'),(5,NULL,'2013-04-02 11:10:39',1,'asdfasdf','afadsfasdf','asdfasdfasdf','1983-03-30','asdfasdf','AZE','XXA','ABW','M','SP','33333333333333','1','fffffffff','2013-04-16','2013-04-15','sadfasdfasdfasdf',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'DZA','Asdfasfsd','sdfasdfdas','333333','asdfasdfdfadf','asfasdf@cccc.cc','23','23523523543','Nie','','','32','PRA','AUS','sadfasdf','asdfasdf','333333','asdfsdfasdf','333','asdfasdfas','afsdfasfasdf','','233','232323232',NULL,'asfasdfdasf','AUT','IRL',3,33,'2013-04-09','2015-04-09','2009-04-07','2013-04-25','2006-04-19','2013-04-16','','',2,'asdfasfdasdf',NULL,NULL,'XXA','asdfadsf','333333','333','333333','','','asfasdfasdf','333','33','asdfa@ccc.cc','1','',NULL,'asdfasdf','2013-04-02'),(6,NULL,'2013-04-02 11:10:55',0,'asdfasdf','afadsfasdf','asdfasdfasdf','1983-03-30','asdfasdf','AZE','XXA','ABW','M','SP','33333333333333','1','fffffffff','2013-04-16','2013-04-15','sadfasdfasdfasdf',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'DZA','Asdfasfsd','sdfasdfdas','333333','asdfasdfdfadf','asfasdf@cccc.cc','23','23523523543','Nie','','','32','PRA','AUS','sadfasdf','asdfasdf','333333','asdfsdfasdf','333','asdfasdfas','afsdfasfasdf','','233','232323232',NULL,'asfasdfdasf','AUT','IRL',3,33,'2013-04-09','2015-04-09','2009-04-07','2013-04-25','2006-04-19','2013-04-16','','',2,'asdfasfdasdf',NULL,NULL,'XXA','asdfadsf','333333','333','333333','','','asfasdfasdf','333','33','asdfa@ccc.cc','1','',NULL,'asdfasdf','2013-04-02'),(8,'admin','2013-04-02 12:32:29',0,'asdfasdf','afadsfasdf','asdfasdfasdf','1983-03-30','asdfasdf','AZE','XXA','ABW','M','SP','33333333333333','1','fffffffff','2013-04-16','2013-04-15','sadfasdfasdfasdf',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'DZA','Asdfasfsd','sdfasdfdas','333333','asdfasdfdfadf','asfasdf@cccc.cc','23','23523523543','Nie','','','32','PRA','AUS','sadfasdf','asdfasdf','333333','asdfsdfasdf','333','asdfasdfas','afsdfasfasdf','','233','232323232',NULL,'asfasdfdasf','AUT','IRL',3,33,'2013-04-09','2015-04-09','2009-04-07','2013-04-25','2006-04-19','2013-04-16','','',2,'asdfasfdasdf',NULL,NULL,'XXA','asdfadsf','333333','333','333333','','','asfasdfasdf','333','33','asdfa@ccc.cc','1','',NULL,'asdfasdf','2013-04-02');
 
 /*Table structure for table `roles` */
 

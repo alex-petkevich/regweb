@@ -1,5 +1,8 @@
 package regweb.domain;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -22,7 +25,7 @@ public class Form implements Serializable {
     private Integer id;
 
     @Column(name = "USER_ID")
-    private Integer user_id;
+    private String user_id;
 
     @Column(name = "ADDED")
     private Date added;
@@ -221,7 +224,7 @@ public class Form implements Serializable {
     private String goalother_21;
 
     @ElementCollection
-    @Column(name = "GOAL_21")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<String> goal_21 = new ArrayList<String>();
 
     @Size(min=1,max=255, message="{errors.requiredfield}")
@@ -329,7 +332,7 @@ public class Form implements Serializable {
     private String expenciesother_33;
 
     @ElementCollection
-    @Column(name = "MONEY_TYPE_33")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<String> money_type_33 = new ArrayList<String>();
 
     @Column(name = "MONEY_TYPE_OTHER_33")
@@ -346,11 +349,11 @@ public class Form implements Serializable {
         this.id = id;
     }
 
-    public Integer getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(Integer user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 

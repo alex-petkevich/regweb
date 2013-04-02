@@ -1,11 +1,14 @@
 package regweb.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import regweb.ConstLists;
 import regweb.domain.Form;
 import regweb.service.FormService;
@@ -71,8 +74,16 @@ public class FormController {
         return "add";
     }
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String deleteForm(Map<String, Object> model, @PathVariable("id") Integer id) {
+        if (id!=null) {
+            formService.removeForm(id);
+        }
+        return "redirect:/";
+    }
+
     @RequestMapping(value = "/addform", method = RequestMethod.POST)
-    public String processForm(@Valid Form form,BindingResult result, Map model) {
+    public String processForm(@Valid Form form,BindingResult result,@RequestParam("copy")  String copy, Map model) {
         model.put("sexList", ConstLists.sexList);
         model.put("mStatusList", ConstLists.mStatusList);
         model.put("countiresOldList", ConstLists.countriesOldList);
@@ -91,10 +102,22 @@ public class FormController {
         if (result.hasErrors()) {
             return "add";
         }
-        form.setAdded(new Date());
+        Form prevForm = formService.getForm(form.getId());
+        Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
+        if (form.getId() == null  || copy!=null) {
+            form.setAdded(new Date());
+            form.setUser_id(authentic.getName());
+            form.setId(null);
+        } else {
+            form.setAdded(prevForm.getAdded());
+            form.setUser_id(prevForm.getUser_id());
+        }
         formService.save(form);
-        model.put("form", form);
-        return "redirect:/";
+        if (copy!=null) {
+            return "redirect:/edit/"+form.getId();
+        } else {
+            return "redirect:/";
+        }
     }
 
     @RequestMapping("/index")
