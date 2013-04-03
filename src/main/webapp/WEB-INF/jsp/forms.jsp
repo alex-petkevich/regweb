@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
@@ -21,42 +22,50 @@
             $('#check').on('click',function() {
                 $('.checkbox').attr('checked',this.checked);
             });
+            $('#clear').on('click',function() {
+                $('#clear_val').attr('value','1');
+                $('#form').submit();
+            });
         });
     </script>
 </head>
 <body>
-<c:choose>
-    <c:when test="${!empty formsList}">
         <!-- Box -->
         <div class="box">
             <!-- Box Head -->
-            <div class="box-head">
+            <spring:url value="/" var="postUrl" />
+            <form:form method="get" action="${postUrl}">
+                <input type="hidden" name="clear" id="clear_val" value="" />
+                <div class="box-head">
                 <h2 class="left">Список анкет</h2>
                 <div class="right">
-                    <label>ФИО:</label>
-                    <input type="text" class="field small-field" />
+                    <label>текст:</label>
+                    <input type="text" name="text" value="${search.text}" class="field small-field" />
                     <label>&nbsp;&nbsp;с:&nbsp;</label>
-                    <input type="text" class="field small-field datepicker" />
+                    <input type="text" name="from" value="${search.from}" class="field small-field datepicker" />
                     <label>&nbsp;по:&nbsp;</label>
-                    <input type="text" class="field small-field datepicker" />
+                    <input type="text" name="to" value="${search.to}" class="field small-field datepicker" />
                     <label>&nbsp;новые:&nbsp;</label>
-                    <input type="checkbox" class="field small-field" />
+                    <input type="checkbox" name="not_reg" value="1"<c:if test="${not empty search.not_reg}"> checked="checked" </c:if> class="field small-field" />
                     <input type="submit" class="button" value="поиск" />
-                    <input type="submit" class="button" value="сброс" />
+                    <input type="submit" id="clear" class="button" value="сброс" />
                 </div>
             </div>
+            </form:form>
             <!-- End Box Head -->
 
+            <c:choose>
+            <c:when test="${!empty formsList}">
             <!-- Table -->
             <div class="table">
                 <table width="99%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                         <th width="13"><input type="checkbox" id="check" /></th>
-                        <th><a href="<spring:url value="/" />?sort=added<c:if test="empty $dir">&dir=desc</c:if>">Дата добавления</a></th>
-                        <th><a href="<spring:url value="/" />?sort=surname<c:if test="empty $dir">&dir=desc</c:if>">Фамилия</a></th>
-                        <th><a href="<spring:url value="/" />?sort=name<c:if test="empty $dir">&dir=desc</c:if>">Имя</a></th>
-                        <th><a href="<spring:url value="/" />?sort=passnum<c:if test="empty $dir">&dir=desc</c:if>">Номер паспорта</a></th>
-                        <th><a href="<spring:url value="/" />?sort=registered<c:if test="empty $dir">&dir=desc</c:if>">Результат</a></th>
+                        <th><a href="<spring:url value="/" />?sort=added<c:if test="${empty dir}">&dir=desc</c:if>">Дата добавления</a></th>
+                        <th><a href="<spring:url value="/" />?sort=surname<c:if test="${empty dir}">&dir=desc</c:if>">Фамилия</a></th>
+                        <th><a href="<spring:url value="/" />?sort=name<c:if test="${empty dir}">&dir=desc</c:if>">Имя</a></th>
+                        <th><a href="<spring:url value="/" />?sort=passnum<c:if test="${empty dir}">&dir=desc</c:if>">Номер паспорта</a></th>
+                        <th><a href="<spring:url value="/" />?sort=registered<c:if test="${empty dir}">&dir=desc</c:if>">Результат</a></th>
                         <th width="50" class="ac">контроль</th>
                     </tr>
                     <c:forEach items="${formsList}" var="form">
@@ -93,12 +102,13 @@
             </div>
             <!-- Table -->
 
+            </c:when>
+                <c:otherwise>
+                    <div style="margin:20px;"><b>Ничего не найдено</b></div>
+                </c:otherwise>
+            </c:choose>
+
         </div>
         <!-- End Box -->
 
-    </c:when>
-    <c:otherwise>
-    <b>Ничего не найдено</b>
-    </c:otherwise>
-</c:choose>
 </body>

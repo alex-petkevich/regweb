@@ -8,6 +8,7 @@ import regweb.domain.Form;
 import regweb.service.FormService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: Alexander Petkevich aka mrdoggy
@@ -25,8 +26,8 @@ public class FormServiceImpl implements FormService {
     }
 
     @Transactional
-    public List<Form> listForms() {
-        return formDAO.listForms();
+    public List<Form> listForms(Map<String,String> searchValue,String sortField,String sortOrder,Integer offset,Integer limit) {
+        return formDAO.listForms(searchValue,sortField,sortOrder,offset,limit);
     }
 
     @Transactional

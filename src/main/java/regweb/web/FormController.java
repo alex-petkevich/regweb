@@ -13,8 +13,10 @@ import regweb.ConstLists;
 import regweb.domain.Form;
 import regweb.service.FormService;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -24,9 +26,68 @@ public class FormController {
     private FormService formService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String listForms(Map<String, Object> map) {
+    public String listForms(@RequestParam(value="sort",required = false)  String sort,
+                            @RequestParam(value="dir",required = false)  String dir,
+                            @RequestParam(value="text",required = false)  String text,
+                            @RequestParam(value="from",required = false)  String from,
+                            @RequestParam(value="to",required = false)  String to,
+                            @RequestParam(value="not_reg",required = false)  String not_reg,
+                            @RequestParam(value="clear",required = false)  String clear,
+                            Map<String, Object> map,
+                            HttpSession session) {
+        if (session.getAttribute("searchForm") == null) {
+            session.setAttribute("searchForm",new HashMap<String,String>());
+        }
+        Map<String,String> searchVal = (HashMap<String,String>)session.getAttribute("searchForm");
+        if (text!=null) {
+            searchVal.put("text",text);
+        }
+        if (from!=null) {
+            searchVal.put("from",from);
+        }
+        if (to!=null){
+            searchVal.put("to",to);
+        }
+        if (not_reg!=null) {
+            searchVal.put("not_reg",not_reg);
+        } else if (clear!=null) {
+            searchVal.put("not_reg",null);
+        }
+        session.setAttribute("searchForm",searchVal);
+        if (clear!=null && clear.equals("1")) {
+            session.setAttribute("searchForm",null);
+            searchVal.clear();
+        }
+        String to_sort = "";
+        String to_dir = "";
+        if (sort==null) {
+            to_sort = "added";
+            to_dir = "desc";
+        } else {
+            if (sort.equals("added")) {
+                 to_sort = "added";
+            }
+            if (sort.equals("surname")) {
+                to_sort = "surname_1";
+            }
+            if (sort.equals("name")) {
+                to_sort = "name_3";
+            }
+            if (sort.equals("passnum")) {
+                to_sort = "passnum_13";
+            }
+            if (sort.equals("registered")) {
+                to_sort = "is_registered";
+            }
+        }
+        if (dir!=null) {
+            to_dir = dir;
+        }
 
-        map.put("formsList", formService.listForms());
+        map.put("formsList", formService.listForms(searchVal,to_sort,to_dir,0,0));
+        map.put("sort",sort);
+        map.put("dir",dir);
+        map.put("search",searchVal);
 
         return "forms";
     }

@@ -3,6 +3,7 @@ package regweb.service;
 import regweb.domain.Form;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: Alexander Petkevich aka mrdoggy
@@ -13,7 +14,7 @@ public interface FormService {
 
     public void save(Form form);
 
-    public List<Form> listForms();
+    public List<Form> listForms(Map<String,String> searchValue,String sortField,String sortOrder,Integer offset,Integer limit);
 
     public void removeForm(Integer id);
 
