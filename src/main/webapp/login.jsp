@@ -16,11 +16,11 @@
         <table>
         <tr>
             <td align="right">логин</td>
-            <td><input type="text" name="j_username" /></td>
+            <td><input type="text" name="j_username" class="field" /></td>
         </tr>
         <tr>
             <td align="right">пароль</td>
-            <td><input type="password" name="j_password" /></td>
+            <td><input type="password" name="j_password" class="field" /></td>
         </tr>
         <tr>
             <td align="right">запомнить</td>
