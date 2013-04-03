@@ -31,6 +31,17 @@ public class User {
     @Column(name = "TYPE")
     private Integer type;
 
+    @Column(name = "ENABLED")
+    private boolean enabled;
+
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public Integer getId() {
         return id;
     }

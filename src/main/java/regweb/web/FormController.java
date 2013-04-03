@@ -2,6 +2,7 @@ package regweb.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -32,6 +33,7 @@ public class FormController {
                             @RequestParam(value="from",required = false)  String from,
                             @RequestParam(value="to",required = false)  String to,
                             @RequestParam(value="not_reg",required = false)  String not_reg,
+                            @RequestParam(value="user_id",required = false)  String user_id,
                             @RequestParam(value="clear",required = false)  String clear,
                             Map<String, Object> map,
                             HttpSession session) {
@@ -39,6 +41,14 @@ public class FormController {
             session.setAttribute("searchForm",new HashMap<String,String>());
         }
         Map<String,String> searchVal = (HashMap<String,String>)session.getAttribute("searchForm");
+        
+        if (is_admin()) {
+            if (user_id!=null) {
+                searchVal.put("user_id",user_id);
+            } 
+        }  else {
+            searchVal.put("user_id",SecurityContextHolder.getContext().getAuthentication().getName());
+        }
         if (text!=null) {
             searchVal.put("text",text);
         }
@@ -48,7 +58,10 @@ public class FormController {
         if (to!=null){
             searchVal.put("to",to);
         }
-        if (not_reg!=null) {
+        if (user_id!=null){
+            searchVal.put("user_id",user_id);
+        }
+        if (not_reg!=null && not_reg.equals("1")) {
             searchVal.put("not_reg",not_reg);
         } else if (clear!=null) {
             searchVal.put("not_reg",null);
@@ -185,6 +198,16 @@ public class FormController {
     @RequestMapping("/index")
     public String home() {
         return "redirect:/";
+    }
+    
+    private boolean is_admin() {
+        boolean is_admin = false;
+        Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
+        for(GrantedAuthority role : authentic.getAuthorities()) {
+            if (role.getAuthority().equals("ROLE_ADMIN"))
+                is_admin = true;
+        }
+        return is_admin;
     }
 
 

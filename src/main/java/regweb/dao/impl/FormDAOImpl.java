@@ -62,9 +62,13 @@ public class FormDAOImpl implements FormDAO {
             }
             req.add(Restrictions.le("added", date) );
         }
-        if (searchValue.containsKey("not_reg"))
+        if (searchValue.containsKey("not_reg") && searchValue.get("not_reg")!=null)
         {
             req.add(Restrictions.eq("is_registered", false) );
+        }
+        if (searchValue.containsKey("user_id") && !searchValue.get("user_id").equals(""))
+        {
+            req.add(Restrictions.eq("user_id", searchValue.get("user_id")) );
         }
         if (searchValue.containsKey("text"))
         {
