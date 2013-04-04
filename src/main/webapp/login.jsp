@@ -3,8 +3,9 @@
 
 
 <c:if test="${not empty param.error}">
-    <font color="red"> ошибка
-        : ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message} </font>
+    <div class="msg msg-error">
+        <p><strong>ошибка: ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</strong></p>
+    </div>
 </c:if>
 <form method="POST" action="<c:url value="/j_spring_security_check" />">
     <div class="box">

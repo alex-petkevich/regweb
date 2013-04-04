@@ -14,10 +14,12 @@ import regweb.ConstLists;
 import regweb.domain.Form;
 import regweb.service.FormService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -25,6 +27,19 @@ public class FormController {
 
     @Autowired
     private FormService formService;
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public String actionForms(@RequestParam(value="action",required = false)  String action,
+                              @RequestParam(value="selusers",required = false) String[] selusers,Map<String, Object> map) {
+        
+        for (int i=0;i<selusers.length;i++) {
+            Form form = formService.getForm(Integer.parseInt(selusers[i]));
+            form.setIs_registered(true);
+            formService.save(form);
+        }
+        return "redirect:/";
+    }
+    
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String listForms(@RequestParam(value="sort",required = false)  String sort,
@@ -199,7 +214,17 @@ public class FormController {
     public String home() {
         return "redirect:/";
     }
-    
+
+    @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
+    public String downloadForm(Map<String, Object> model, @PathVariable("id") Integer id,HttpServletResponse response) {
+        if (id!=null) {
+            Form form = formService.getForm(id);
+            model.put("form",form);
+        }
+        return "template/template";
+    }
+
+
     private boolean is_admin() {
         boolean is_admin = false;
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();

@@ -177,10 +177,13 @@ public class UserController {
                 model.put("error", 2);
                 return "adduser";
             }
+            if (password.equals("")) {
+                user.setPassword(prevUser.getPassword());
+            }
         }
         userService.save(user);
         userService.addRole(user.getUsername(), "ROLE_USER");
-        if (is_admin == 1) {
+        if (is_admin!=null && is_admin == 1) {
             userService.addRole(user.getUsername(),"ROLE_ADMIN");
         } else {
             userService.removeRole(user.getUsername(), "ROLE_ADMIN");
@@ -198,5 +201,8 @@ public class UserController {
         return "redirect:/";
     }
 
+    public String displayRole(List<String> roles) {
+        return "xxx";
+    }
 
 }

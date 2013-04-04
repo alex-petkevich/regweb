@@ -26,10 +26,18 @@
                 $('#clear_val').attr('value','1');
                 $('#form').submit();
             });
+            $('#mark-sel').on('click',function(){
+                $('#hid-action').attr('value','ready');
+                $('#forms-form').submit();
+            });
         });
     </script>
 </head>
 <body>
+        <p>Выбранные: <input type="BUTTON" class="button" id="mark-sel" value="Отметить как готовые"> </p><br>
+        <spring:url value="/" var="postUrl" />
+        <form method="post" action="${postUrl}" id="forms-form">
+        <input type="hidden" name="action" value="" id="hid-action"/>
         <!-- Box -->
         <div class="box">
             <!-- Box Head -->
@@ -77,16 +85,16 @@
                     </tr>
                     <c:forEach items="${formsList}" var="form">
                         <tr>
-                            <td width="13"><input type="checkbox" class="checkbox" /></td>
+                            <td width="13"><input type="checkbox" name="selusers" value="${form.id}" class="checkbox" /></td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>><fmt:formatDate dateStyle="full" pattern="dd.MM.yyyy HH:mm" value="${form.added}"/></td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.surname_1}</td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.name_3}</td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.passnum_13}</td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>><c:if test="${form.is_registered}">готово</c:if></td>
                             <sec:authorize ifAnyGranted="ROLE_ADMIN">
-                                <td<c:if test="${form.is_registered}"> class="reged"</c:if>><a href="<spring:url value="/user/" />${form.user_id}">${form.user_id}</a></td>
+                                <td<c:if test="${form.is_registered}"> class="reged"</c:if>><a href="<spring:url value="/user/edit/" />${form.user_id}">${form.user_id}</a></td>
                             </sec:authorize>
-                            <td<c:if test="${form.is_registered}"> class="reged"</c:if>><a href="edit/${form.id}" class="ico edit">x</a> <a href="delete/${form.id}"  class="ico del">x</a></td>
+                            <td<c:if test="${form.is_registered}"> class="reged"</c:if>><a href="download/${form.id}" class="ico down">&nbsp;</a>&nbsp;<a href="edit/${form.id}" class="ico edit">&nbsp;</a>&nbsp;<a href="delete/${form.id}"  class="ico del">&nbsp;</a></td>
                         </tr>
                     </c:forEach>
                 </table>
@@ -120,5 +128,5 @@
 
         </div>
         <!-- End Box -->
-
+        </form>
 </body>

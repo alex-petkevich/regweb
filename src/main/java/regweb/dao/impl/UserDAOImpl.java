@@ -76,6 +76,8 @@ public class UserDAOImpl implements UserDAO {
         User user = (User) sessionFactory.getCurrentSession().get(
                 User.class, id);
         if (null != user) {
+            this.removeRole(user.getUsername(),"ROLE_ADMIN");
+            this.removeRole(user.getUsername(),"ROLE_USER");
             sessionFactory.getCurrentSession().delete(user);
         }
     }

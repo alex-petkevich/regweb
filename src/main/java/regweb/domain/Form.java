@@ -154,7 +154,7 @@ public class Form implements Serializable {
     @Column(name = "EMAIL_17")
     private String email_17;
 
-    @Size(min=1,max=20, message="{errors.requiredfield}")
+    @Size(min=1,max=10, message="{errors.requiredfield}")
     @Column(name = "PREFTEL_17")
     private String preftel_17;
 
@@ -199,7 +199,7 @@ public class Form implements Serializable {
     @Column(name = "ADDRESS_20")
     private String address_20;
 
-    @Size(min=1,max=20, message="{errors.requiredfield}")
+    @Size(min=1,max=10, message="{errors.requiredfield}")
     @Column(name = "PREFTEL_20")
     private String preftel_20;
 
@@ -214,6 +214,7 @@ public class Form implements Serializable {
     @Column(name = "EMAIL_20")
     private String email_20;
 
+    @Size(max=10, message="{errors.requiredfield}")
     @Column(name = "PREFFAX_20")
     private String preffax_20;
 
@@ -295,7 +296,7 @@ public class Form implements Serializable {
     @Column(name = "INDEX_31")
     private String index_31;
 
-    @Size(min=1,max=20, message="{errors.requiredfield}")
+    @Size(min=1,max=10, message="{errors.requiredfield}")
     @Column(name = "PREFTEL_31")
     private String preftel_31;
 
@@ -304,6 +305,7 @@ public class Form implements Serializable {
     private String tel_31;
 
     @Column(name = "PREFFAX_31")
+    @Size(max=10, message="{errors.requiredfield}")
     private String preffax_31;
 
     @Column(name = "FAX_31")

@@ -44,7 +44,7 @@ public class User {
     @Column(name = "ENABLED")
     private boolean enabled;
 
-    @ElementCollection
+    @Transient
     private List<String> roles = new ArrayList<String>();
 
     public List<String> getRoles() {
