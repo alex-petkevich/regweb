@@ -8,6 +8,7 @@ import regweb.domain.User;
 import regweb.service.UserService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: Alexander Petkevich aka mrdoggy
@@ -25,8 +26,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public List<User> listUsers() {
-        return userDAO.listUsers();
+    public List<User> listUsers(Map<String,String> searchValue,String sortField,String sortOrder,Integer offset,Integer limit) {
+        return userDAO.listUsers(searchValue,sortField,sortOrder,offset,limit);
+    }
+
+    @Transactional
+    public List<String> listUserRoles(String username) {
+        return userDAO.listUserRoles(username);
     }
 
     @Transactional
@@ -37,5 +43,20 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User getUserByName(String name) {
         return userDAO.getUserByName(name);
+    }
+
+    @Transactional
+    public User getUser(Integer id) {
+        return userDAO.getUser(id);
+    }
+
+    @Transactional
+    public void addRole(String username,String role) {
+        userDAO.addRole(username,role);
+    }
+
+    @Transactional
+    public void removeRole(String username,String role) {
+        userDAO.removeRole(username,role);
     }
 }

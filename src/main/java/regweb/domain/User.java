@@ -1,7 +1,11 @@
 package regweb.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Author: Alexander Petkevich aka mrdoggy
@@ -13,9 +17,10 @@ import java.util.Date;
 public class User {
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Integer id;
 
+    @Size(min=1,max=20, message="{errors.requiredfield}")
     @Column(name = "USERNAME")
     private String username;
 
@@ -25,6 +30,11 @@ public class User {
     @Column(name = "ADDED")
     private Date added;
 
+    @Pattern(regexp = "^(?:[a-zA-Z0-9_'^&/+-])+(?:\\.(?:[a-zA-Z0-9_'^&/+-])+)" +
+            "*@(?:(?:\\[?(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))\\.)" +
+            "{3}(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\]?)|(?:[a-zA-Z0-9-]+\\.)" +
+            "+(?:[a-zA-Z]){2,}\\.?)$",
+            message = "{errors.email}")
     @Column(name = "EMAIL")
     private String email;
 
@@ -33,6 +43,17 @@ public class User {
 
     @Column(name = "ENABLED")
     private boolean enabled;
+
+    @ElementCollection
+    private List<String> roles = new ArrayList<String>();
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
 
     public boolean getEnabled() {
         return enabled;

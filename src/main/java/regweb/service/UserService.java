@@ -3,6 +3,7 @@ package regweb.service;
 import regweb.domain.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: Alexander Petkevich aka mrdoggy
@@ -13,9 +14,17 @@ public interface UserService {
 
     public void save(User user);
 
-    public List<User> listUsers();
+    public List<User> listUsers(Map<String,String> searchValue,String sortField,String sortOrder,Integer offset,Integer limit);
+
+    public List<String> listUserRoles(String username);
 
     public void removeUser(Integer id);
 
     public User getUserByName(String name);
+
+    public User getUser(Integer id);
+
+    public void addRole(String username,String role);
+
+    public void removeRole(String username,String role);
 }

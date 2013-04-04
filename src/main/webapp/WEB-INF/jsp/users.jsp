@@ -48,8 +48,8 @@
                             <td<c:if test="${not user.enabled}"> class="reged"</c:if>>${user.email}</td>
                             <td<c:if test="${not user.enabled}"> class="reged"</c:if>><fmt:formatDate dateStyle="full" pattern="dd.MM.yyyy HH:mm" value="${user.added}"/></td>
                             <td<c:if test="${not user.enabled}"> class="reged"</c:if>><c:choose><c:when test="${user.enabled}"><b>да</b> <a href="<spring:url value="/user-disable/" />${user.username}">нет</a></c:when><c:otherwise><a href="<spring:url value="/user-enable/" />${user.username}">да</a> <b>нет</b> </c:otherwise></c:choose></td>
-                            <td<c:if test="${not user.enabled}"> class="reged"</c:if>></td>
-                            <td<c:if test="${not user.enabled}"> class="reged"</c:if>><a href="edit/${user.username}" class="ico edit">x</a> <a href="delete/${user.username}"  class="ico del">x</a></td>
+                            <td<c:if test="${not user.enabled}"> class="reged"</c:if>><c:forEach items="${user.roles}" var="role">${role}<br /></c:forEach></td>
+                            <td<c:if test="${not user.enabled}"> class="reged"</c:if>><a href="<spring:url value="/user/edit/" />${user.username}" class="ico edit">x</a> <a href="<spring:url value="/user/delete/" />${user.username}"  class="ico del">x</a></td>
                         </tr>
                     </c:forEach>
                 </table>
