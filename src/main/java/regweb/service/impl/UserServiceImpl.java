@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
 
     @Transactional
-    public void addUser(User user) {
-        userDAO.addUser(user);
+    public void save(User user) {
+        userDAO.save(user);
     }
 
     @Transactional
@@ -32,5 +32,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void removeUser(Integer id) {
         userDAO.removeUser(id);
+    }
+
+    @Transactional
+    public User getUserByName(String name) {
+        return userDAO.getUserByName(name);
     }
 }

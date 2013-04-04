@@ -1,5 +1,6 @@
 package regweb.dao.impl;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,8 +21,8 @@ public class UserDAOImpl implements UserDAO {
     private SessionFactory sessionFactory;
 
     @Override
-    public void addUser(User user) {
-        sessionFactory.getCurrentSession().save(user);
+    public void save(User user) {
+        sessionFactory.getCurrentSession().saveOrUpdate(user);
     }
 
     @Override
@@ -32,10 +33,22 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void removeUser(Integer id) {
-        User user = (User) sessionFactory.getCurrentSession().load(
+        User user = (User) sessionFactory.getCurrentSession().get(
                 User.class, id);
         if (null != user) {
             sessionFactory.getCurrentSession().delete(user);
         }
     }
+
+    @Override
+    public User getUserByName(String name) {
+
+        Query userQ = sessionFactory.getCurrentSession().createQuery("from User where username = ?");
+        userQ.setParameter(0,name);
+        User user = (User) userQ.list().get(0); 
+        
+        return user;
+    }
+
+
 }

@@ -37,9 +37,13 @@
             <form:form method="get" action="${postUrl}">
                 <input type="hidden" name="clear" id="clear_val" value="" />
                 <div class="box-head">
-                <h2 class="left">Список анкет</h2>
+                <h2 class="left">Анкеты</h2>
                 <div class="right">
-                    <label>текст:</label>
+                    <sec:authorize ifAnyGranted="ROLE_ADMIN">
+                    <label>юзер:</label>
+                    <input type="text" name="user_id" value="${search.user_id}" class="field small-field" />
+                    </sec:authorize>
+                    <label>&nbsp;текст:&nbsp;</label>
                     <input type="text" name="text" value="${search.text}" class="field small-field" />
                     <label>&nbsp;&nbsp;с:&nbsp;</label>
                     <input type="text" name="from" value="${search.from}" class="field small-field datepicker" />
@@ -66,6 +70,9 @@
                         <th><a href="<spring:url value="/" />?sort=name<c:if test="${empty dir}">&dir=desc</c:if>">Имя</a></th>
                         <th><a href="<spring:url value="/" />?sort=passnum<c:if test="${empty dir}">&dir=desc</c:if>">Номер паспорта</a></th>
                         <th><a href="<spring:url value="/" />?sort=registered<c:if test="${empty dir}">&dir=desc</c:if>">Результат</a></th>
+                        <sec:authorize ifAnyGranted="ROLE_ADMIN">
+                            <th><a href="<spring:url value="/" />?sort=registered<c:if test="${empty dir}">&dir=desc</c:if>">Юзер</a></th>
+                        </sec:authorize>
                         <th width="50" class="ac">контроль</th>
                     </tr>
                     <c:forEach items="${formsList}" var="form">
@@ -76,6 +83,9 @@
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.name_3}</td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.passnum_13}</td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>><c:if test="${form.is_registered}">готово</c:if></td>
+                            <sec:authorize ifAnyGranted="ROLE_ADMIN">
+                                <td<c:if test="${form.is_registered}"> class="reged"</c:if>><a href="<spring:url value="/user/" />${form.user_id}">${form.user_id}</a></td>
+                            </sec:authorize>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>><a href="edit/${form.id}" class="ico edit">x</a> <a href="delete/${form.id}"  class="ico del">x</a></td>
                         </tr>
                     </c:forEach>
