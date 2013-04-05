@@ -20,15 +20,15 @@ Ctl00$cp$f$txt14NumerPaszportu	${form.passnum_13}	(?:^ctl00\\$cp\\$f\\$txt14Nume
 Ctl00$cp$f$txt16WydanyDnia	${form.passissuedate_14}	(?:^ctl00\\$cp\\$f\\$txt16WydanyDnia$)	(?:)	true	true
 Ctl00$cp$f$txt17WaznyDo	${form.passexpiration_15}	(?:^ctl00\\$cp\\$f\\$txt17WaznyDo$)	(?:)	true	true
 Ctl00$cp$f$txt15WydanyPrzez	${form.passby_16}	(?:^ctl00\\$cp\\$f\\$txt15WydanyPrzez$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$chkNieDotyczy	(?:^on$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$chkNieDotyczy$)	(?:)	false	true
-Ctl00$cp$f$opiekunowie$cbObywatelstwo1	(?:^AIA$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$cbObywatelstwo1$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$txtImie1	IVANOVA	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtImie1$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$txtNazwisko1	BAHDANOVICH	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtNazwisko1$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$cbPanstwo1	(?:^ALB$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$cbPanstwo1$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$txtStanProwincja1	MINSKAYA OBL	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtStanProwincja1$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$txtMiejscowosc1	Minsk	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtMiejscowosc1$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$txtKod1	220068	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtKod1$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$txtAdres1	LOBANKA 14-29	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtAdres1$)	(?:)	true	true
+<c:choose><c:when test="${not form.is_children}">Ctl00$cp$f$opiekunowie$chkNieDotyczy	(?:^on$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$chkNieDotyczy$)	(?:)	false	true
+Ctl00$cp$f$opiekunowie$cbObywatelstwo1	(?:^${form.citizenship_child}$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$cbObywatelstwo1$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$txtImie1	${form.name_child}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtImie1$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$txtNazwisko1	${form.surname_child}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtNazwisko1$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$cbPanstwo1	(?:^${form.country_child}$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$cbPanstwo1$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$txtStanProwincja1	${form.state_child}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtStanProwincja1$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$txtMiejscowosc1	${form.city_child}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtMiejscowosc1$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$txtKod1	${form.index_child}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtKod1$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$txtAdres1	${form.address_child}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtAdres1$)	(?:)	true	true
 Ctl00$cp$f$opiekunowie$cbObywatelstwo2	(?:^$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$cbObywatelstwo2$)	(?:)	true	true
 Ctl00$cp$f$opiekunowie$txtImie2		(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtImie2$)	(?:)	true	true
 Ctl00$cp$f$opiekunowie$txtNazwisko2		(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtNazwisko2$)	(?:)	true	true
@@ -37,31 +37,33 @@ Ctl00$cp$f$opiekunowie$txtStanProwincja2		(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txt
 Ctl00$cp$f$opiekunowie$txtMiejscowosc2		(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtMiejscowosc2$)	(?:)	true	true
 Ctl00$cp$f$opiekunowie$txtKod2		(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtKod2$)	(?:)	true	true
 Ctl00$cp$f$opiekunowie$txtAdres2		(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtAdres2$)	(?:)	true	true
-Ctl00$cp$f$ddl45Panstwo	(?:^AIA$)	(?:^ctl00\\$cp\\$f\\$ddl45Panstwo$)	(?:)	true	true
-Ctl00$cp$f$txt45StanProwincja	MINSKAYA OBL	(?:^ctl00\\$cp\\$f\\$txt45StanProwincja$)	(?:)	true	true
-Ctl00$cp$f$txt45Miejscowosc	V/G OKOLICA	(?:^ctl00\\$cp\\$f\\$txt45Miejscowosc$)	(?:)	true	true
-Ctl00$cp$f$txt45Kod	220068	(?:^ctl00\\$cp\\$f\\$txt45Kod$)	(?:)	true	true
-Ctl00$cp$f$txt45Adres	ul.Azizova 8-52	(?:^ctl00\\$cp\\$f\\$txt45Adres$)	(?:)	true	true
-Ctl00$cp$f$txt17Email	mrdoggy.all@gmail.com	(?:^ctl00\\$cp\\$f\\$txt17Email$)	(?:)	true	true
-Ctl00$cp$f$txt46TelefonPrefiks0	37529	(?:^ctl00\\$cp\\$f\\$txt46TelefonPrefiks0$)	(?:)	true	true
-Ctl00$cp$f$txt46TelefonNumer0	1202747	(?:^ctl00\\$cp\\$f\\$txt46TelefonNumer0$)	(?:)	true	true
-Да. Вид на жительство или равноценный документ	(?:^Tak$)	(?:^ctl00\\$cp\\$f\\$rbl18$)	(?:)	true	true
-Ctl00$cp$f$txt18aNumer	333333333	(?:^ctl00\\$cp\\$f\\$txt18aNumer$)	(?:)	true	true
-Ctl00$cp$f$txt18bDataWaznosci	2002-11-11	(?:^ctl00\\$cp\\$f\\$txt18bDataWaznosci$)	(?:)	true	true
+</c:when><c:otherwise>Ctl00$cp$f$opiekunowie$chkNieDotyczy	(?:^on$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$chkNieDotyczy$)	(?:)	true	true</c:otherwise></c:choose>
+Ctl00$cp$f$ddl45Panstwo	(?:^${form.country_17}$)	(?:^ctl00\\$cp\\$f\\$ddl45Panstwo$)	(?:)	true	true
+Ctl00$cp$f$txt45StanProwincja	${form.state_17}	(?:^ctl00\\$cp\\$f\\$txt45StanProwincja$)	(?:)	true	true
+Ctl00$cp$f$txt45Miejscowosc	${form.city_17}	(?:^ctl00\\$cp\\$f\\$txt45Miejscowosc$)	(?:)	true	true
+Ctl00$cp$f$txt45Kod	${form.index_17}	(?:^ctl00\\$cp\\$f\\$txt45Kod$)	(?:)	true	true
+Ctl00$cp$f$txt45Adres	${form.address_17}	(?:^ctl00\\$cp\\$f\\$txt45Adres$)	(?:)	true	true
+Ctl00$cp$f$txt17Email	${form.email_17}	(?:^ctl00\\$cp\\$f\\$txt17Email$)	(?:)	true	true
+Ctl00$cp$f$txt46TelefonPrefiks0	${form.preftel_17}	(?:^ctl00\\$cp\\$f\\$txt46TelefonPrefiks0$)	(?:)	true	true
+Ctl00$cp$f$txt46TelefonNumer0	${form.tel_17}	(?:^ctl00\\$cp\\$f\\$txt46TelefonNumer0$)	(?:)	true	true
+<c:choose><c:when test="${form.countryvisitor_18 == 'Tak'}">Да. Вид на жительство или равноценный документ	(?:^${form.countryvisitor_18}$)	(?:^ctl00\\$cp\\$f\\$rbl18$)	(?:)	true	true
+Ctl00$cp$f$txt18aNumer	${form.visitdoc_18}	(?:^ctl00\\$cp\\$f\\$txt18aNumer$)	(?:)	true	true
+Ctl00$cp$f$txt18bDataWaznosci	${form.expdate_18}	(?:^ctl00\\$cp\\$f\\$txt18bDataWaznosci$)	(?:)	true	true
 Ctl00$cp$f$chk18Bezterminowo	(?:^on$)	(?:^ctl00\\$cp\\$f\\$chk18Bezterminowo$)	(?:)	false	true
-Ctl00$cp$f$ddl19WykonywanyZawod	(?:^02$)	(?:^ctl00\\$cp\\$f\\$ddl19WykonywanyZawod$)	(?:)	true	true
-Работодатель	(?:^PRA$)	(?:^ctl00\\$cp\\$f\\$rbl20$)	(?:)	true	true
-Ctl00$cp$f$dd20bPanstwo	(?:^AGO$)	(?:^ctl00\\$cp\\$f\\$dd20bPanstwo$)	(?:)	true	true
-Ctl00$cp$f$txt20cStanProwincja	MINSK	(?:^ctl00\\$cp\\$f\\$txt20cStanProwincja$)	(?:)	true	true
-Ctl00$cp$f$txt20dMiejscowosc	MINSK	(?:^ctl00\\$cp\\$f\\$txt20dMiejscowosc$)	(?:)	true	true
-Ctl00$cp$f$txt20eKodPocztowy	220102	(?:^ctl00\\$cp\\$f\\$txt20eKodPocztowy$)	(?:)	true	true
-Ctl00$cp$f$txt20fAdres	UL. LOBANKA 44	(?:^ctl00\\$cp\\$f\\$txt20fAdres$)	(?:)	true	true
-Ctl00$cp$f$txt20gPrefix	37517	(?:^ctl00\\$cp\\$f\\$txt20gPrefix$)	(?:)	true	true
-Ctl00$cp$f$txt20hTelefon	2578750	(?:^ctl00\\$cp\\$f\\$txt20hTelefon$)	(?:)	true	true
-Ctl00$cp$f$txt20Nazwa	MIU	(?:^ctl00\\$cp\\$f\\$txt20Nazwa$)	(?:)	true	true
-Ctl00$cp$f$txt20Email	gymn30@minsk.edu.by	(?:^ctl00\\$cp\\$f\\$txt20Email$)	(?:)	true	true
-Ctl00$cp$f$txt20PrefiksFax	33	(?:^ctl00\\$cp\\$f\\$txt20PrefiksFax$)	(?:)	true	true
-Ctl00$cp$f$txt20NumerFax	4433333	(?:^ctl00\\$cp\\$f\\$txt20NumerFax$)	(?:)	true	true
+</c:when><c:otherwise>Да. Вид на жительство или равноценный документ	(?:^${form.countryvisitor_18}$)	(?:^ctl00\\$cp\\$f\\$rbl18$)	(?:)	false	true</c:otherwise></c:choose>
+Ctl00$cp$f$ddl19WykonywanyZawod	(?:^${form.profession_19}$)	(?:^ctl00\\$cp\\$f\\$ddl19WykonywanyZawod$)	(?:)	true	true
+Работодатель	(?:^${form.employee_20}$)	(?:^ctl00\\$cp\\$f\\$rbl20$)	(?:)	true	true
+Ctl00$cp$f$dd20bPanstwo	(?:^${form.country_20}$)	(?:^ctl00\\$cp\\$f\\$dd20bPanstwo$)	(?:)	true	true
+Ctl00$cp$f$txt20cStanProwincja	${form.state_20}	(?:^ctl00\\$cp\\$f\\$txt20cStanProwincja$)	(?:)	true	true
+Ctl00$cp$f$txt20dMiejscowosc	${form.city_20}	(?:^ctl00\\$cp\\$f\\$txt20dMiejscowosc$)	(?:)	true	true
+Ctl00$cp$f$txt20eKodPocztowy	${form.index_20}	(?:^ctl00\\$cp\\$f\\$txt20eKodPocztowy$)	(?:)	true	true
+Ctl00$cp$f$txt20fAdres	${form.address_20}	(?:^ctl00\\$cp\\$f\\$txt20fAdres$)	(?:)	true	true
+Ctl00$cp$f$txt20gPrefix	${form.preftel_20}	(?:^ctl00\\$cp\\$f\\$txt20gPrefix$)	(?:)	true	true
+Ctl00$cp$f$txt20hTelefon	${form.tel_20}	(?:^ctl00\\$cp\\$f\\$txt20hTelefon$)	(?:)	true	true
+Ctl00$cp$f$txt20Nazwa	${form.title_20}	(?:^ctl00\\$cp\\$f\\$txt20Nazwa$)	(?:)	true	true
+Ctl00$cp$f$txt20Email	${form.email_20}	(?:^ctl00\\$cp\\$f\\$txt20Email$)	(?:)	true	true
+Ctl00$cp$f$txt20PrefiksFax	${form.preffax_20}	(?:^ctl00\\$cp\\$f\\$txt20PrefiksFax$)	(?:)	true	true
+Ctl00$cp$f$txt20NumerFax	${form.fax_20}	(?:^ctl00\\$cp\\$f\\$txt20NumerFax$)	(?:)	true	true
 Туризм	(?:^on$)	(?:^ctl00\\$cp\\$f\\$rbl29\\$0$)	(?:)	false	true
 Деловая	(?:^on$)	(?:^ctl00\\$cp\\$f\\$rbl29\\$1$)	(?:)	false	true
 Посещение родственников или друзей	(?:^on$)	(?:^ctl00\\$cp\\$f\\$rbl29\\$2$)	(?:)	false	true
@@ -73,35 +75,35 @@ Ctl00$cp$f$txt20NumerFax	4433333	(?:^ctl00\\$cp\\$f\\$txt20NumerFax$)	(?:)	true	
 Транзит	(?:^on$)	(?:^ctl00\\$cp\\$f\\$rbl29\\$8$)	(?:)	false	true
 Транзит ч. аэропорт	(?:^on$)	(?:^ctl00\\$cp\\$f\\$rbl29\\$9$)	(?:)	false	true
 Иная (указать)	(?:^on$)	(?:^ctl00\\$cp\\$f\\$rbl29\\$10$)	(?:)	true	true
-Ctl00$cp$f$txt29CelPodrozy	ZAKUPY	(?:^ctl00\\$cp\\$f\\$txt29CelPodrozy$)	(?:)	true	true
-Ctl00$cp$f$ddl21KrajDocelowy	(?:^POL$)	(?:^ctl00\\$cp\\$f\\$ddl21KrajDocelowy$)	(?:)	true	true
-Ctl00$cp$f$ddl23PierwszyWjazd	(?:^POL$)	(?:^ctl00\\$cp\\$f\\$ddl23PierwszyWjazd$)	(?:)	true	true
-Многократного  въезда	(?:^3$)	(?:^ctl00\\$cp\\$f\\$rbl24$)	(?:)	true	true
-Ctl00$cp$f$txt25OkresPobytu	90	(?:^ctl00\\$cp\\$f\\$txt25OkresPobytu$)	(?:)	true	true
-Ctl00$cp$f$txt30DataWjazdu	2013-04-22	(?:^ctl00\\$cp\\$f\\$txt30DataWjazdu$)	(?:)	true	true
-Ctl00$cp$f$txt31DataWyjazdu	2014-04-21	(?:^ctl00\\$cp\\$f\\$txt31DataWyjazdu$)	(?:)	true	true
-Да. Срок действия  (год-месяц-день)	(?:^Tak$)	(?:^ctl00\\$cp\\$f\\$rbl26$)	(?:)	true	true
-PoprzednieWizy_0_txtDataOd	2012-04-21	(?:^PoprzednieWizy_0_txtDataOd$)	(?:)	true	true
-PoprzednieWizy_0_txtDataDo	2013-03-31	(?:^PoprzednieWizy_0_txtDataDo$)	(?:)	true	true
-PoprzednieWizy_1_txtDataOd	2012-05-07	(?:^PoprzednieWizy_1_txtDataOd$)	(?:)	true	true
-PoprzednieWizy_1_txtDataDo	2013-02-14	(?:^PoprzednieWizy_1_txtDataDo$)	(?:)	true	true
-PoprzednieWizy_2_txtDataOd	2012-05-07	(?:^PoprzednieWizy_2_txtDataOd$)	(?:)	true	true
-PoprzednieWizy_2_txtDataDo	2013-02-14	(?:^PoprzednieWizy_2_txtDataDo$)	(?:)	true	true
-Нет	(?:^Nie$)	(?:^ctl00\\$cp\\$f\\$rbl27$)	(?:)	true	true
+Ctl00$cp$f$txt29CelPodrozy	${form.goalother_21}	(?:^ctl00\\$cp\\$f\\$txt29CelPodrozy$)	(?:)	true	true
+Ctl00$cp$f$ddl21KrajDocelowy	(?:^${form.dest_country_22}$)	(?:^ctl00\\$cp\\$f\\$ddl21KrajDocelowy$)	(?:)	true	true
+Ctl00$cp$f$ddl23PierwszyWjazd	(?:^${form.first_country_23}$)	(?:^ctl00\\$cp\\$f\\$ddl23PierwszyWjazd$)	(?:)	true	true
+Многократного  въезда	(?:^${form.typevisa_24}$)	(?:^ctl00\\$cp\\$f\\$rbl24$)	(?:)	true	true
+Ctl00$cp$f$txt25OkresPobytu	${form.lenvisa_25}	(?:^ctl00\\$cp\\$f\\$txt25OkresPobytu$)	(?:)	true	true
+Ctl00$cp$f$txt30DataWjazdu	${form.startvisa_29}	(?:^ctl00\\$cp\\$f\\$txt30DataWjazdu$)	(?:)	true	true
+Ctl00$cp$f$txt31DataWyjazdu	${form.endvisa_30}	(?:^ctl00\\$cp\\$f\\$txt31DataWyjazdu$)	(?:)	true	true
+<c:choose><c:when test="${not empty form.prevvisastart1_26}">Да. Срок действия  (год-месяц-день)	(?:^Tak$)	(?:^ctl00\\$cp\\$f\\$rbl26$)	(?:)	true	true
+PoprzednieWizy_0_txtDataOd	${form.prevvisastart1_26}	(?:^PoprzednieWizy_0_txtDataOd$)	(?:)	true	true
+PoprzednieWizy_0_txtDataDo	${form.prevvisaend1_26}	(?:^PoprzednieWizy_0_txtDataDo$)	(?:)	true	true
+PoprzednieWizy_1_txtDataOd	${form.prevvisastart2_26}	(?:^PoprzednieWizy_1_txtDataOd$)	(?:)	true	true
+PoprzednieWizy_1_txtDataDo	${form.prevvisaend2_26}	(?:^PoprzednieWizy_1_txtDataDo$)	(?:)	true	true
+PoprzednieWizy_2_txtDataOd	${form.prevvisastart3_26}	(?:^PoprzednieWizy_2_txtDataOd$)	(?:)	true	true
+PoprzednieWizy_2_txtDataDo	${form.prevvisaend3_26}	(?:^PoprzednieWizy_2_txtDataDo$)	(?:)	true	true
+</c:when><c:otherwise>Да. Срок действия  (год-месяц-день)	(?:^Nie$)	(?:^ctl00\\$cp\\$f\\$rbl26$)	(?:)	false	true</c:otherwise></c:choose>Нет	(?:^Nie$)	(?:^ctl00\\$cp\\$f\\$rbl27$)	(?:)	true	true
 Ctl00$cp$f$chkNiedotyczy28	(?:^on$)	(?:^ctl00\\$cp\\$f\\$chkNiedotyczy28$)	(?:)	true	true
-фирма	(?:^1$)	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$rbl34$)	(?:)	true	true
-Ctl00$cp$f$ctrl31_$txt34Nazwa	Media Markt Polska Sp. Z O.O.	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34Nazwa$)	(?:)	true	true
-Ctl00$cp$f$ctrl31_$ddl34panstwo	(?:^DNK$)	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$ddl34panstwo$)	(?:)	true	true
-Ctl00$cp$f$ctrl31_$txt34miejscowosc	BIALYSTOK	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34miejscowosc$)	(?:)	true	true
-Ctl00$cp$f$ctrl31_$txt34kod	15265	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34kod$)	(?:)	true	true
-Ctl00$cp$f$ctrl31_$txt34prefikstel	48	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34prefikstel$)	(?:)	true	true
-Ctl00$cp$f$ctrl31_$txt34tel	85 747 31 00	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34tel$)	(?:)	true	true
-Ctl00$cp$f$ctrl31_$txt34prefiksfax	85	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34prefiksfax$)	(?:)	true	true
-Ctl00$cp$f$ctrl31_$txt34fax	747 31 00	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34fax$)	(?:)	true	true
-Ctl00$cp$f$ctrl31_$txt34adres	ul. Czeslawa Milosza	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34adres$)	(?:)	true	true
-Ctl00$cp$f$ctrl31_$txt34NumerDomu	2	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34NumerDomu$)	(?:)	true	true
-Ctl00$cp$f$ctrl31_$txt34NumerLokalu		(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34NumerLokalu$)	(?:)	true	true
-Ctl00$cp$f$ctrl31_$txt34Email	sdf@ccc.cc	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34Email$)	(?:)	true	true
+фирма	(?:^${form.invite_31}$)	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$rbl34$)	(?:)	true	true
+Ctl00$cp$f$ctrl31_$txt34Nazwa	${form.title_31}	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34Nazwa$)	(?:)	true	true
+Ctl00$cp$f$ctrl31_$ddl34panstwo	(?:^${form.country_31}$)	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$ddl34panstwo$)	(?:)	true	true
+Ctl00$cp$f$ctrl31_$txt34miejscowosc	${form.city_31}	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34miejscowosc$)	(?:)	true	true
+Ctl00$cp$f$ctrl31_$txt34kod	${form.index_31}	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34kod$)	(?:)	true	true
+Ctl00$cp$f$ctrl31_$txt34prefikstel	${form.preftel_31}	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34prefikstel$)	(?:)	true	true
+Ctl00$cp$f$ctrl31_$txt34tel	${form.tel_31}	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34tel$)	(?:)	true	true
+Ctl00$cp$f$ctrl31_$txt34prefiksfax	${form.preffax_31}	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34prefiksfax$)	(?:)	true	true
+Ctl00$cp$f$ctrl31_$txt34fax	${form.fax_31}	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34fax$)	(?:)	true	true
+Ctl00$cp$f$ctrl31_$txt34adres	${form.address_31}	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34adres$)	(?:)	true	true
+Ctl00$cp$f$ctrl31_$txt34NumerDomu	${form.building_31}	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34NumerDomu$)	(?:)	true	true
+Ctl00$cp$f$ctrl31_$txt34NumerLokalu	${form.flat_31}	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34NumerLokalu$)	(?:)	true	true
+Ctl00$cp$f$ctrl31_$txt34Email	${form.email_31}	(?:^ctl00\\$cp\\$f\\$ctrl31_\\$txt34Email$)	(?:)	true	true
 Сам заявитель	(?:^1$)	(?:^ctl00\\$cp\\$f\\$rbl35$)	(?:)	true	true
 Наличные деньги	(?:^on$)	(?:^ctl00\\$cp\\$f\\$rb36Gotowka$)	(?:)	true	true
 Дорожные чеки	(?:^on$)	(?:^ctl00\\$cp\\$f\\$rb36Czeki$)	(?:)	false	true
