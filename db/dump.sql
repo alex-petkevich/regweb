@@ -1,5 +1,5 @@
 /*
-SQLyog Ultimate v9.50 
+SQLyog Ultimate v10.42 
 MySQL - 5.1.63-community-log : Database - regweb
 *********************************************************************
 */
@@ -160,7 +160,7 @@ insert  into `roles`(`id`,`role_name`) values (1,'ROLE_ANONYMOUS'),(2,'ROLE_USER
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-  `id` int(11) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
@@ -168,11 +168,11 @@ CREATE TABLE `users` (
   `added` datetime DEFAULT NULL,
   `enabled` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`username`,`email`,`password`,`type`,`added`,`enabled`) values (1,'admin','admin@test.cc','admin',0,NULL,1);
+insert  into `users`(`id`,`username`,`email`,`password`,`type`,`added`,`enabled`) values (1,'admin','admin@test.cc','admin',0,'2013-04-01 11:48:17',1),(2,'test','test@test.tt','12345',NULL,'2013-04-04 12:59:50',1),(3,'test2','test2@ttt.tt','11111',NULL,'2013-04-04 13:17:32',1),(4,'ttt','ttt@cc.cc','11111',NULL,'2013-04-04 13:23:27',1),(5,'ttt','ttt@cc.cc','11111',NULL,'2013-04-04 13:23:54',1),(6,'test33','qwt@ccc.cc','11111',NULL,'2013-04-04 13:49:45',0);
 
 /*Table structure for table `users_roles` */
 
@@ -186,7 +186,7 @@ CREATE TABLE `users_roles` (
 
 /*Data for the table `users_roles` */
 
-insert  into `users_roles`(`username`,`role_id`) values ('admin',2),('admin',3);
+insert  into `users_roles`(`username`,`role_id`) values ('admin',2),('admin',3),('test33',2),('test33',3);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
