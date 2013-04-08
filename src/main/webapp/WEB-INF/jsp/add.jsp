@@ -26,19 +26,19 @@
                     check_children(true);
                 }
             });
-            $("#ctl00_cp_f_ctrl31__rbl34_0").on('click',function() {
+            $("#ctl00_cp_f_ctrl31__rbl34_1").on('click',function() {
                 check_inv1();
             });
-            $("#ctl00_cp_f_ctrl31__rbl34_1").on('click',function() {
+            $("#ctl00_cp_f_ctrl31__rbl34_2").on('click',function() {
                 check_inv2();
             });
             if ($("#ctl00_cp_f_opiekunowie_chkNieDotyczy").attr("checked")) {
                 check_children(false);
             }
-            if ($("#ctl00_cp_f_ctrl31__rbl34_0").attr("checked")) {
+            if ($("#ctl00_cp_f_ctrl31__rbl34_1").attr("checked")) {
                 check_inv1();
             }
-            if ($("#ctl00_cp_f_ctrl31__rbl34_1").attr("checked")) {
+            if ($("#ctl00_cp_f_ctrl31__rbl34_2").attr("checked")) {
                 check_inv2();
             }
             $('#copy').on('click',function() {
@@ -124,6 +124,8 @@
             <td colspan="2"><form:label path="birthdate_4" cssClass="sign">4. Дата рождения (год-месяц-день)</form:label>
                 <span id="ctl00_cp_f_daneOs_rvTxtDataUrodzin" style="color:Red;display:none;">Неправильное значение</span>
                 <span id="ctl00_cp_f_daneOs_revTxtDataUrodzin" style="color:Red;display:none;">Неправильное значение</span>
+                <span id="ctl00_cp_f_daneOs_rfvTxtDataUrodzin" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+
                 <br/>
                 <div class="errors"> <form:errors path="birthdate_4" /></div>
                 <form:input path="birthdate_4" cssClass="field datepicker" maxlength="10" id="ctl00_cp_f_daneOs_txtDataUrodzin" /></td>
@@ -182,10 +184,12 @@
         </tr>
         <tr>
             <td colspan="2"><form:label path="passdata_12" cssClass="sign">12. Тип проездного документа</form:label>
-                <span id="ctl00_cp_f_rfv_13" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                <span id="ctl00_cp_f_rfv_13" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+                <span id="ctl00_cp_f_rfv_13a" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+                <span id="ctl00_cp_f_rfvKonsultacja1" style="color:Red;display:none;">Неправильное значение</span><br/>
                 <div class="errors"> <form:errors path="passdata_12" /></div>
                 <form:radiobuttons delimiter="<br>" id="ctl00_cp_f_rbl13_" items="${docTypeList}" path="passdata_12" />
-                
+                <input type="hidden" name="scs" id="ctl00_cp_f_txt13Rodzaj" value="1" />
  
             </td>
         </tr>
@@ -233,50 +237,100 @@
 
         <table>
          <tr>
-            <td colspan="2"> <form:checkbox path="is_children" value="1" /> Не касается</td>
+            <td colspan="2"> <form:checkbox path="is_children" id="ctl00_cp_f_opiekunowie_chkNieDotyczy" value="Nie" /> Не касается</td>
         </tr>
         <tr>
-            <td colspan="2"><form:label path="citizenship_child" cssClass="sign">Гражданство </form:label><br/>
+            <td colspan="2"><form:label path="citizenship_child" cssClass="sign">Гражданство </form:label> <span id="ctl00_cp_f_opiekunowie_rfvCbObywatelstwo1" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
                 <div class="errors"> <form:errors path="citizenship_child" /></div>
-                <form:select items="${countiresOldList}" cssClass="field size1" path="citizenship_child" /></td>
+                <form:select items="${countiresOldList}" cssClass="field size1" id="ctl00_cp_f_opiekunowie_cbObywatelstwo1" path="citizenship_child" /></td>
         </tr>
         <tr>
-            <td colspan="2"><form:label path="name_child" cssClass="sign">Имя</form:label><br/>
+            <td colspan="2"><form:label path="name_child" cssClass="sign">Имя</form:label><span id="ctl00_cp_f_opiekunowie_rfvTxtImie1" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
                 <div class="errors"> <form:errors path="name_child" /></div>
-                <form:input path="name_child" cssClass="field size1" /></td>
+                <form:input path="name_child" cssClass="field size1" maxlength="50" id="ctl00_cp_f_opiekunowie_txtImie1" /></td>
         </tr>
         <tr>
-            <td colspan="2"><form:label path="surname_child" cssClass="sign">Фамилия</form:label><br/>
+            <td colspan="2"><form:label path="surname_child" cssClass="sign">Фамилия</form:label><span id="ctl00_cp_f_opiekunowie_rfvTxtNazwisko1" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
                 <div class="errors"> <form:errors path="surname_child" /></div>
-                <form:input path="surname_child" cssClass="field size1" /></td>
+                <form:input path="surname_child" cssClass="field size1" maxlength="150" id="ctl00_cp_f_opiekunowie_txtNazwisko1" /></td>
         </tr>
         <tr>
-            <td colspan="2"><form:label path="country_child" cssClass="sign">Государство </form:label><br/>
+            <td colspan="2"><form:label path="country_child" cssClass="sign">Государство </form:label><span id="ctl00_cp_f_opiekunowie_rfvCbPanstwo1" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+                <br/>
                 <div class="errors"> <form:errors path="country_child" /></div>
-                <form:select items="${countiresList}" cssClass="field size1" path="country_child" /></td>
+                <form:select items="${countiresList}" cssClass="field size1" id="ctl00_cp_f_opiekunowie_cbPanstwo1" path="country_child" /></td>
         </tr>
         <tr>
-            <td colspan="2"><form:label path="state_child" cssClass="sign">Штат/провинция</form:label><br/>
+            <td colspan="2"><form:label path="state_child" cssClass="sign">Штат/провинция</form:label><span id="ctl00_cp_f_opiekunowie_lblStanProwincja1" class="FormularzEtykietaWewnetrznaEtykieta">Штат/провинция</span><br/>
                 <div class="errors"> <form:errors path="state_child" /></div>
-                <form:input path="state_child" cssClass="field size1" /></td>
+                <form:input path="state_child" cssClass="field size1" maxlength="50" id="ctl00_cp_f_opiekunowie_txtStanProwincja1" /></td>
         </tr>
         <tr>
-            <td colspan="2"><form:label path="city_child" cssClass="sign">Место</form:label><br/>
+            <td colspan="2"><form:label path="city_child" cssClass="sign">Место</form:label><span id="ctl00_cp_f_opiekunowie_rfvTxtMiejscowosc1" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
                 <div class="errors"> <form:errors path="city_child" /></div>
-                <form:input path="city_child" cssClass="field size1" /></td>
+                <form:input path="city_child" cssClass="field size1" maxlength="56" id="ctl00_cp_f_opiekunowie_txtMiejscowosc1" /></td>
         </tr>
         <tr>
-            <td colspan="2"><form:label path="index_child" cssClass="sign">Почтовый индекс</form:label><br/>
+            <td colspan="2"><form:label path="index_child" cssClass="sign">Почтовый индекс</form:label><span id="ctl00_cp_f_opiekunowie_rfvTxtKod1" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+                <br/>
                 <div class="errors"> <form:errors path="index_child" /></div>
-                <form:input path="index_child" cssClass="field size1" /></td>
+                <form:input path="index_child" cssClass="field size1" maxlength="20" id="ctl00_cp_f_opiekunowie_txtKod1" /></td>
         </tr>
         <tr>
-            <td colspan="2"><form:label path="address_child" cssClass="sign">Адрес </form:label><br/>
+            <td colspan="2"><form:label path="address_child" cssClass="sign">Адрес </form:label><span id="ctl00_cp_f_opiekunowie_rfvTxtAdres1" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
                 <div class="errors"> <form:errors path="address_child" /></div>
-                <form:input path="address_child" cssClass="field size1" /></td>
+                <form:input path="address_child" cssClass="field size1" maxlength="255" id="ctl00_cp_f_opiekunowie_txtAdres1" /></td>
         </tr>
          </table>
+
+    <table class="hide">
+        <tr>
+            <td colspan="2"> &nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvCbObywatelstwo2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                <input type="hidden" name="ctl00_cp_f_opiekunowie_cbObywatelstwo2" id="ctl00_cp_f_opiekunowie_cbObywatelstwo2"  /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvTxtImie2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                <input type="hidden" name="ctl00_cp_f_opiekunowie_txtImie2" id="ctl00_cp_f_opiekunowie_txtImie2"  />
+                </td>
+        </tr>
+        <tr>
+            <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvTxtNazwisko2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                <input type="hidden" name="ctl00_cp_f_opiekunowie_txtNazwisko2" id="ctl00_cp_f_opiekunowie_txtNazwisko2"  /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvCbPanstwo2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+                <br/>
+                <input type="hidden" name="ctl00_cp_f_opiekunowie_cbPanstwo2" id="ctl00_cp_f_opiekunowie_cbPanstwo2"  />
+                </td>
+        </tr>
+        <tr>
+            <td colspan="2"><span id="ctl00_cp_f_opiekunowie_lblStanProwincja2" class="FormularzEtykietaWewnetrznaEtykieta">Штат/провинция</span><br/>
+               <input type="hidden" name="ctl00_cp_f_opiekunowie_txtStanProwincja2" id="ctl00_cp_f_opiekunowie_txtStanProwincja2"  />
+               </td>
+        </tr>
+        <tr>
+            <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvTxtMiejscowosc2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                <input type="hidden" name="ctl00_cp_f_opiekunowie_txtMiejscowosc2" id="ctl00_cp_f_opiekunowie_txtMiejscowosc2"  />
+                </td>
+        </tr>
+        <tr>
+            <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvTxtKod2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+                <input type="hidden" name="ctl00_cp_f_opiekunowie_txtKod2" id="ctl00_cp_f_opiekunowie_txtKod2"  /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvTxtAdres2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                <input type="hidden" name="ctl00_cp_f_opiekunowie_txtAdres2" id="ctl00_cp_f_opiekunowie_txtAdres2"  /></td>
+        </tr>
+    </table>
+
 </div>
+<input type="hidden" name="ctl00$cp$f$opiekunowie$IloscOpiekunoV" id="ctl00_cp_f_opiekunowie_IloscOpiekunoV" value="1" />
+
+
+
 
 <div class="box">
 <!-- Box Head -->
@@ -505,7 +559,7 @@
                 <form:input cssClass="datepicker field" path="endvisa_30" maxlength="10" id="ctl00_cp_f_txt31DataWyjazdu" /></td>
         </tr>
         <tr>
-            <td colspan="2"><b>26. Шенгенские визы, выданные за последние три года</b><input type="hidden" id="ctl00_cp_f_rbl26" value="0"> </td>
+            <td colspan="2"><b>26. Шенгенские визы, выданные за последние три года</b><input type="hidden" id="ctl00_cp_f_rbl26" value="0"><span id="ctl00_cp_f_rfv26" style="color:Red;display:none;">Поле для обязательного заполнения </span> </td>
         </tr>
         <tr>
             <td>
@@ -540,6 +594,40 @@
 </div>
 <input id="ctl00_cp_f_rbl27" type="hidden" name="ctl00$cp$f$rbl27" value="Nie">
 <input id="ctl00_cp_f_chkNiedotyczy28" type="hidden" name="ctl00$cp$f$chkNiedotyczy28" value="1" />
+
+<input id="ctl00_cp_f_txt27WydanePrzez" type="hidden" name="ctl00$cp$f$chkNiedotyczy28" value="1" />
+<input id="ctl00_cp_f_txt27WazneOd" type="hidden" name="ctl00$cp$f$chkNiedotyczy28" value="1" />
+<input id="ctl00_cp_f_txt27WazneDo" type="hidden" name="ctl00$cp$f$chkNiedotyczy28" value="1" />
+
+<input id="ctl00_cp_f_txt43Nazwisko" type="hidden" name="ctl00_cp_f_txt43Nazwisko" value="1" />
+<input id="ctl00_cp_f_txt43Imie" type="hidden" name="ctl00_cp_f_txt43Imie" value="1" />
+<input id="ctl00_cp_f_txt43DataUrodzenia" type="hidden" name="ctl00_cp_f_txt43DataUrodzenia" value="1" />
+<input id="ctl00_cp_f_txt43Paszport" type="hidden" name="ctl00_cp_f_txt43Paszport" value="1" />
+<input id="ctl00_cp_f_ddl43Obywatelstwo" type="hidden" name="ctl00_cp_f_ddl43Obywatelstwo" value="1" />
+<input id="ctl00_cp_f_rbl43_0" type="hidden" name="ctl00_cp_f_rbl43_0" value="1" />
+<div class="hide">
+    <span id="ctl00_cp_f_rfv27WydanePrzez" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+    <input name="ctl00$cp$f$txt27WazneOd" type="text" maxlength="50" id="ctl00_cp_f_txt27WazneOd" style="width:360px;" />
+    <span id="ctl00_cp_f_rfv27WazneOd" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+    <span id="ctl00_cp_f_rev27WazneOd" style="color:Red;display:none;">Неправильное значение</span>
+    <span id="ctl00_cp_f_rfv27WazneDo" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+    <span id="ctl00_cp_f_rev27WazneDo" style="color:Red;display:none;">Неправильное значение</span>
+    <span id="ctl00_cp_f_rfv35Sponsor" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+    <span id="ctl00_cp_f_rfv43_Nazwisko" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+    <span id="ctl00_cp_f_rfvKonsultacja12" style="color:Red;display:none;">Неправильное значение</span>
+    <span id="ctl00_cp_f_rfv43Imie" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+    <span id="ctl00_cp_f_rfvKonsultacja13" style="color:Red;display:none;">Неправильное значение</span>
+    <span id="ctl00_cp_f_rfv43DataUrodzenia" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+    <span id="ctl00_cp_f_rev43DataUrodzenia" style="color:Red;display:none;">Неправильное значение</span>
+    <span id="ctl00_cp_f_rfv43NumerPaszportu" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+    <span id="ctl00_cp_f_rfvKonsultacja14" style="color:Red;display:none;">Неправильное значение</span>
+
+    <span id="ctl00_cp_f_rfv43" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+    <span id="ctl00_cp_f_rvl25" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+    <span id="ctl00_cp_f_cvOswiadczenie" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+    <span id="ctl00_cp_f_CustomValidator1" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+    <span id="ctl00_cp_f_CustomValidator2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+</div>
 <div class="box">
     <!-- Box Head -->
     <div class="box-head">
@@ -553,7 +641,7 @@
                 <form:radiobuttons id="ctl00_cp_f_ctrl31__rbl34_" delimiter="<br>" items="${invList}" path="invite_31" /></td>
         </tr>
         <tr>
-            <td colspan="2"><form:label path="title_31" cssClass="sign">Название </form:label><span id="ctl00_cp_f_ctrl31__rfv34_1" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+            <td colspan="2"><form:label path="title_31" cssClass="sign">Название </form:label><span id="ctl00_cp_f_ctrl31__rfv34_1" style="color:Red;display:none;">Поле для обязательного заполнения </span><span id="ctl00_cp_f_ctrl31__rfvKonsultacja6" style="color:Red;display:none;">Неправильное значение</span><br/>
                 <div class="errors"> <form:errors path="title_31" /></div>
                 <form:input path="title_31" cssClass="field size1" maxlength="100" id="ctl00_cp_f_ctrl31__txt34Nazwa" /></td>
         </tr>
