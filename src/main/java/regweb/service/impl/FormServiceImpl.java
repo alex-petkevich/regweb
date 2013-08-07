@@ -7,6 +7,8 @@ import regweb.dao.FormDAO;
 import regweb.domain.Form;
 import regweb.service.FormService;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -38,5 +40,11 @@ public class FormServiceImpl implements FormService {
     @Transactional
     public Form getForm(Integer id) {
         return formDAO.getForm(id);
+    }
+    
+    public void parseFromPDF(InputStream fileStream) {
+        Form form = new Form();
+        
+        
     }
 }

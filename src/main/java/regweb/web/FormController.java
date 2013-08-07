@@ -1,25 +1,27 @@
 package regweb.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import regweb.ConstLists;
+import regweb.domain.FileUpload;
 import regweb.domain.Form;
 import regweb.service.FormService;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -27,6 +29,9 @@ public class FormController {
 
     @Autowired
     private FormService formService;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String actionForms(@RequestParam(value="action",required = false)  String action,
@@ -122,41 +127,14 @@ public class FormController {
 
     @RequestMapping(value = "/addform", method = RequestMethod.GET)
     public String addForm(Map<String, Object> model) {
-        model.put("sexList", ConstLists.sexList);
-        model.put("mStatusList", ConstLists.mStatusList);
-        model.put("countiresOldList", ConstLists.countriesOldList);
-        model.put("countiresList", ConstLists.countriesList);
-        model.put("docTypeList", ConstLists.docTypeList);
-        model.put("countryPosList", ConstLists.countryPosList);
-        model.put("professionList", ConstLists.professionList);
-        model.put("employeeList", ConstLists.employeeList);
-        model.put("goalsList", ConstLists.goalsList);
-        model.put("inputCountriesList", ConstLists.inputCountriesList);
-        model.put("qtyList", ConstLists.qtyList);
-        model.put("invList", ConstLists.invList);
-        model.put("expenciesList", ConstLists.expenciesList);
-        model.put("moneyList", ConstLists.moneyList);
-
+        model.putAll(fillDictionary());
         model.put("form", new Form());
         return "add";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editForm(Map<String, Object> model, @PathVariable("id") Integer id) {
-        model.put("sexList", ConstLists.sexList);
-        model.put("mStatusList", ConstLists.mStatusList);
-        model.put("countiresOldList", ConstLists.countriesOldList);
-        model.put("countiresList", ConstLists.countriesList);
-        model.put("docTypeList", ConstLists.docTypeList);
-        model.put("countryPosList", ConstLists.countryPosList);
-        model.put("professionList", ConstLists.professionList);
-        model.put("employeeList", ConstLists.employeeList);
-        model.put("goalsList", ConstLists.goalsList);
-        model.put("inputCountriesList", ConstLists.inputCountriesList);
-        model.put("qtyList", ConstLists.qtyList);
-        model.put("invList", ConstLists.invList);
-        model.put("expenciesList", ConstLists.expenciesList);
-        model.put("moneyList", ConstLists.moneyList);
+        model.putAll(fillDictionary());
 
         Form form = formService.getForm(id);
         model.put("form", form);
@@ -164,10 +142,27 @@ public class FormController {
     }
     
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importForm(BindingResult result,@RequestParam("pdffile") CommonsMultipartFile file,Map<String, Object> model) {
-         System.out.print("file:"+file.getOriginalFilename());
+    public String importForm(FileUpload fileUpload, BindingResult result, Map model,Locale locale,@RequestParam("id")  Integer id) {
         
-        return "redirect:/";
+        if (fileUpload.getFileData().getContentType().equals("application/pdf")) {
+            try {
+                formService.parseFromPDF(fileUpload.getFileData().getInputStream());
+                return "redirect:/";
+            } catch (IOException e) {
+                model.put("importError", messageSource.getMessage("errors.importReadError",null,locale));
+            }
+
+        } else {
+            model.put("importError", messageSource.getMessage("errors.incorrectPDFFormat",null,locale));
+            
+        }
+        
+        model.putAll(fillDictionary());
+        model.put("form", new Form());
+        
+        return "add";
+    
+        
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
@@ -180,21 +175,9 @@ public class FormController {
 
     @RequestMapping(value = "/addform", method = RequestMethod.POST)
     public String processForm(@Valid Form form,BindingResult result,@RequestParam("copy")  String copy, Map model) {
-        model.put("sexList", ConstLists.sexList);
-        model.put("mStatusList", ConstLists.mStatusList);
-        model.put("countiresOldList", ConstLists.countriesOldList);
-        model.put("countiresList", ConstLists.countriesList);
-        model.put("docTypeList", ConstLists.docTypeList);
-        model.put("countryPosList", ConstLists.countryPosList);
-        model.put("professionList", ConstLists.professionList);
-        model.put("employeeList", ConstLists.employeeList);
-        model.put("goalsList", ConstLists.goalsList);
-        model.put("inputCountriesList", ConstLists.inputCountriesList);
-        model.put("qtyList", ConstLists.qtyList);
-        model.put("invList", ConstLists.invList);
-        model.put("expenciesList", ConstLists.expenciesList);
-        model.put("moneyList", ConstLists.moneyList);
-
+        
+        model.putAll(fillDictionary());
+        
         if (result.hasErrors()) {
             return "add";
         }
@@ -240,6 +223,28 @@ public class FormController {
                 is_admin = true;
         }
         return is_admin;
+    }
+    
+    private Map fillDictionary() {
+        Map model = new HashMap();
+
+        model.put("sexList", ConstLists.sexList);
+        model.put("mStatusList", ConstLists.mStatusList);
+        model.put("countiresOldList", ConstLists.countriesOldList);
+        model.put("countiresList", ConstLists.countriesList);
+        model.put("docTypeList", ConstLists.docTypeList);
+        model.put("countryPosList", ConstLists.countryPosList);
+        model.put("professionList", ConstLists.professionList);
+        model.put("employeeList", ConstLists.employeeList);
+        model.put("goalsList", ConstLists.goalsList);
+        model.put("inputCountriesList", ConstLists.inputCountriesList);
+        model.put("qtyList", ConstLists.qtyList);
+        model.put("invList", ConstLists.invList);
+        model.put("expenciesList", ConstLists.expenciesList);
+        model.put("moneyList", ConstLists.moneyList);
+        model.put("fileUpload", new FileUpload());
+
+        return model;
     }
 
 

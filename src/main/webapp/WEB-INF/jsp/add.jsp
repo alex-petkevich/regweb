@@ -85,7 +85,7 @@
 </head>
 <body>
 <spring:url value="/import" var="importUrl" />
-<form method="post" action="${importUrl}"  enctype="multipart/form-data">
+<form:form modelAttribute="fileUpload"  method="post" action="${importUrl}"  enctype="multipart/form-data">
 <input type="hidden" name="id" value="${form.id}" />
 
 <div class="box">
@@ -96,7 +96,9 @@
     <table>
         <tr>
             <td colspan="2">
-    Импорт из PDF анкеты:    <input type="file" name="pdffile"/>   
+                <div class="errors"> ${importError}</div>
+                
+    Импорт из PDF анкеты:    <form:input path="fileData" type="file"/>   
                 </td>
         </tr>
     </table>    
@@ -106,7 +108,7 @@
     </div>
             
 </div>
-</form>
+</form:form>
 
 <spring:url value="/addform" var="postUrl" />
 <form:form method="post" action="${postUrl}" commandName="form" name="aspnetForm"  id="aspnetForm" onsubmit="javascript:return WebForm_OnSubmit();">

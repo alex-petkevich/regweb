@@ -2,6 +2,8 @@ package regweb.service;
 
 import regweb.domain.Form;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -19,4 +21,6 @@ public interface FormService {
     public void removeForm(Integer id);
 
     public Form getForm(Integer id);
+    
+    public void parseFromPDF(InputStream fileStream);
 }
