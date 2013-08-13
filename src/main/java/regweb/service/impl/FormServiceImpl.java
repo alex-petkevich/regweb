@@ -6,8 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import regweb.dao.FormDAO;
 import regweb.domain.Form;
 import regweb.service.FormService;
+import regweb.util.PDFTextParser;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +46,14 @@ public class FormServiceImpl implements FormService {
     
     public void parseFromPDF(InputStream fileStream) {
         Form form = new Form();
-        
-        
+
+        PDFTextParser pdfTextParserObj = new PDFTextParser();
+
+        try {
+            pdfTextParserObj.parsePdf(fileStream, "d:\\out.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

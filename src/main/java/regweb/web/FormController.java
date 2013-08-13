@@ -144,7 +144,7 @@ public class FormController {
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importForm(FileUpload fileUpload, BindingResult result, Map model,Locale locale,@RequestParam("id")  Integer id) {
         
-        if (fileUpload.getFileData().getContentType().equals("application/pdf")) {
+        if (fileUpload.getFileData()!=null && fileUpload.getFileData().getContentType().equals("application/pdf")) {
             try {
                 formService.parseFromPDF(fileUpload.getFileData().getInputStream());
                 return "redirect:/";
