@@ -37,11 +37,12 @@ public class FormController {
     public String actionForms(@RequestParam(value="action",required = false)  String action,
                               @RequestParam(value="selusers",required = false) String[] selusers,Map<String, Object> map) {
         
-        for (int i=0;i<selusers.length;i++) {
-            Form form = formService.getForm(Integer.parseInt(selusers[i]));
-            form.setIs_registered(true);
-            formService.save(form);
-        }
+        if (selusers!=null)
+            for (int i=0;i<selusers.length;i++) {
+                Form form = formService.getForm(Integer.parseInt(selusers[i]));
+                form.setIs_registered(true);
+                formService.save(form);
+            }
         return "redirect:/";
     }
     

@@ -13,7 +13,7 @@ import java.util.List;
  * Time: 22:34
  */
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 public class User {
     @Id
     @Column(name = "ID")

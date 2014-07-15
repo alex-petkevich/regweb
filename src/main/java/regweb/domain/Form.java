@@ -17,7 +17,7 @@ import java.util.List;
  * Time: 22:34
  */
 @Entity
-@Table(name = "FORMS")
+@Table(name = "forms")
 public class Form implements Serializable {
     @Id
     @GeneratedValue
