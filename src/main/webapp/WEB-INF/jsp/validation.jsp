@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script type="text/javascript">
     //<![CDATA[
-    function WebForm_OnSubmit() {
+    function WebForm_OnSubmit() {  
         if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
         return true;
     }

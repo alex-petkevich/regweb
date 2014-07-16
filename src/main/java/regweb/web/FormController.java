@@ -33,7 +33,7 @@ public class FormController {
     @Autowired
     private MessageSource messageSource;
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String actionForms(@RequestParam(value="action",required = false)  String action,
                               @RequestParam(value="selusers",required = false) String[] selusers,Map<String, Object> map) {
         
@@ -47,7 +47,7 @@ public class FormController {
     }
     
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/")
     public String listForms(@RequestParam(value="sort",required = false)  String sort,
                             @RequestParam(value="dir",required = false)  String dir,
                             @RequestParam(value="text",required = false)  String text,
@@ -78,9 +78,6 @@ public class FormController {
         }
         if (to!=null){
             searchVal.put("to",to);
-        }
-        if (user_id!=null){
-            searchVal.put("user_id",user_id);
         }
         if (not_reg!=null && not_reg.equals("1")) {
             searchVal.put("not_reg",not_reg);

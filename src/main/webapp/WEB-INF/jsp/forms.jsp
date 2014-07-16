@@ -36,8 +36,7 @@
 <body>
         <p>Выбранные: <input type="BUTTON" class="button" id="mark-sel" value="Отметить как готовые"> </p><br>
         <spring:url value="/" var="postUrl" />
-        <form method="post" action="${postUrl}" id="forms-form">
-        <input type="hidden" name="action" value="" id="hid-action"/>
+         <input type="hidden" name="action" value="" id="hid-action"/>
         <!-- Box -->
         <div class="box">
             <!-- Box Head -->
@@ -66,6 +65,7 @@
             </form:form>
             <!-- End Box Head -->
 
+            <form method="post" action="${postUrl}" id="forms-form">
             <c:choose>
             <c:when test="${!empty formsList}">
             <!-- Table -->
@@ -125,6 +125,7 @@
                     <div style="margin:20px;"><b>Ничего не найдено</b></div>
                 </c:otherwise>
             </c:choose>
+            </form>
 
         </div>
         <!-- End Box -->

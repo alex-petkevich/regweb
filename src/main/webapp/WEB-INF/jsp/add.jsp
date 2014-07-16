@@ -87,9 +87,8 @@
 <spring:url value="/import" var="importUrl" />
 <form:form modelAttribute="fileUpload"  method="post" action="${importUrl}"  enctype="multipart/form-data">
 <input type="hidden" name="id" value="${form.id}" />
-
-<div class="box">
-<!-- Box Head -->
+    <!--
+<div class="box"> 
 <div class="box-head">
     <h2>Импорт анкеты</h2>
 </div>
@@ -107,7 +106,7 @@
 
     </div>
             
-</div>
+</div>       -->
 </form:form>
 
 <spring:url value="/addform" var="postUrl" />
