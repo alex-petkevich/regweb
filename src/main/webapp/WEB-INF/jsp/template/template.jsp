@@ -48,7 +48,7 @@ Ctl00$cp$f$txt46TelefonNumer0	${form.tel_17}	(?:^ctl00\\$cp\\$f\\$txt46TelefonNu
 Ctl00$cp$f$txt18aNumer	${form.visitdoc_18}	(?:^ctl00\\$cp\\$f\\$txt18aNumer$)	(?:)	true	true
 Ctl00$cp$f$txt18bDataWaznosci	${form.expdate_18}	(?:^ctl00\\$cp\\$f\\$txt18bDataWaznosci$)	(?:)	true	true
 Ctl00$cp$f$chk18Bezterminowo	(?:^on$)	(?:^ctl00\\$cp\\$f\\$chk18Bezterminowo$)	(?:)	false	true
-</c:when><c:otherwise>Да. Вид на жительство или равноценный документ	(?:^${form.countryvisitor_18}$)	(?:^ctl00\\$cp\\$f\\$rbl18$)	(?:)	false	true</c:otherwise></c:choose>
+</c:when><c:otherwise>Нет	(?:^Nie$)	(?:^ctl00\$cp\$f\$rbl18$)	(?:)	true	true</c:otherwise></c:choose>
 Ctl00$cp$f$ddl19WykonywanyZawod	(?:^${form.profession_19}$)	(?:^ctl00\\$cp\\$f\\$ddl19WykonywanyZawod$)	(?:)	true	true
 Работодатель	(?:^${form.employee_20}$)	(?:^ctl00\\$cp\\$f\\$rbl20$)	(?:)	true	true
 Ctl00$cp$f$dd20bPanstwo	(?:^${form.country_20}$)	(?:^ctl00\\$cp\\$f\\$dd20bPanstwo$)	(?:)	true	true
