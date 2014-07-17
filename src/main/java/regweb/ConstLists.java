@@ -57,8 +57,8 @@ public class ConstLists {
     }};
     
     public static final Map<String, String> invList = new LinkedHashMap<String , String>() {{
-        put("1", "человек");
-        put("2", "фирма");
+        put("0", "человек");
+        put("1", "фирма");
     }};
 
     public static final Map<String, String> qtyList = new LinkedHashMap<String , String>() {{

@@ -687,7 +687,7 @@
             <td colspan="2"><form:label path="country_31" cssClass="sign">Государство </form:label><span id="ctl00_cp_f_ctrl31__rfv34_2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
                 <br/>
                 <div class="errors"> <form:errors path="country_31" /></div>
-                <form:select items="${countiresList}" id="ctl00_cp_f_ctrl31__ddl34panstwo" cssClass="field size1"  path="country_31" /></td>
+                <form:select items="${inputCountriesList}" id="ctl00_cp_f_ctrl31__ddl34panstwo" cssClass="field size1"  path="country_31" /></td>
         </tr>
         <tr>
             <td colspan="2"><form:label path="city_31" cssClass="sign">Место</form:label><span id="ctl00_cp_f_ctrl31__rfv34_3" style="color:Red;display:none;">Поле для обязательного заполнения </span><span id="ctl00_cp_f_ctrl31__rfvKonsultacja9" style="color:Red;display:none;">Неправильное значение</span>
