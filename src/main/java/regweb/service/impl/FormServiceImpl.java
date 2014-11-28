@@ -3,12 +3,11 @@ package regweb.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import regweb.dao.FormDAO;
+import regweb.dao.IFormDAO;
 import regweb.domain.Form;
 import regweb.service.FormService;
 import regweb.util.PDFTextParser;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -22,26 +21,26 @@ import java.util.Map;
 @Service
 public class FormServiceImpl implements FormService {
     @Autowired
-    private FormDAO formDAO;
+    private IFormDAO IFormDAO;
 
     @Transactional
     public void save(Form form) {
-        formDAO.save(form);
+        IFormDAO.save(form);
     }
 
     @Transactional
     public List<Form> listForms(Map<String,String> searchValue,String sortField,String sortOrder,Integer offset,Integer limit) {
-        return formDAO.listForms(searchValue,sortField,sortOrder,offset,limit);
+        return IFormDAO.listForms(searchValue,sortField,sortOrder,offset,limit);
     }
 
     @Transactional
     public void removeForm(Integer id) {
-        formDAO.removeForm(id);
+        IFormDAO.removeForm(id);
     }
 
     @Transactional
     public Form getForm(Integer id) {
-        return formDAO.getForm(id);
+        return IFormDAO.getForm(id);
     }
     
     public void parseFromPDF(InputStream fileStream) {

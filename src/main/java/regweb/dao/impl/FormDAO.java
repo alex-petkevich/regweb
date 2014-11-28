@@ -8,7 +8,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import regweb.dao.FormDAO;
+import regweb.dao.IFormDAO;
 import regweb.domain.Form;
 
 import java.text.ParseException;
@@ -23,7 +23,7 @@ import java.util.Map;
  * Time: 23:52
  */
 @Repository
-public class FormDAOImpl implements FormDAO {
+public class FormDAO implements IFormDAO {
 
     @Autowired
     private SessionFactory sessionFactory;

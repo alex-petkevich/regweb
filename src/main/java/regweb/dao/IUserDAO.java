@@ -10,7 +10,7 @@ import java.util.Map;
  * Date: 24.03.13
  * Time: 23:50
  */
-public interface UserDAO {
+public interface IUserDAO {
 
     public void save(User user);
 

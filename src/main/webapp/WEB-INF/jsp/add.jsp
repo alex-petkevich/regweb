@@ -109,6 +109,31 @@
 </div>       -->
 </form:form>
 
+<spring:url value="/import" var="importUrl" />
+<form:form modelAttribute="fileUpload"  method="post" action="${importUrl}"  enctype="multipart/form-data">
+    <input type="hidden" name="id" value="${form.id}" />
+
+    <div class="box">
+    <div class="box-head">
+    <h2>Импорт анкеты</h2>
+    </div>
+    <table>
+    <tr>
+    <td colspan="2">
+    <div class="errors"> ${importError}</div>
+
+    Импорт из Roboform XML:    <form:input path="fileData" type="file"/>
+    </td>
+    </tr>
+    </table>
+    <div class="buttons">
+    <input type="submit" value="Сохранить" class="button" />
+
+    </div>
+
+    </div>
+</form:form>
+
 <spring:url value="/addform" var="postUrl" />
 <form:form method="post" action="${postUrl}" commandName="form" name="aspnetForm"  id="aspnetForm" onsubmit="javascript:return WebForm_OnSubmit();">
 <form:hidden path="id" />

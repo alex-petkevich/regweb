@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import regweb.dao.UserDAO;
+import regweb.dao.IUserDAO;
 import regweb.domain.User;
 
 import java.util.HashMap;
@@ -19,7 +19,7 @@ import java.util.Map;
  * Time: 23:52
  */
 @Repository
-public class UserDAOImpl implements UserDAO {
+public class UserDAO implements IUserDAO {
 
     @Autowired
     private SessionFactory sessionFactory;

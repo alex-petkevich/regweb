@@ -33,7 +33,7 @@ public class FormController {
     @Autowired
     private MessageSource messageSource;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public String actionForms(@RequestParam(value="action",required = false)  String action,
                               @RequestParam(value="selusers",required = false) String[] selusers,Map<String, Object> map) {
         
