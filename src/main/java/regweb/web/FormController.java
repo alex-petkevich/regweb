@@ -13,8 +13,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import regweb.ConstLists;
 import regweb.domain.FileUpload;
 import regweb.domain.Form;
+import regweb.exceptions.ImportExceptions;
 import regweb.service.FormService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -140,7 +142,7 @@ public class FormController {
     }
     
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importForm(FileUpload fileUpload, BindingResult result, Map model,Locale locale,@RequestParam("id")  Integer id) {
+    public String importForm(FileUpload fileUpload, BindingResult result, Map model,Locale locale,@RequestParam("id")  Integer id,HttpServletRequest request) {
         
         if (fileUpload.getFileData()!=null && fileUpload.getFileData().getContentType().equals("application/pdf")) {
             try {
@@ -150,7 +152,21 @@ public class FormController {
                 model.put("importError", messageSource.getMessage("errors.importReadError",null,locale));
             }
 
-        } else {
+        } else if (fileUpload.getFileData()!=null && fileUpload.getFileData().getContentType().equals("text/html")) {
+
+          int total = 0;
+          try {
+            total = formService.parseFromRoboHTML(fileUpload.getFileData().getInputStream());
+            return "redirect:/?totalConverted="+total;
+          } catch (IOException e) {
+            model.put("importError", messageSource.getMessage("errors.importReadError",null,locale));
+          } catch(ImportExceptions ex) {
+            request.getSession().setAttribute("errorImport", ex.getMessage());
+
+            return "redirect:/addform?errorConvert=1&totalConverted="+ex.getTotal();
+          }
+
+        }else {
             model.put("importError", messageSource.getMessage("errors.incorrectPDFFormat",null,locale));
             
         }

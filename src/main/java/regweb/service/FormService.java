@@ -1,6 +1,7 @@
 package regweb.service;
 
 import regweb.domain.Form;
+import regweb.exceptions.ImportExceptions;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -23,4 +24,6 @@ public interface FormService {
     public Form getForm(Integer id);
     
     public void parseFromPDF(InputStream fileStream);
+
+    public int parseFromRoboHTML(InputStream fileStream) throws ImportExceptions;
 }

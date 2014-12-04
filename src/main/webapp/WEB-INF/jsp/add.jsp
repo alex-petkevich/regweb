@@ -108,7 +108,16 @@
             
 </div>       -->
 </form:form>
-
+<c:if test="${not empty param.totalConverted}">
+    <div class="msg msg-ok">
+        <p><strong>Успешно сконвертировано анкет: ${param.totalConverted}</strong></p>
+    </div>
+</c:if>
+<c:if test="${not empty param.errorConvert}">
+    <div class="msg msg-error">
+        <p><strong>При конвертации найдены ошибки в исходных данных: <br /> ${sessionScope["errorImport"]}</strong></p>
+    </div>
+</c:if>
 <spring:url value="/import" var="importUrl" />
 <form:form modelAttribute="fileUpload"  method="post" action="${importUrl}"  enctype="multipart/form-data">
     <input type="hidden" name="id" value="${form.id}" />
@@ -122,7 +131,7 @@
     <td colspan="2">
     <div class="errors"> ${importError}</div>
 
-    Импорт из Roboform XML:    <form:input path="fileData" type="file"/>
+    Импорт из Roboform HTML:    <form:input path="fileData" type="file"/>
     </td>
     </tr>
     </table>

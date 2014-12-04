@@ -149,7 +149,7 @@ public class Form implements Serializable {
     @Pattern(regexp = "^(?:[a-zA-Z0-9_'^&/+-])+(?:\\.(?:[a-zA-Z0-9_'^&/+-])+)" +
             "*@(?:(?:\\[?(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))\\.)" +
             "{3}(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\]?)|(?:[a-zA-Z0-9-]+\\.)" +
-            "+(?:[a-zA-Z]){2,}\\.?)$",
+            "+(?:[a-zA-Z]){2,}\\.?)|\\s*$",
             message = "{errors.email}")
     @Column(name = "EMAIL_17")
     private String email_17;
@@ -319,7 +319,7 @@ public class Form implements Serializable {
     @Column(name = "BUILDING_31")
     private String building_31;
 
-    @Size(min=1,max=5, message="{errors.requiredfield}")
+    @Size(min=0,max=5, message="{errors.requiredfield}")
     @Column(name = "FLAT_31")
     private String flat_31;
 
@@ -342,6 +342,43 @@ public class Form implements Serializable {
 
     @Column(name = "INSHURANCE_33")
     private String inshurance_33;
+
+    @Column(name = "FINGERPRINT_27")
+    private String fingerprint_27;
+
+    @Column(name = "ENDCOUNTRYPERMIT_28")
+    private String endcountrypermit_28;
+
+    @Column(name = "ENDCOUNTRYBY_28")
+    private String endcountryby_28;
+
+    @Column(name = "ENDCOUNTRYFROM_28")
+    private String endcountryfrom_28;
+
+    @Column(name = "ENDCOUNTRYTO_28")
+    private String endcountryto_28;
+
+    @Column(name = "PERSONALDATAES_34")
+    private String personaldataes_34;
+
+    @Column(name = "PERSONALDATASURNAME_34")
+    private String personaldatasurname_34;
+
+    @Column(name = "PERSONALDATANAME_34")
+    private String personaldataname_34;
+
+    @Column(name = "PERSONALDATADATE_34")
+    private String personaldatadate_34;
+
+    @Column(name = "PERSONALDATAPASS_34")
+    private String personaldatapass_34;
+
+    @Column(name = "PERSONALDATACITIZEN_34")
+    private String personaldatacitizen_34;
+
+    @Column(name = "PERSONALDATARELATION_34")
+    private String personaldatarelation_34;
+
 
     public Integer getId() {
         return id;
@@ -1037,5 +1074,102 @@ public class Form implements Serializable {
 
     public void setInshurance_33(String inshurance_33) {
         this.inshurance_33 = inshurance_33;
+    }
+
+
+    public String getFingerprint_27() {
+      return fingerprint_27;
+    }
+
+    public void setFingerprint_27(String fingerprint_27) {
+      this.fingerprint_27 = fingerprint_27;
+    }
+
+    public String getEndcountrypermit_28() {
+      return endcountrypermit_28;
+    }
+
+    public void setEndcountrypermit_28(String endcountrypermit_28) {
+      this.endcountrypermit_28 = endcountrypermit_28;
+    }
+
+    public String getEndcountryby_28() {
+      return endcountryby_28;
+    }
+
+    public void setEndcountryby_28(String endcountryby_28) {
+      this.endcountryby_28 = endcountryby_28;
+    }
+
+    public String getEndcountryfrom_28() {
+      return endcountryfrom_28;
+    }
+
+    public void setEndcountryfrom_28(String endcountryfrom_28) {
+      this.endcountryfrom_28 = endcountryfrom_28;
+    }
+
+    public String getEndcountryto_28() {
+      return endcountryto_28;
+    }
+
+    public void setEndcountryto_28(String endcountryto_28) {
+      this.endcountryto_28 = endcountryto_28;
+    }
+
+    public String getPersonaldataes_34() {
+      return personaldataes_34;
+    }
+
+    public void setPersonaldataes_34(String personaldataes_34) {
+      this.personaldataes_34 = personaldataes_34;
+    }
+
+    public String getPersonaldatasurname_34() {
+      return personaldatasurname_34;
+    }
+
+    public void setPersonaldatasurname_34(String personaldatasurname_34) {
+      this.personaldatasurname_34 = personaldatasurname_34;
+    }
+
+    public String getPersonaldataname_34() {
+      return personaldataname_34;
+    }
+
+    public void setPersonaldataname_34(String personaldataname_34) {
+      this.personaldataname_34 = personaldataname_34;
+    }
+
+    public String getPersonaldatadate_34() {
+      return personaldatadate_34;
+    }
+
+    public void setPersonaldatadate_34(String personaldatadate_34) {
+      this.personaldatadate_34 = personaldatadate_34;
+    }
+
+    public String getPersonaldatapass_34() {
+      return personaldatapass_34;
+    }
+
+    public void setPersonaldatapass_34(String personaldatapass_34) {
+      this.personaldatapass_34 = personaldatapass_34;
+    }
+
+    public String getPersonaldatacitizen_34() {
+      return personaldatacitizen_34;
+    }
+
+    public void setPersonaldatacitizen_34(String personaldatacitizen_34) {
+      this.personaldatacitizen_34 = personaldatacitizen_34;
+    }
+
+    public String getPersonaldatarelation_34() {
+      return personaldatarelation_34;
+    }
+
+    public void setPersonaldatarelation_34(String personaldatarelation_34) {
+      this.personaldatarelation_34 = personaldatarelation_34;
     }
 }

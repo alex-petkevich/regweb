@@ -34,6 +34,11 @@
     </script>
 </head>
 <body>
+<c:if test="${not empty param.totalConverted}">
+    <div class="msg msg-ok">
+        <p><strong>Успешно сконвертировано анкет: ${param.totalConverted}</strong></p>
+    </div>
+</c:if>
         <p>Выбранные: <input type="BUTTON" class="button" id="mark-sel" value="Отметить как готовые"> </p><br>
         <spring:url value="/" var="postUrl" />
          <input type="hidden" name="action" value="" id="hid-action"/>

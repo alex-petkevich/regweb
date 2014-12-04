@@ -5,13 +5,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import regweb.dao.IFormDAO;
 import regweb.domain.Form;
+import regweb.exceptions.ImportExceptions;
 import regweb.service.FormService;
 import regweb.util.PDFTextParser;
+import regweb.util.RoboParser;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Author: Alexander Petkevich aka mrdoggy
@@ -55,4 +60,46 @@ public class FormServiceImpl implements FormService {
         }
 
     }
+
+  public int parseFromRoboHTML(InputStream fileStream) throws ImportExceptions {
+    RoboParser roboParser = new RoboParser();
+
+    int total = 0;
+    List<String> errors = new ArrayList<String>();
+
+    try {
+      ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+      Validator validator = factory.getValidator();
+
+      List<Form> forms = roboParser.parseHTML(fileStream);
+      int number = 1;
+      if (forms.size() > 0) {
+        for(Form form : forms ) {
+          Set<ConstraintViolation<Form>> formIssues = validator.validate(form);
+          if (formIssues.size() == 0) {
+            form.setAdded(new Date());
+            this.save(form);
+            total ++ ;
+          } else {
+            StringBuilder issue = new StringBuilder();
+            for(ConstraintViolation<Form> formIssue: formIssues) {
+              issue.append("Поле: ").append(formIssue.getPropertyPath()).append(", Ошибка: ").append(formIssue.getMessage()).append("; ");
+            }
+            errors.add("Номер анкеты: "+ number + ", " + form.getName_3() + " " + form.getSurname_1() + " " +  issue.toString());
+          }
+          number++;
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    if (errors.size() > 0) {
+      throw new ImportExceptions(total,errors);
+    }
+
+    return total;
+
+  }
+
 }

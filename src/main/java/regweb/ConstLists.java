@@ -647,5 +647,14 @@ public class ConstLists {
         put("JPN", "ЯПОНИЯ");
     }};
     
-    
+    public static String getKeyByValue(Map<String , String> map,String valueToFind) {
+      if (map.containsValue(valueToFind)) {
+        for (final String entry : map.keySet()) {
+          if (map.get(entry).equals(valueToFind)) {
+            return entry;
+          }
+        }
+      }
+      return null;
+    }
 }
