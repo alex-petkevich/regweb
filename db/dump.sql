@@ -134,6 +134,18 @@ CREATE TABLE `forms` (
   `money_type_33` varchar(255) DEFAULT NULL,
   `money_type_other_33` varchar(255) DEFAULT NULL,
   `inshurance_33` varchar(255) DEFAULT NULL,
+   fingerprint_27            varchar(20),
+   endcountrypermit_28       varchar(20),
+   endcountryby_28           varchar(200),
+   endcountryfrom_28         varchar(20),
+   endcountryto_28           varchar(20),
+   personaldataes_34         varchar(20),
+   personaldatasurname_34    varchar(200),
+   personaldataname_34       varchar(200),
+   personaldatadate_34       varchar(200),
+   personaldatapass_34       varchar(200),
+   personaldatacitizen_34    varchar(200),
+   personaldatarelation_34   varchar(20),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
