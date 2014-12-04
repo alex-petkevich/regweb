@@ -76,7 +76,13 @@ public class FormServiceImpl implements FormService {
       if (forms.size() > 0) {
         for(Form form : forms ) {
           Set<ConstraintViolation<Form>> formIssues = validator.validate(form);
-          if (formIssues.size() == 0) {
+          // check if passnum already exists
+          Form passForm = IFormDAO.getFormByPassnum(form.getPassnum_13());
+
+          if (passForm!=null) {
+            errors.add("Номер анкеты: "+ number + ", " + form.getName_3() + " " + form.getSurname_1() + " " + form.getPassnum_13() + " Анкета с таким номером паспорта уже есть в базе");
+          }
+          else if (formIssues.size() == 0) {
             form.setAdded(new Date());
             this.save(form);
             total ++ ;

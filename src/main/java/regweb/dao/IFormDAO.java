@@ -19,4 +19,6 @@ public interface IFormDAO {
     public void removeForm(Integer id);
 
     public Form getForm(Integer id);
+
+    public Form getFormByPassnum(String passnum);
 }

@@ -70,6 +70,10 @@ public class FormDAO implements IFormDAO {
         {
             req.add(Restrictions.eq("user_id", searchValue.get("user_id")) );
         }
+        if (searchValue.containsKey("passnum_13"))
+        {
+          req.add(Restrictions.eq("passnum_13", searchValue.get("passnum_13")) );
+        }
         if (searchValue.containsKey("text"))
         {
             LogicalExpression restr = Restrictions.or(Restrictions.ilike("surname_1", "%" + searchValue.get("text") + "%"),
@@ -90,6 +94,15 @@ public class FormDAO implements IFormDAO {
         return req.list();
 
     }
+
+  @Transactional
+  public Form getFormByPassnum(String passnum) {
+    Criteria req = sessionFactory.getCurrentSession().createCriteria(Form.class);
+    req.setCacheable(true);
+    req.add(Restrictions.eq("passnum_13", passnum) );
+    List<Form> result = req.list();
+    return (result.size() > 0 ? result.get(0) : null);
+  }
 
     @Transactional
     public void removeForm(Integer id) {
