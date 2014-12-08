@@ -27,16 +27,16 @@ public class RoboParser {
 
       Elements rows = table.getElementsByTag("tr");
 
-      currentForm.setSurname_1(getColumnValue("ctl00$cp$f$daneos$txtnazwisko",rows));
-      currentForm.setSurname_2(getColumnValue("ctl00$cp$f$daneos$txtnazwiskorodowe", rows));
+      currentForm.setSurname_1(getColumnValue("txtnazwisko",rows));
+      currentForm.setSurname_2(getColumnValue("txtnazwiskorodowe", rows));
 
-      currentForm.setName_3(getColumnValue("ctl00$cp$f$daneos$txtimiona", rows));
-      currentForm.setBirthdate_4(getColumnValue("ctl00$cp$f$daneos$txtdataurodzin", rows));
-      currentForm.setPlacedate_5(getColumnValue("ctl00$cp$f$daneos$txtmiejsceurodzenia", rows));
-      currentForm.setCountry_6(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("ctl00$cp$f$daneos$cbkrajurodzenia", rows)));
-      currentForm.setCitizenship_7(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("ctl00$cp$f$daneos$cbobecneobywatelstwo", rows)));
-      currentForm.setCitizenship_born_8(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("ctl00$cp$f$daneos$cbposiadaneobywatelstwo", rows)));
-      currentForm.setSex_9(getColumnKeyPart("ctl00$cp$f$daneos$rbplec", rows));
+      currentForm.setName_3(getColumnValue("txtnazwiskorodowe", rows));
+      currentForm.setBirthdate_4(getColumnValue("txtnazwiskorodowe", rows));
+      currentForm.setPlacedate_5(getColumnValue("txtmiejsceurodzenia", rows));
+      currentForm.setCountry_6(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbkrajurodzenia", rows)));
+      currentForm.setCitizenship_7(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbobecneobywatelstwo", rows)));
+      currentForm.setCitizenship_born_8(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbposiadaneobywatelstwo", rows)));
+      currentForm.setSex_9(getColumnKeyPart("rbplec", rows));
       currentForm.setFamily_10(getColumnKeyPart("ctl00$cp$f$daneos$rbstancywilny", rows));
       currentForm.setIdentnum_11(getColumnValue("ctl00$cp$f$txt5numerdowodu", rows));
       currentForm.setPassdata_12(getColumnKeyPart("ctl00$cp$f$rbl13", rows));
@@ -134,18 +134,23 @@ public class RoboParser {
   private String getColumnValue(String name,Elements rows) {
     for(Element row: rows) {
       Elements cols = row.getElementsByTag("td");
-      String firstCell = cols.get(0).text();
-      if (firstCell.equals(name) && cols.size() > 2) {
-        return cols.get(2).text();
+      String firstCell = cleanString(cols.get(0).text());
+      if (firstCell.startsWith(name) && cols.size() > 2) {
+        return cleanString(cols.get(2).text());
       }
     }
     return "";
   }
 
+  private String cleanString(String str) {
+
+    return Jsoup.parse(str.replaceAll("[^A-Za-z0-9А-Яа-я\\.\\,\\-\\_\\&\\*@\\!\\(\\)\\+=:;\\\"\\\'\\?]", "")).text();
+  }
+
   private String getColumnKeyPart(String name,Elements rows) {
     for(Element row: rows) {
       Elements cols = row.getElementsByTag("td");
-      String firstCell = cols.get(0).text();
+      String firstCell = cleanString(cols.get(0).text());
       if (firstCell.startsWith(name) && cols.size() > 2) {
         String[] parts = firstCell.split(":");
         if (parts.length > 1) {
