@@ -221,16 +221,19 @@ public class FormController {
 
     @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
     public String downloadForm(Map<String, Object> model, @PathVariable("id") Integer id,HttpServletResponse response) {
+        Form form;
         if (id!=null) {
-            Form form = formService.getForm(id);
+            form = formService.getForm(id);
             model.put("form",form);
+            response.setContentType("text/plain");
+            String headerKey = "Content-Disposition";
+            String headerValue = String.format("attachment; filename=\"%s\"",
+                    "form_"+form.getPassnum_13()+".txt");
+            response.setHeader(headerKey, headerValue);
+            return "template/template";
+        } else {
+          return "redirect:/";
         }
-        response.setContentType("text/plain");
-        String headerKey = "Content-Disposition";
-        String headerValue = String.format("attachment; filename=\"%s\"",
-                "form_"+id+".txt");
-        response.setHeader(headerKey, headerValue);
-        return "template/template";
     }
 
 
