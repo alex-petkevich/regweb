@@ -27,14 +27,14 @@ Ctl00$cp$f$opiekunowie$txtStanProwincja1	${form.state_child}	(?:^ctl00\\$cp\\$f\
 Ctl00$cp$f$opiekunowie$txtMiejscowosc1	${form.city_child}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtMiejscowosc1$)	(?:)	true	true
 Ctl00$cp$f$opiekunowie$txtKod1	${form.index_child}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtKod1$)	(?:)	true	true
 Ctl00$cp$f$opiekunowie$txtAdres1	${form.address_child}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtAdres1$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$cbObywatelstwo2	(?:^$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$cbObywatelstwo2$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$txtImie2		(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtImie2$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$txtNazwisko2		(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtNazwisko2$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$cbPanstwo2	(?:^$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$cbPanstwo2$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$txtStanProwincja2		(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtStanProwincja2$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$txtMiejscowosc2		(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtMiejscowosc2$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$txtKod2		(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtKod2$)	(?:)	true	true
-Ctl00$cp$f$opiekunowie$txtAdres2		(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtAdres2$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$cbObywatelstwo2	(?:^${form.citizenship_child2}$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$cbObywatelstwo2$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$txtImie2	${form.name_child2}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtImie2$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$txtNazwisko2	${form.surname_child2}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtNazwisko2$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$cbPanstwo2	(?:^${form.country_child2}$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$cbPanstwo2$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$txtStanProwincja2	${form.state_child2}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtStanProwincja2$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$txtMiejscowosc2	${form.city_child2}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtMiejscowosc2$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$txtKod2	${form.index_child2}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtKod2$)	(?:)	true	true
+Ctl00$cp$f$opiekunowie$txtAdres2	${form.address_child2}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtAdres2$)	(?:)	true	true
 </c:when><c:otherwise>Ctl00$cp$f$opiekunowie$chkNieDotyczy	(?:^on$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$chkNieDotyczy$)	(?:)	true	true</c:otherwise></c:choose>
 Ctl00$cp$f$ddl45Panstwo	(?:^${form.country_17}$)	(?:^ctl00\\$cp\\$f\\$ddl45Panstwo$)	(?:)	true	true
 Ctl00$cp$f$txt45StanProwincja	${form.state_17}	(?:^ctl00\\$cp\\$f\\$txt45StanProwincja$)	(?:)	true	true
