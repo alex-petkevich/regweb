@@ -20,12 +20,14 @@ public class RoboParser {
     List<Form> result = new ArrayList<Form>();
 
     Document doc = Jsoup.parse(text,"UTF-8","");
-    Elements tables = doc.getElementsByTag("table");
+    Elements tables = doc.getElementsByClass("orph");
 
     for(Element table : tables) {
+      Elements inner = table.getElementsByTag("table");
+      Element tbl = inner.last();
+      Elements rows = tbl.getElementsByTag("tr");
       Form currentForm = new Form();
 
-      Elements rows = table.getElementsByTag("tr");
 
       currentForm.setSurname_1(getColumnValue("txtnazwisko",rows));
       currentForm.setSurname_2(getColumnValue("txtnazwiskorodowe", rows));
@@ -62,6 +64,16 @@ public class RoboParser {
         currentForm.setCity_child(getColumnValue("txtmiejscowosc1",rows));
         currentForm.setIndex_child(getColumnValue("txtkod1",rows));
         currentForm.setAddress_child(getColumnValue("txtadres1",rows));
+
+        currentForm.setCountry_child2(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbpanstwo2", rows)));
+        currentForm.setCitizenship_child2(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbobywatelstwo2", rows)));
+        currentForm.setName_child2(getColumnValue("txtimie2",rows));
+        currentForm.setSurname_child2(getColumnValue("txtimie2",rows));
+        currentForm.setState_child2(getColumnValue("txtnazwisko2",rows));
+        currentForm.setCity_child2(getColumnValue("txtmiejscowosc2",rows));
+        currentForm.setIndex_child2(getColumnValue("txtkod2",rows));
+        currentForm.setAddress_child2(getColumnValue("txtadres2",rows));
+
       } else {
         currentForm.setIs_children(false);
       }

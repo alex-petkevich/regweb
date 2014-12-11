@@ -126,7 +126,31 @@ public class Form implements Serializable {
     @Column(name = "ADDRESS_CHILD")
     private String address_child;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Column(name = "CITIZENSHIP_CHILD2")
+    private String citizenship_child2;
+
+  @Column(name = "NAME_CHILD2")
+    private String name_child2;
+
+    @Column(name = "SURNAME_CHILD2")
+    private String surname_child2;
+
+    @Column(name = "COUNTRY_CHILD2")
+    private String country_child2;
+
+    @Column(name = "STATE_CHILD2")
+    private String state_child2;
+
+    @Column(name = "CITY_CHILD2")
+    private String city_child2;
+
+    @Column(name = "INDEX_CHILD2")
+    private String index_child2;
+
+    @Column(name = "ADDRESS_CHILD2")
+    private String address_child2;
+
+  @Size(min=1,max=255, message="{errors.requiredfield}")
     @Column(name = "COUNTRY_17")
     private String country_17;
 
@@ -1171,5 +1195,69 @@ public class Form implements Serializable {
 
     public void setPersonaldatarelation_34(String personaldatarelation_34) {
       this.personaldatarelation_34 = personaldatarelation_34;
+    }
+
+    public String getName_child2() {
+      return name_child2;
+    }
+
+    public void setName_child2(String name_child2) {
+      this.name_child2 = name_child2;
+    }
+
+    public String getSurname_child2() {
+      return surname_child2;
+    }
+
+    public void setSurname_child2(String surname_child2) {
+      this.surname_child2 = surname_child2;
+    }
+
+    public String getCountry_child2() {
+      return country_child2;
+    }
+
+    public void setCountry_child2(String country_child2) {
+      this.country_child2 = country_child2;
+    }
+
+    public String getState_child2() {
+      return state_child2;
+    }
+
+    public void setState_child2(String state_child2) {
+      this.state_child2 = state_child2;
+    }
+
+    public String getCity_child2() {
+      return city_child2;
+    }
+
+    public void setCity_child2(String city_child2) {
+      this.city_child2 = city_child2;
+    }
+
+    public String getIndex_child2() {
+      return index_child2;
+    }
+
+    public void setIndex_child2(String index_child2) {
+      this.index_child2 = index_child2;
+    }
+
+    public String getAddress_child2() {
+      return address_child2;
+    }
+
+    public void setAddress_child2(String address_child2) {
+      this.address_child2 = address_child2;
+    }
+
+    public String getCitizenship_child2() {
+      return citizenship_child2;
+    }
+
+    public void setCitizenship_child2(String citizenship_child2) {
+      this.citizenship_child2 = citizenship_child2;
     }
 }
