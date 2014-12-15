@@ -170,7 +170,7 @@ public class RoboParser {
 
   private String cleanString(String str) {
 
-    return Jsoup.parse(str.replaceAll("[^A-Za-z0-9А-Яа-я\\.\\,\\-\\_\\&\\*@\\!\\(\\)\\+=:;\\\"\\\'\\?]", "")).text();
+    return Jsoup.parse(str.replaceAll("[^A-Za-z0-9А-Яа-я\\.\\,\\-\\_\\&\\*@\\!\\(\\)\\+=:;\\\"\\\'\\?\\s]", "")).text();
   }
 
   private String getColumnKeyPart(String name,Elements rows) {
