@@ -32,8 +32,8 @@ public class RoboParser {
       currentForm.setSurname_1(getColumnValue("txtnazwisko",rows));
       currentForm.setSurname_2(getColumnValue("txtnazwiskorodowe", rows));
 
-      currentForm.setName_3(getColumnValue("txtnazwiskorodowe", rows));
-      currentForm.setBirthdate_4(getColumnValue("txtnazwiskorodowe", rows));
+      currentForm.setName_3(getColumnValue("txtimiona", rows));
+      currentForm.setBirthdate_4(getColumnValue("txtdataurodzin", rows));
       currentForm.setPlacedate_5(getColumnValue("txtmiejsceurodzenia", rows));
       currentForm.setCountry_6(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbkrajurodzenia", rows)));
       currentForm.setCitizenship_7(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbobecneobywatelstwo", rows)));

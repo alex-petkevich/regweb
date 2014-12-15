@@ -203,35 +203,35 @@ public class Form implements Serializable {
     @Column(name = "EMPLOYEE_20")
     private String employee_20;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min=0,max=255, message="{errors.requiredfield}")
     @Column(name = "COUNTRY_20")
     private String country_20;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min=0,max=255, message="{errors.requiredfield}")
     @Column(name = "STATE_20")
     private String state_20;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min=0,max=255, message="{errors.requiredfield}")
     @Column(name = "CITY_20")
     private String city_20;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min=0,max=255, message="{errors.requiredfield}")
     @Column(name = "INDEX_20")
     private String index_20;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min=0,max=255, message="{errors.requiredfield}")
     @Column(name = "ADDRESS_20")
     private String address_20;
 
-    @Size(min=1,max=10, message="{errors.requiredfield}")
+    @Size(min=0,max=10, message="{errors.requiredfield}")
     @Column(name = "PREFTEL_20")
     private String preftel_20;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min=0,max=255, message="{errors.requiredfield}")
     @Column(name = "TEL_20")
     private String tel_20;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min=0,max=255, message="{errors.requiredfield}")
     @Column(name = "TITLE_20")
     private String title_20;
 
