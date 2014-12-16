@@ -303,9 +303,9 @@
          <tr>
             <td colspan="2">
                 <c:choose><c:when test="${not form.is_children}">
-                    <input type="checkbox" name="is_children" id="ctl00_cp_f_opiekunowie_chkNieDotyczy" value="Nie" checked="checked" />
+                    <input type="checkbox" name="is_children" id="ctl00_cp_f_opiekunowie_chkNieDotyczy" value="1" checked="checked" />
                 </c:when><c:otherwise>
-                    <input type="checkbox" name="is_children" id="ctl00_cp_f_opiekunowie_chkNieDotyczy" value="Nie"  />
+                    <input type="checkbox" name="is_children" id="ctl00_cp_f_opiekunowie_chkNieDotyczy" value="1"  />
                 </c:otherwise></c:choose>
                 Не касается
             </td>

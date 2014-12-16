@@ -24,9 +24,14 @@ public class RoboParser {
 
     for(Element table : tables) {
       Elements inner = table.getElementsByTag("table");
+      Element caption = inner.first();
       Element tbl = inner.last();
       Elements rows = tbl.getElementsByTag("tr");
       Form currentForm = new Form();
+
+      if (caption.getElementsByClass("caption").size() > 0) {
+        currentForm.setFilename(cleanString(caption.getElementsByClass("caption").first().text()));
+      }
 
 
       currentForm.setSurname_1(getColumnValue("txtnazwisko",rows));

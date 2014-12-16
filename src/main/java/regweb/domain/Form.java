@@ -103,6 +103,7 @@ public class Form implements Serializable {
     private String citizenship_child;
 
     @Column(name = "IS_CHILDREN")
+
     private boolean is_children;
 
     @Column(name = "NAME_CHILD")
@@ -403,6 +404,8 @@ public class Form implements Serializable {
     @Column(name = "PERSONALDATARELATION_34")
     private String personaldatarelation_34;
 
+    @Column(name = "FILENAME")
+    private String filename;
 
     public Integer getId() {
         return id;
@@ -1259,5 +1262,13 @@ public class Form implements Serializable {
 
     public void setCitizenship_child2(String citizenship_child2) {
       this.citizenship_child2 = citizenship_child2;
+    }
+
+    public String getFilename() {
+      return filename;
+    }
+
+    public void setFilename(String filename) {
+      this.filename = filename;
     }
 }

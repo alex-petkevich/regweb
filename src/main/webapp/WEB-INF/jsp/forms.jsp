@@ -3,6 +3,9 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="md" uri="/WEB-INF/tags/ConstDescriptor.tld" %>
+
+<md:constMap path="regweb.Actions" var="consts" />
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
@@ -27,7 +30,15 @@
                 $('#form').submit();
             });
             $('#mark-sel').on('click',function(){
-                $('#hid-action').attr('value','ready');
+                $('#hid-action').attr('value','${consts['MARK_ALL']}');
+                $('#forms-form').submit();
+            });
+            $('#bulk-remove').on('click',function(){
+                $('#hid-action').attr('value','${consts['REMOVE']}');
+                $('#forms-form').submit();
+            });
+            $('#bulk-down').on('click',function(){
+                $('#hid-action').attr('value','${consts['DOWNLOAD']}');
                 $('#forms-form').submit();
             });
         });
@@ -39,9 +50,10 @@
         <p><strong>Успешно сконвертировано анкет: ${param.totalConverted}</strong></p>
     </div>
 </c:if>
-        <p>Выбранные: <input type="BUTTON" class="button" id="mark-sel" value="Отметить как готовые"> </p><br>
+        <p>Выбранные: <input type="BUTTON" class="button" id="mark-sel" value="Отметить как готовые">
+            <input type="BUTTON" class="button" id="bulk-down" value="Скачать">
+            <input type="BUTTON" class="button" id="bulk-remove" value="Удалить"></p><br>
         <spring:url value="/" var="postUrl" />
-         <input type="hidden" name="action" value="" id="hid-action"/>
         <!-- Box -->
         <div class="box">
             <!-- Box Head -->
@@ -71,6 +83,7 @@
             <!-- End Box Head -->
 
             <form method="post" action="${postUrl}" id="forms-form">
+            <input type="hidden" name="action" value="" id="hid-action"/>
             <c:choose>
             <c:when test="${!empty formsList}">
             <!-- Table -->

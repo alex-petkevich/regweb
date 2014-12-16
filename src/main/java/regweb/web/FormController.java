@@ -7,9 +7,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import regweb.Actions;
 import regweb.ConstLists;
 import regweb.domain.FileUpload;
 import regweb.domain.Form;
@@ -20,11 +22,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Controller
 public class FormController {
@@ -36,15 +43,52 @@ public class FormController {
     private MessageSource messageSource;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String actionForms(@RequestParam(value="action",required = false)  String action,
+    public String actionForms(@RequestParam(value="action",required = false)  Integer action,
                               @RequestParam(value="selusers",required = false) String[] selusers,Map<String, Object> map) {
-        
-        if (selusers!=null)
+
+      if (action == null)
+        action = 0;
+
+      switch (action) {
+        case Actions.REMOVE :
+          if (selusers!=null)
             for (int i=0;i<selusers.length;i++) {
-                Form form = formService.getForm(Integer.parseInt(selusers[i]));
-                form.setIs_registered(true);
-                formService.save(form);
+              formService.removeForm(Integer.parseInt(selusers[i]));
             }
+        break;
+        case Actions.DOWNLOAD :
+          /*if (selusers!=null) {
+            File temp;
+            try {
+              temp = File.createTempFile("temp-file-name", ".tmp");
+            } catch (IOException e) {
+              e.printStackTrace();
+              System.exit(1);
+            }
+
+
+            for (int i = 0; i < selusers.length; i++) {
+              Form form = formService.getForm(Integer.parseInt(selusers[i]));
+
+              String name = "form_"+form.getPassnum_13()+".txt";
+              model.put("form",form);
+
+              response.setHeader(headerKey, headerValue);
+              return "template/template";
+
+            }
+          }*/
+        break;
+        default:
+          if (selusers!=null)
+            for (int i=0;i<selusers.length;i++) {
+              Form form = formService.getForm(Integer.parseInt(selusers[i]));
+              form.setIs_registered(true);
+              formService.save(form);
+            }
+
+      }
+
         return "redirect:/";
     }
     
@@ -188,7 +232,7 @@ public class FormController {
     }
 
     @RequestMapping(value = "/addform", method = RequestMethod.POST)
-    public String processForm(@Valid Form form,BindingResult result,@RequestParam("copy")  String copy, Map model) {
+    public String processForm(@Valid Form form,BindingResult result,@RequestParam("copy")  String copy,@RequestParam(value="is_children",required = false)  String is_children, Map model) {
         
         model.putAll(fillDictionary());
         
@@ -206,6 +250,7 @@ public class FormController {
             form.setAdded(prevForm.getAdded());
             form.setUser_id(prevForm.getUser_id());
         }
+        form.setIs_children(is_children==null || !is_children.equals("1"));
         formService.save(form);
         if (!copy.equals("")) {
             return "redirect:/edit/"+form.getId();
@@ -224,11 +269,11 @@ public class FormController {
         Form form;
         if (id!=null) {
             form = formService.getForm(id);
+            String filename = (!form.getFilename().isEmpty() ? form.getFilename() + ".txt" : "form_"+form.getPassnum_13()+".txt");
             model.put("form",form);
             response.setContentType("text/plain");
             String headerKey = "Content-Disposition";
-            String headerValue = String.format("attachment; filename=\"%s\"",
-                    "form_"+form.getPassnum_13()+".txt");
+            String headerValue = String.format("attachment; filename=\"%s\"",filename);
             response.setHeader(headerKey, headerValue);
             return "template/template";
         } else {
@@ -268,6 +313,44 @@ public class FormController {
 
         return model;
     }
+
+
+  /**
+   * Zip it
+   * @param zipFile output ZIP file location
+   */
+  public void zipIt(String zipFile, String inputFolder, String[] fileList){
+
+    byte[] buffer = new byte[1024];
+
+    try{
+
+      FileOutputStream fos = new FileOutputStream(zipFile);
+      ZipOutputStream zos = new ZipOutputStream(fos);
+
+      for(String file : fileList){
+
+        ZipEntry ze= new ZipEntry(file);
+        zos.putNextEntry(ze);
+
+        FileInputStream in = new FileInputStream(inputFolder + File.separator + file);
+
+        int len;
+        while ((len = in.read(buffer)) > 0) {
+          zos.write(buffer, 0, len);
+        }
+
+        in.close();
+      }
+
+      zos.closeEntry();
+      //remember close it
+      zos.close();
+
+    }catch(IOException ex){
+      ex.printStackTrace();
+    }
+  }
 
 
 }

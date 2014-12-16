@@ -18,7 +18,7 @@ Ctl00$cp$f$txt14NumerPaszportu	${form.passnum_13}	(?:^ctl00\\$cp\\$f\\$txt14Nume
 Ctl00$cp$f$txt16WydanyDnia	${form.passissuedate_14}	(?:^ctl00\\$cp\\$f\\$txt16WydanyDnia$)	(?:)	true	true
 Ctl00$cp$f$txt17WaznyDo	${form.passexpiration_15}	(?:^ctl00\\$cp\\$f\\$txt17WaznyDo$)	(?:)	true	true
 Ctl00$cp$f$txt15WydanyPrzez	${form.passby_16}	(?:^ctl00\\$cp\\$f\\$txt15WydanyPrzez$)	(?:)	true	true
-<c:choose><c:when test="${not form.is_children}">Ctl00$cp$f$opiekunowie$chkNieDotyczy	(?:^on$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$chkNieDotyczy$)	(?:)	false	true
+<c:choose><c:when test="${form.is_children}">Ctl00$cp$f$opiekunowie$chkNieDotyczy	(?:^on$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$chkNieDotyczy$)	(?:)	false	true
 Ctl00$cp$f$opiekunowie$cbObywatelstwo1	(?:^${form.citizenship_child}$)	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$cbObywatelstwo1$)	(?:)	true	true
 Ctl00$cp$f$opiekunowie$txtImie1	${form.name_child}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtImie1$)	(?:)	true	true
 Ctl00$cp$f$opiekunowie$txtNazwisko1	${form.surname_child}	(?:^ctl00\\$cp\\$f\\$opiekunowie\\$txtNazwisko1$)	(?:)	true	true
