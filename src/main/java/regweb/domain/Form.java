@@ -73,7 +73,7 @@ public class Form implements Serializable {
     @Column(name = "FAMILY_10")
     private String family_10;
 
-    @Size(min=14,max=14, message="{errors.requiredfield}")
+    @Size(min=0,max=100, message="{errors.requiredfield}")
     @Column(name = "IDENTNUM_11")
     private String identnum_11;
 
@@ -81,7 +81,7 @@ public class Form implements Serializable {
     @Column(name = "PASSDATA_12")
     private String passdata_12;
 
-    @Size(min=9,max=9, message="{errors.requiredfield}")
+    @Size(min=1,max=111, message="{errors.requiredfield}")
     @Column(name = "PASSNUM_13")
     private String passnum_13;
 
