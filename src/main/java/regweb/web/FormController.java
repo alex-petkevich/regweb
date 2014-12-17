@@ -269,7 +269,7 @@ public class FormController {
         Form form;
         if (id!=null) {
             form = formService.getForm(id);
-            String filename = (!form.getFilename().isEmpty() ? form.getFilename() + ".txt" : "form_"+form.getPassnum_13()+".txt");
+            String filename = (form.getFilename()!=null && !form.getFilename().equals("") ? form.getFilename() + ".txt" : "form_"+form.getPassnum_13()+".txt");
             model.put("form",form);
             response.setContentType("text/plain");
             String headerKey = "Content-Disposition";

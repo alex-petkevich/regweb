@@ -41,6 +41,9 @@
                 $('#hid-action').attr('value','${consts['DOWNLOAD']}');
                 $('#forms-form').submit();
             });
+            $(".down").on('click',function() {
+               $(this).before("[X]");
+            });
         });
     </script>
 </head>
@@ -112,7 +115,7 @@
                             <sec:authorize ifAnyGranted="ROLE_ADMIN">
                                 <td<c:if test="${form.is_registered}"> class="reged"</c:if>><a href="<spring:url value="/user/edit/" />${form.user_id}">${form.user_id}</a></td>
                             </sec:authorize>
-                            <td<c:if test="${form.is_registered}"> class="reged"</c:if>><a href="download/${form.id}" class="ico down">&nbsp;</a>&nbsp;<a href="edit/${form.id}" class="ico edit">&nbsp;</a>&nbsp;<a href="delete/${form.id}"  class="ico del">&nbsp;</a></td>
+                            <td<c:if test="${form.is_registered}"> class="reged"</c:if>><a href="download/${form.id}" id="ln_${form.id}" class="ico down">&nbsp;</a>&nbsp;<a href="edit/${form.id}" class="ico edit">&nbsp;</a>&nbsp;<a href="delete/${form.id}"  class="ico del">&nbsp;</a></td>
                         </tr>
                     </c:forEach>
                 </table>
