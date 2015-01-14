@@ -1,11 +1,14 @@
 package regweb.web;
 
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.exception.VelocityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,29 +25,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Controller
 public class FormController {
 
-    @Autowired
+  public static final String TEMPLATES_AUTOFILL_VM = "autofill.vm";
+  @Autowired
     private FormService formService;
 
     @Autowired
     private MessageSource messageSource;
 
+    @Autowired
+    private VelocityEngine velocityEngine;
+
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String actionForms(@RequestParam(value="action",required = false)  Integer action,
-                              @RequestParam(value="selusers",required = false) String[] selusers,Map<String, Object> map) {
+                              @RequestParam(value="selusers",required = false) String[] selusers,HttpServletResponse response) throws IOException {
 
       if (action == null)
         action = 0;
@@ -57,27 +58,47 @@ public class FormController {
             }
         break;
         case Actions.DOWNLOAD :
-          /*if (selusers!=null) {
-            File temp;
-            try {
-              temp = File.createTempFile("temp-file-name", ".tmp");
-            } catch (IOException e) {
-              e.printStackTrace();
-              System.exit(1);
-            }
+          if (selusers!=null) {
 
-
+            Set<File> files = new HashSet<File>();
             for (int i = 0; i < selusers.length; i++) {
+
+              Map<String, Object> model = new HashMap<String, Object>();
               Form form = formService.getForm(Integer.parseInt(selusers[i]));
-
-              String name = "form_"+form.getPassnum_13()+".txt";
               model.put("form",form);
-
-              response.setHeader(headerKey, headerValue);
-              return "template/template";
-
+              String textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, model);
+              String filename = (form.getFilename()!=null && !form.getFilename().equals("") ? form.getFilename() : "form_"+form.getPassnum_13());
+              File temp = File.createTempFile(filename, ".txt");
+              BufferedWriter fos = new BufferedWriter(new FileWriter(temp));
+              fos.write(textdoc);
+              String newFilePath = temp.getAbsolutePath().replace(temp.getName(), "") + filename + ".txt";
+              File newFile = new File(newFilePath);
+              temp.renameTo(newFile);
+              files.add(newFile);
             }
-          }*/
+            File outFile = File.createTempFile("package", ".zip");
+            this.zipIt(outFile.getAbsolutePath(),files);
+            FileInputStream in = new FileInputStream(outFile);
+            //send to browser
+            response.setContentType("application/zip");
+            String headerKey = "Content-Disposition";
+            String headerValue = String.format("attachment; filename=\"%s\"","package.zip");
+            response.setHeader(headerKey, headerValue);
+            byte[] outputByte = new byte[4096];
+            while(in.read(outputByte, 0, 4096) != -1)
+            {
+              response.getOutputStream().write(outputByte, 0, 4096);
+            }
+            in.close();
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+            // delete all temp files
+            outFile.delete();
+            for (File file : files) {
+              file.delete();
+            }
+
+          }
         break;
         default:
           if (selusers!=null)
@@ -265,17 +286,26 @@ public class FormController {
     }
 
     @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
-    public String downloadForm(Map<String, Object> model, @PathVariable("id") Integer id,HttpServletResponse response) {
+    public String downloadForm(Map<String, Object> model, @PathVariable("id") Integer id,HttpServletResponse response) throws IOException {
         Form form;
         if (id!=null) {
             form = formService.getForm(id);
             String filename = (form.getFilename()!=null && !form.getFilename().equals("") ? form.getFilename() + ".txt" : "form_"+form.getPassnum_13()+".txt");
             model.put("form",form);
-            response.setContentType("text/plain");
+            /*response.setContentType("text/plain");
             String headerKey = "Content-Disposition";
             String headerValue = String.format("attachment; filename=\"%s\"",filename);
-            response.setHeader(headerKey, headerValue);
-            return "template/template";
+            response.setHeader(headerKey, headerValue);*/
+
+            String textdoc= null;
+            try {
+              textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, model);
+            } catch (VelocityException e) {
+              e.printStackTrace();
+            }
+
+            response.getOutputStream().print(textdoc);
+            return null;
         } else {
           return "redirect:/";
         }
@@ -319,7 +349,7 @@ public class FormController {
    * Zip it
    * @param zipFile output ZIP file location
    */
-  public void zipIt(String zipFile, String inputFolder, String[] fileList){
+  public void zipIt(String zipFile, Set<File> fileList){
 
     byte[] buffer = new byte[1024];
 
@@ -328,12 +358,12 @@ public class FormController {
       FileOutputStream fos = new FileOutputStream(zipFile);
       ZipOutputStream zos = new ZipOutputStream(fos);
 
-      for(String file : fileList){
+      for(File file : fileList){
 
-        ZipEntry ze= new ZipEntry(file);
+        ZipEntry ze= new ZipEntry(file.getName());
         zos.putNextEntry(ze);
 
-        FileInputStream in = new FileInputStream(inputFolder + File.separator + file);
+        FileInputStream in = new FileInputStream(file);
 
         int len;
         while ((len = in.read(buffer)) > 0) {
