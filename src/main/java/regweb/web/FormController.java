@@ -69,7 +69,9 @@ public class FormController {
               String textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, model);
               String filename = (form.getFilename()!=null && !form.getFilename().equals("") ? form.getFilename() : "form_"+form.getPassnum_13());
               File temp = File.createTempFile(filename, ".txt");
-              BufferedWriter fos = new BufferedWriter(new FileWriter(temp));
+              BufferedWriter fos = new BufferedWriter(new OutputStreamWriter(
+                  new FileOutputStream(temp), "UTF-8"
+              ));
               fos.write(textdoc);
               String newFilePath = temp.getAbsolutePath().replace(temp.getName(), "") + filename + ".txt";
               File newFile = new File(newFilePath);
