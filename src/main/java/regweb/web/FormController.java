@@ -21,6 +21,7 @@ import regweb.domain.Form;
 import regweb.exceptions.ImportExceptions;
 import regweb.service.FormService;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -294,6 +295,9 @@ public class FormController {
             form = formService.getForm(id);
             String filename = (form.getFilename()!=null && !form.getFilename().equals("") ? form.getFilename() + ".txt" : "form_"+form.getPassnum_13()+".txt");
             model.put("form",form);
+            if (form.getPassdata_12()!=null) {
+              //model.put("doctitle", ConstLists.docTypeList.get(form.getPassdata_12()));
+            }
             /*response.setContentType("text/plain");
             String headerKey = "Content-Disposition";
             String headerValue = String.format("attachment; filename=\"%s\"",filename);
@@ -301,12 +305,14 @@ public class FormController {
 
             String textdoc= null;
             try {
-              textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, model);
+              textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM,"utf-8", model);
             } catch (VelocityException e) {
               e.printStackTrace();
             }
+            ServletOutputStream out = response.getOutputStream();
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(out));
 
-            response.getOutputStream().print(textdoc);
+            writer.print(textdoc);
             return null;
         } else {
           return "redirect:/";

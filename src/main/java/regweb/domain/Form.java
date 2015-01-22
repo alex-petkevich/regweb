@@ -81,6 +81,9 @@ public class Form implements Serializable {
     @Column(name = "PASSDATA_12")
     private String passdata_12;
 
+    @Column(name = "PASSDATA_12_OTHER")
+    private String passdata_12_other;
+
     @Size(min=1,max=111, message="{errors.requiredfield}")
     @Column(name = "PASSNUM_13")
     private String passnum_13;
@@ -190,6 +193,9 @@ public class Form implements Serializable {
     @Size(min=1,max=3, message="{errors.requiredfield}")
     @Column(name = "COUNTRYVISITOR_18")
     private String countryvisitor_18;
+
+    @Column(name = "EXPDATE_18_UNLIMITED")
+    private boolean expdate_18_unlimited;
 
     @Column(name = "VISITDOC_18")
     private String visitdoc_18;
@@ -383,7 +389,13 @@ public class Form implements Serializable {
     @Column(name = "ENDCOUNTRYTO_28")
     private String endcountryto_28;
 
-    @Column(name = "PERSONALDATAES_34")
+    @Column(name = "EXPENCIES_33_ABOVE")
+    private boolean expencies_33_above;
+
+    @Column(name = "EXPENCIES_33_OTHER")
+    private boolean expencies_33_other;
+
+  @Column(name = "PERSONALDATAES_34")
     private String personaldataes_34;
 
     @Column(name = "PERSONALDATASURNAME_34")
@@ -823,11 +835,11 @@ public class Form implements Serializable {
         this.fax_20 = fax_20;
     }
 
-    public List getGoal_21() {
+    public List<String> getGoal_21() {
         return goal_21;
     }
 
-    public void setGoal_21(List goal_21) {
+    public void setGoal_21(List<String> goal_21) {
         this.goal_21 = goal_21;
     }
 
@@ -1055,11 +1067,11 @@ public class Form implements Serializable {
         this.expencies_33 = expencies_33;
     }
 
-    public List getMoney_type_33() {
+    public List<String> getMoney_type_33() {
         return money_type_33;
     }
 
-    public void setMoney_type_33(List money_type_33) {
+    public void setMoney_type_33(List<String> money_type_33) {
         this.money_type_33 = money_type_33;
     }
 
@@ -1270,5 +1282,37 @@ public class Form implements Serializable {
 
     public void setFilename(String filename) {
       this.filename = filename;
+    }
+
+    public boolean isExpdate_18_unlimited() {
+      return expdate_18_unlimited;
+    }
+
+    public void setExpdate_18_unlimited(boolean expdate_18_unlimited) {
+      this.expdate_18_unlimited = expdate_18_unlimited;
+    }
+
+    public String getPassdata_12_other() {
+      return passdata_12_other;
+    }
+
+    public void setPassdata_12_other(String passdata_12_other) {
+      this.passdata_12_other = passdata_12_other;
+    }
+
+    public boolean getExpencies_33_above() {
+      return expencies_33_above;
+    }
+
+    public void setExpencies_33_above(boolean expencies_33_above) {
+      this.expencies_33_above = expencies_33_above;
+    }
+
+    public boolean getExpencies_33_other() {
+      return expencies_33_other;
+    }
+
+    public void setExpencies_33_other(boolean expencies_33_other) {
+      this.expencies_33_other = expencies_33_other;
     }
 }
