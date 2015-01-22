@@ -40,13 +40,14 @@ public class RoboParser {
       currentForm.setName_3(getColumnValue("txtimiona", rows));
       currentForm.setBirthdate_4(getColumnValue("txtdataurodzin", rows));
       currentForm.setPlacedate_5(getColumnValue("txtmiejsceurodzenia", rows));
-      currentForm.setCountry_6(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbkrajurodzenia", rows)));
-      currentForm.setCitizenship_7(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbobecneobywatelstwo", rows)));
-      currentForm.setCitizenship_born_8(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbposiadaneobywatelstwo", rows)));
+      currentForm.setCountry_6(ConstLists.getKeyByValue(ConstLists.countriesList, getColumnValue("cbkrajurodzenia", rows)));
+      currentForm.setCitizenship_7(ConstLists.getKeyByValue(ConstLists.countriesList, getColumnValue("cbobecneobywatelstwo", rows)));
+      currentForm.setCitizenship_born_8(ConstLists.getKeyByValue(ConstLists.countriesList, getColumnValue("cbposiadaneobywatelstwo", rows)));
       currentForm.setSex_9(getColumnKeyPart("rbplec", rows));
       currentForm.setFamily_10(getColumnKeyPart("rbstancywilny", rows));
       currentForm.setIdentnum_11(getColumnValue("txt5numerdowodu", rows));
       currentForm.setPassdata_12(getColumnKeyPart("rbl13", rows));
+      currentForm.setPassdata_12_other(getColumnValue("txt13rodzaj",rows));
       currentForm.setPassnum_13(getColumnValue("txt14numerpaszportu", rows));
       currentForm.setPassissuedate_14(getColumnValue("txt16wydanydnia", rows));
       currentForm.setPassexpiration_15(getColumnValue("txt17waznydo", rows));
@@ -86,6 +87,11 @@ public class RoboParser {
         currentForm.setCountryvisitor_18("Tak");
         currentForm.setVisitdoc_18(getColumnValue("txt18anumer", rows));
         currentForm.setExpdate_18(getColumnValue("txt18bdatawaznosci", rows));
+        if (getColumnValue("chk18bezterminowo",rows).equals("")) {
+          currentForm.setExpdate_18_unlimited(false);
+        } else {
+          currentForm.setExpdate_18_unlimited(true);
+        }
       } else {
         currentForm.setCountryvisitor_18("Nie");
       }
@@ -103,7 +109,20 @@ public class RoboParser {
       currentForm.setFax_20(getColumnValue("txt20numerfax", rows));
       currentForm.setTitle_20(getColumnValue("txt20nazwa", rows));
       currentForm.setEmail_20(getColumnValue("txt20email", rows));
+      List<String> goals = new ArrayList<String>();
+      if (getColumnValue("0:",rows).equals("*")) {  goals.add("Туризм"); }
+      if (getColumnValue("1:",rows).equals("*")) {  goals.add("Деловая"); }
+      if (getColumnValue("2:",rows).equals("*")) {  goals.add("Посещение родственников или друзей"); }
+      if (getColumnValue("3:",rows).equals("*")) {  goals.add("Культура"); }
+      if (getColumnValue("4:",rows).equals("*")) {  goals.add("Спорт"); }
+      if (getColumnValue("5:",rows).equals("*")) {  goals.add("Официальная"); }
+      if (getColumnValue("6:",rows).equals("*")) {  goals.add("Лечение"); }
+      if (getColumnValue("7:",rows).equals("*")) {  goals.add("Учеба"); }
+      if (getColumnValue("8:",rows).equals("*")) {  goals.add("Транзит"); }
+      if (getColumnValue("9:",rows).equals("*")) {  goals.add("Транзит ч. аэропорт"); }
+      if (getColumnValue("10:",rows).equals("*")) {  goals.add("Иная (указать)"); }
 
+      currentForm.setGoal_21(goals);
       currentForm.setGoalother_21(getColumnValue("txt29celpodrozy", rows));
       currentForm.setDest_country_22(ConstLists
           .getKeyByValue(ConstLists.inputCountriesList, getColumnValue("ddl21krajdocelowy", rows)));
@@ -145,7 +164,39 @@ public class RoboParser {
       currentForm.setEmail_31(getColumnValue("txt34email", rows));
       currentForm.setExpencies_33(getColumnKeyPart("rbl35", rows));
       currentForm.setExpenciesother_33(getColumnValue("txt35ktopokrywakoszty", rows));
-      //currentForm.setMoney_type_33(getColumnValue("txt36inne", rows));
+      if (getColumnValue("lbl35a_okreslony",rows).equals("")) {
+        currentForm.setExpencies_33_above(false);
+      } else {
+        currentForm.setExpencies_33_above(true);
+      }
+      if (getColumnValue("lbl35a_inny",rows).equals("")) {
+        currentForm.setExpencies_33_other(false);
+      } else {
+        currentForm.setExpencies_33_other(true);
+      }
+      List<String> money_type = new ArrayList<String>();
+      if (getColumnValue("rb36gotowka",rows).equals("*")) {
+        money_type.add("Наличные деньги");
+      }
+      if (getColumnValue("rb36czeki",rows).equals("*")) {
+        money_type.add("Дорожные чеки");
+      }
+      if (getColumnValue("rb36karty",rows).equals("*")) {
+        money_type.add("Кредитная карточка");
+      }
+      if (getColumnValue("rb36zakwaterowanie",rows).equals("*")) {
+        money_type.add("Размещение");
+      }
+      if (getColumnValue("rb36transport",rows).equals("*")) {
+        money_type.add("Предоплачен транспорт");
+      }
+      if (getColumnValue("rb36pokrywakoszty",rows).equals("*")) {
+        money_type.add("Обеспечиваются все расходы во время пребывания");
+      }
+      if (getColumnValue("rb36inne",rows).equals("*")) {
+        money_type.add("Иные (указать)");
+      }
+      currentForm.setMoney_type_33(money_type);
       currentForm.setMoney_type_other_33(getColumnValue("txt36inne", rows));
       currentForm.setInshurance_33(getColumnValue("txt36waznedo", rows));
       currentForm.setPersonaldataes_34(getColumnValue("chkniedotyczy43", rows));

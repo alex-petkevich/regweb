@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import regweb.Actions;
 import regweb.ConstLists;
 import regweb.domain.FileUpload;
@@ -210,7 +211,7 @@ public class FormController {
     }
     
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importForm(FileUpload fileUpload, BindingResult result, Map model,Locale locale,@RequestParam("id")  Integer id,HttpServletRequest request) {
+    public String importForm(FileUpload fileUpload, BindingResult result, Map model,Locale locale,@RequestParam("id")  Integer id,MultipartHttpServletRequest request) {
         
         if (fileUpload.getFileData()!=null && fileUpload.getFileData().getContentType().equals("application/pdf")) {
             try {

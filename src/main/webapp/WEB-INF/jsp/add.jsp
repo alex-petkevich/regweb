@@ -26,6 +26,9 @@
                     check_children(true);
                 }
             });
+            $("#more_children").on('click',function(){
+                $('#more_children_table').show();
+            });
             $("#ctl00_cp_f_ctrl31__rbl34_1").on('click',function() {
                 check_inv1();
             });
@@ -115,6 +118,40 @@
 
     </div>       -->
 </form:form>
+<spring:url value="/import" var="importUrl" />
+<form:form modelAttribute="fileUpload"  method="post" action="${importUrl}"  enctype="multipart/form-data">
+    <input type="hidden" name="id" value="${form.id}" />
+
+    <div class="box">
+        <div class="box-head">
+            <h2>Импорт анкеты</h2>
+        </div>
+        <table>
+            <tr>
+                <td colspan="2">
+                    <div class="errors"> ${importError}</div>
+
+                    Импорт из Roboform XML:    <form:input path="fileData" type="file"/>
+                </td>
+            </tr>
+        </table>
+        <div class="buttons">
+            <input type="submit" value="Сохранить" class="button" />
+
+        </div>
+
+    </div>
+</form:form>
+<c:if test="${not empty param.totalConverted}">
+    <div class="msg msg-ok">
+        <p><strong>Успешно сконвертировано анкет: ${param.totalConverted}</strong></p>
+    </div>
+</c:if>
+<c:if test="${not empty param.errorConvert}">
+    <div class="msg msg-error">
+        <p><strong>При конвертации найдены ошибки в исходных данных: <br /> ${sessionScope["errorImport"]}</strong></p>
+    </div>
+</c:if>
 
 <spring:url value="/addform" var="postUrl" />
 <form:form method="post" action="${postUrl}" commandName="form" name="aspnetForm"  id="aspnetForm" onsubmit="javascript:return WebForm_OnSubmit();">
@@ -123,12 +160,12 @@
     <div class="box">
         <!-- Box Head -->
         <div class="box-head">
-            <h2>Персональные данныzе</h2>
+            <h2>Персональные данные</h2>
         </div>
 
         <table>
             <tr>
-                <td colspan="2"><form:label path="surname_1" cssClass="sign">1. Ф!амилия(-и)  </form:label>
+                <td colspan="2"><form:label path="surname_1" cssClass="sign">1. Фамилия(-и)  </form:label>
                     <span id="ctl00_cp_f_daneOs_revTxtNazwisko" class="errors hide">Неправильное значение</span>
                     <span id="ctl00_cp_f_daneOs_rfvTxtNazwisko" class="errors hide">Поле для обязательного заполнения </span>
                     <br/>
@@ -269,7 +306,14 @@
 
         <table>
             <tr>
-                <td colspan="2"> <form:checkbox path="is_children" id="ctl00_cp_f_opiekunowie_chkNieDotyczy" value="Nie" /> Не касается</td>
+                <td colspan="2">
+                    <c:choose><c:when test="${not form.is_children}">
+                        <input type="checkbox" name="is_children" id="ctl00_cp_f_opiekunowie_chkNieDotyczy" value="1" checked="checked" />
+                    </c:when><c:otherwise>
+                        <input type="checkbox" name="is_children" id="ctl00_cp_f_opiekunowie_chkNieDotyczy" value="1"  />
+                    </c:otherwise></c:choose>
+                    Не касается
+                </td>
             </tr>
             <tr>
                 <td colspan="2"><form:label path="citizenship_child" cssClass="sign">Гражданство </form:label> <span id="ctl00_cp_f_opiekunowie_rfvCbObywatelstwo1" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
