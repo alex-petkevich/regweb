@@ -298,10 +298,10 @@ public class FormController {
             if (form.getPassdata_12()!=null) {
               //model.put("doctitle", ConstLists.docTypeList.get(form.getPassdata_12()));
             }
-            /*response.setContentType("text/plain");
+            response.setContentType("text/plain");
             String headerKey = "Content-Disposition";
             String headerValue = String.format("attachment; filename=\"%s\"",filename);
-            response.setHeader(headerKey, headerValue);*/
+            response.setHeader(headerKey, headerValue);
 
             String textdoc= null;
             try {
