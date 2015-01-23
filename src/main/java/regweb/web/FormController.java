@@ -69,13 +69,14 @@ public class FormController {
               Map<String, Object> model = new HashMap<String, Object>();
               Form form = formService.getForm(Integer.parseInt(selusers[i]));
               model.put("form",form);
-              String textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, model);
+              String textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM,"utf-8", model);
               String filename = (form.getFilename()!=null && !form.getFilename().equals("") ? form.getFilename() : "form_"+form.getPassnum_13());
               File temp = File.createTempFile(filename, ".txt");
               BufferedWriter fos = new BufferedWriter(new OutputStreamWriter(
                   new FileOutputStream(temp), "UTF-8"
               ));
               fos.write(textdoc);
+              fos.flush();
               String newFilePath = temp.getAbsolutePath().replace(temp.getName(), "") + filename + ".txt";
               File newFile = new File(newFilePath);
               temp.renameTo(newFile);
@@ -312,11 +313,8 @@ public class FormController {
             } catch (VelocityException e) {
               e.printStackTrace();
             }
-           // ServletOutputStream out = response.getOutputStream();
-  //          PrintWriter writer = new PrintWriter(new OutputStreamWriter(out, "UTF-8"));
-          response.getOutputStream().write(textdoc.getBytes());
-          response.getOutputStream().flush();
-  //          writer.print(textdoc);
+            response.getOutputStream().write(textdoc.getBytes());
+            response.getOutputStream().flush();
             return null;
         } else {
           return "redirect:/";
