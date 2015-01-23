@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -311,7 +312,7 @@ public class FormController {
               e.printStackTrace();
             }
             ServletOutputStream out = response.getOutputStream();
-            PrintWriter writer = new PrintWriter(new OutputStreamWriter(out));
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
 
             writer.print(textdoc);
             return null;

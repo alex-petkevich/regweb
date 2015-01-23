@@ -346,7 +346,6 @@ public class Form implements Serializable {
     @Column(name = "ADDRESS_31")
     private String address_31;
 
-    @Size(min=1,max=5, message="{errors.requiredfield}")
     @Column(name = "BUILDING_31")
     private String building_31;
 
