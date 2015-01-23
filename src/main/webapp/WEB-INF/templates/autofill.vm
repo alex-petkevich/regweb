@@ -243,8 +243,16 @@ Ctl00$cp$f$ctrl31_$txt34adres	$!form.address_31	(?:^ctl00\$cp\$f\$ctrl31_\$txt34
 Ctl00$cp$f$ctrl31_$txt34NumerDomu	$!form.building_31	(?:^ctl00\$cp\$f\$ctrl31_\$txt34NumerDomu$)	(?:)	true	true
 Ctl00$cp$f$ctrl31_$txt34NumerLokalu	$!form.flat_31	(?:^ctl00\$cp\$f\$ctrl31_\$txt34NumerLokalu$)	(?:)	true	true
 Ctl00$cp$f$ctrl31_$txt34Email	$!form.email_31	(?:^ctl00\$cp\$f\$ctrl31_\$txt34Email$)	(?:)	true	true
+#if ($form.expencies_33 == "1")
 Сам заявитель	(?:^1$)	(?:^ctl00\$cp\$f\$rbl35$)	(?:)	true	true
+#else
+Сам заявитель	(?:^1$)	(?:^ctl00\$cp\$f\$rbl35$)	(?:)	false	true
+#end
+#if ($form.expencies_33 == "2")
 Спонсор (приглашающее лицо, предприятие, организация), указать	(?:^2$)	(?:^ctl00\$cp\$f\$rbl35$)	(?:)	true	true
+#else
+Спонсор (приглашающее лицо, предприятие, организация), указать	(?:^2$)	(?:^ctl00\$cp\$f\$rbl35$)	(?:)	false	true
+#end
 #if ($form.expencies_33_above)
 упомянутые в пунктах 31 и 32	(?:^on$)	(?:^ctl00\$cp\$f\$lbl35a_okreslony$)	(?:)	true	true
 #else
@@ -281,34 +289,34 @@ Ctl00$cp$f$txt35KtoPokrywaKoszty	$!form.money_type_other_33	(?:^ctl00\$cp\$f\$tx
 #set ($fnd = true)
 #foreach($money in $form.money_type_33)
 #if ($money == "Кредитная карточка")
-Кредитная карточка	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Karty$)	(?:)	false	true
+Кредитная карточка	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Karty$)	(?:)	true	true
 #set ($fnd = false)
 #end
 #end
 #if ($fnd)
-Кредитная карточка	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Karty$)	(?:)	true	true
+Кредитная карточка	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Karty$)	(?:)	false	true
 #set ($fnd = true)
 #end
 #set ($fnd = true)
 #foreach($money in $form.money_type_33)
 #if ($money == "Размещение")
-Размещение	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Zakwaterowanie$)	(?:)	false	true
+Размещение	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Zakwaterowanie$)	(?:)	true	true
 #set ($fnd = false)
 #end
 #end
 #if ($fnd)
-Размещение	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Zakwaterowanie$)	(?:)	true	true
+Размещение	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Zakwaterowanie$)	(?:)	false	true
 #set ($fnd = true)
 #end
 #set ($fnd = true)
 #foreach($money in $form.money_type_33)
 #if ($money == "Предоплачен транспорт")
-Предоплачен транспорт	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Transport$)	(?:)	false	true
+Предоплачен транспорт	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Transport$)	(?:)	true	true
 #set ($fnd = false)
 #end
 #end
 #if ($fnd)
-Предоплачен транспорт	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Transport$)	(?:)	true	true
+Предоплачен транспорт	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Transport$)	(?:)	false	true
 #set ($fnd = true)
 #end
 #set ($fnd = true)
@@ -319,18 +327,18 @@ Ctl00$cp$f$txt35KtoPokrywaKoszty	$!form.money_type_other_33	(?:^ctl00\$cp\$f\$tx
 #end
 #end
 #if ($fnd)
-Обеспечиваются все расходы во время пребывания	(?:^on$)	(?:^ctl00\$cp\$f\$rb36PokrywaKoszty$)	(?:)	true	true
+Обеспечиваются все расходы во время пребывания	(?:^on$)	(?:^ctl00\$cp\$f\$rb36PokrywaKoszty$)	(?:)	false	true
 #set ($fnd = true)
 #end
 #set ($fnd = true)
 #foreach($money in $form.money_type_33)
 #if ($money == "Иные (указать)")
-Иные (указать)	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Inne$)	(?:)	false	true
+Иные (указать)	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Inne$)	(?:)	true	true
 #set ($fnd = false)
 #end
 #end
 #if ($fnd)
-Иные (указать)	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Inne$)	(?:)	true	true
+Иные (указать)	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Inne$)	(?:)	false	true
 #set ($fnd = true)
 #end
 Страхование поездки / медицинское страхование. Действительно до  (год-месяц-день)	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Ubezpieczenie$)	(?:)	false	true
