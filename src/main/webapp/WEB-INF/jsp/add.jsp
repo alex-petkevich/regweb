@@ -67,6 +67,7 @@
                 $('#ctl00_cp_f_opiekunowie_txtMiejscowosc1').removeAttr("disabled");
                 $('#ctl00_cp_f_opiekunowie_txtKod1').removeAttr("disabled");
                 $('#ctl00_cp_f_opiekunowie_txtAdres1').removeAttr("disabled");
+                $('#more_children').removeAttr("disabled","disabled");
             } else {
                 $('#ctl00_cp_f_opiekunowie_cbObywatelstwo1').attr("disabled","disabled");
                 $('#ctl00_cp_f_opiekunowie_txtImie1').attr("disabled","disabled");
@@ -76,6 +77,7 @@
                 $('#ctl00_cp_f_opiekunowie_txtMiejscowosc1').attr("disabled","disabled");
                 $('#ctl00_cp_f_opiekunowie_txtKod1').attr("disabled","disabled");
                 $('#ctl00_cp_f_opiekunowie_txtAdres1').attr("disabled","disabled");
+                $('#more_children').attr("disabled","disabled");
             }
         }
         function check_inv1() {
@@ -357,50 +359,59 @@
                     <div class="errors"> <form:errors path="address_child" /></div>
                     <form:input path="address_child" cssClass="field size1" maxlength="255" id="ctl00_cp_f_opiekunowie_txtAdres1" /></td>
             </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" name="more_children" id="more_children" value="Подробнее" />
+                </td>
+            </tr>
         </table>
 
-        <table class="hide">
+        <table class="hide" id="more_children_table">
+
             <tr>
-                <td colspan="2"> &nbsp;</td>
+                <td colspan="2"><form:label path="citizenship_child2" cssClass="sign">Гражданство </form:label> <span id="ctl00_cp_f_opiekunowie_rfvCbObywatelstwo2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                    <div class="errors"> <form:errors path="citizenship_child2" /></div>
+                    <form:select items="${countiresOldList}" cssClass="field size1" id="ctl00_cp_f_opiekunowie_cbObywatelstwo2" path="citizenship_child2" /></td>
             </tr>
             <tr>
-                <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvCbObywatelstwo2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
-                    <input type="hidden" name="ctl00_cp_f_opiekunowie_cbObywatelstwo2" id="ctl00_cp_f_opiekunowie_cbObywatelstwo2"  /></td>
+                <td colspan="2"><form:label path="name_child2" cssClass="sign">Имя</form:label><span id="ctl00_cp_f_opiekunowie_rfvTxtImie2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                    <div class="errors"> <form:errors path="name_child2" /></div>
+                    <form:input path="name_child2" cssClass="field size1" maxlength="50" id="ctl00_cp_f_opiekunowie_txtImie2" /></td>
             </tr>
             <tr>
-                <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvTxtImie2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
-                    <input type="hidden" name="ctl00_cp_f_opiekunowie_txtImie2" id="ctl00_cp_f_opiekunowie_txtImie2"  />
-                </td>
+                <td colspan="2"><form:label path="surname_child2" cssClass="sign">Фамилия</form:label><span id="ctl00_cp_f_opiekunowie_rfvTxtNazwisko2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                    <div class="errors"> <form:errors path="surname_child2" /></div>
+                    <form:input path="surname_child2" cssClass="field size1" maxlength="150" id="ctl00_cp_f_opiekunowie_txtNazwisko2" /></td>
             </tr>
             <tr>
-                <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvTxtNazwisko2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
-                    <input type="hidden" name="ctl00_cp_f_opiekunowie_txtNazwisko2" id="ctl00_cp_f_opiekunowie_txtNazwisko2"  /></td>
-            </tr>
-            <tr>
-                <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvCbPanstwo2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+                <td colspan="2"><form:label path="country_child2" cssClass="sign">Государство </form:label><span id="ctl00_cp_f_opiekunowie_rfvCbPanstwo2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
                     <br/>
-                    <input type="hidden" name="ctl00_cp_f_opiekunowie_cbPanstwo2" id="ctl00_cp_f_opiekunowie_cbPanstwo2"  />
-                </td>
+                    <div class="errors"> <form:errors path="country_child2" /></div>
+                    <form:select items="${countiresList}" cssClass="field size1" id="ctl00_cp_f_opiekunowie_cbPanstwo2" path="country_child2" /></td>
             </tr>
             <tr>
-                <td colspan="2"><span id="ctl00_cp_f_opiekunowie_lblStanProwincja2" class="FormularzEtykietaWewnetrznaEtykieta">Штат/провинция</span><br/>
-                    <input type="hidden" name="ctl00_cp_f_opiekunowie_txtStanProwincja2" id="ctl00_cp_f_opiekunowie_txtStanProwincja2"  />
-                </td>
+                <td colspan="2"><form:label path="state_child" cssClass="sign">Штат/провинция</form:label><span id="ctl00_cp_f_opiekunowie_lblStanProwincja2" class="FormularzEtykietaWewnetrznaEtykieta">Штат/провинция</span><br/>
+                    <div class="errors"> <form:errors path="state_child2" /></div>
+                    <form:input path="state_child2" cssClass="field size1" maxlength="50" id="ctl00_cp_f_opiekunowie_txtStanProwincja2" /></td>
             </tr>
             <tr>
-                <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvTxtMiejscowosc2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
-                    <input type="hidden" name="ctl00_cp_f_opiekunowie_txtMiejscowosc2" id="ctl00_cp_f_opiekunowie_txtMiejscowosc2"  />
-                </td>
+                <td colspan="2"><form:label path="city_child2" cssClass="sign">Место</form:label><span id="ctl00_cp_f_opiekunowie_rfvTxtMiejscowosc2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                    <div class="errors"> <form:errors path="city_child2" /></div>
+                    <form:input path="city_child2" cssClass="field size1" maxlength="56" id="ctl00_cp_f_opiekunowie_txtMiejscowosc2" /></td>
             </tr>
             <tr>
-                <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvTxtKod2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
-                    <input type="hidden" name="ctl00_cp_f_opiekunowie_txtKod2" id="ctl00_cp_f_opiekunowie_txtKod2"  /></td>
+                <td colspan="2"><form:label path="index_child2" cssClass="sign">Почтовый индекс</form:label><span id="ctl00_cp_f_opiekunowie_rfvTxtKod2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+                    <br/>
+                    <div class="errors"> <form:errors path="index_child2" /></div>
+                    <form:input path="index_child2" cssClass="field size1" maxlength="20" id="ctl00_cp_f_opiekunowie_txtKod2" /></td>
             </tr>
             <tr>
-                <td colspan="2"><span id="ctl00_cp_f_opiekunowie_rfvTxtAdres2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
-                    <input type="hidden" name="ctl00_cp_f_opiekunowie_txtAdres2" id="ctl00_cp_f_opiekunowie_txtAdres2"  /></td>
+                <td colspan="2"><form:label path="address_child" cssClass="sign">Адрес </form:label><span id="ctl00_cp_f_opiekunowie_rfvTxtAdres2" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                    <div class="errors"> <form:errors path="address_child2" /></div>
+                    <form:input path="address_child2" cssClass="field size1" maxlength="255" id="ctl00_cp_f_opiekunowie_txtAdres2" /></td>
             </tr>
         </table>
+
 
     </div>
     <input type="hidden" name="ctl00$cp$f$opiekunowie$IloscOpiekunoV" id="ctl00_cp_f_opiekunowie_IloscOpiekunoV" value="1" />
