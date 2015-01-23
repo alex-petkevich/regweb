@@ -312,7 +312,7 @@ public class FormController {
               e.printStackTrace();
             }
             ServletOutputStream out = response.getOutputStream();
-            PrintWriter writer = new PrintWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(out, "UTF-8"));
 
             writer.print(textdoc);
             return null;
