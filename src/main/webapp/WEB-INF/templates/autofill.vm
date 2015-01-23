@@ -245,14 +245,9 @@ Ctl00$cp$f$ctrl31_$txt34NumerLokalu	$!form.flat_31	(?:^ctl00\$cp\$f\$ctrl31_\$tx
 Ctl00$cp$f$ctrl31_$txt34Email	$!form.email_31	(?:^ctl00\$cp\$f\$ctrl31_\$txt34Email$)	(?:)	true	true
 #if ($form.expencies_33 == "1")
 Сам заявитель	(?:^1$)	(?:^ctl00\$cp\$f\$rbl35$)	(?:)	true	true
-#else
-Сам заявитель	(?:^1$)	(?:^ctl00\$cp\$f\$rbl35$)	(?:)	false	true
 #end
 #if ($form.expencies_33 == "2")
 Спонсор (приглашающее лицо, предприятие, организация), указать	(?:^2$)	(?:^ctl00\$cp\$f\$rbl35$)	(?:)	true	true
-#else
-Спонсор (приглашающее лицо, предприятие, организация), указать	(?:^2$)	(?:^ctl00\$cp\$f\$rbl35$)	(?:)	false	true
-#end
 #if ($form.expencies_33_above)
 упомянутые в пунктах 31 и 32	(?:^on$)	(?:^ctl00\$cp\$f\$lbl35a_okreslony$)	(?:)	true	true
 #else
@@ -260,10 +255,11 @@ Ctl00$cp$f$ctrl31_$txt34Email	$!form.email_31	(?:^ctl00\$cp\$f\$ctrl31_\$txt34Em
 #end
 #if ($form.expencies_33_other)
 Иные (указать)	(?:^on$)	(?:^ctl00\$cp\$f\$lbl35a_inny$)	(?:)	true	true
+Ctl00$cp$f$txt35KtoPokrywaKoszty	$!form.money_type_other_33	(?:^ctl00\$cp\$f\$txt35KtoPokrywaKoszty$)	(?:)	true	true
 #else
 Иные (указать)	(?:^on$)	(?:^ctl00\$cp\$f\$lbl35a_inny$)	(?:)	false	true
 #end
-Ctl00$cp$f$txt35KtoPokrywaKoszty	$!form.money_type_other_33	(?:^ctl00\$cp\$f\$txt35KtoPokrywaKoszty$)	(?:)	true	true
+#end
 #set ($fnd = true)
 #foreach($money in $form.money_type_33)
 #if ($money == "Наличные деньги")
