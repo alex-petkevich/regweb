@@ -300,10 +300,11 @@ public class FormController {
             if (form.getPassdata_12()!=null) {
               //model.put("doctitle", ConstLists.docTypeList.get(form.getPassdata_12()));
             }
-            response.setContentType("text/plain");
+            response.setContentType("text/plain; charset=utf-8");
             String headerKey = "Content-Disposition";
             String headerValue = String.format("attachment; filename=\"%s\"",filename);
             response.setHeader(headerKey, headerValue);
+            response.setCharacterEncoding("utf-8");
 
             String textdoc= null;
             try {
@@ -311,10 +312,11 @@ public class FormController {
             } catch (VelocityException e) {
               e.printStackTrace();
             }
-            ServletOutputStream out = response.getOutputStream();
-            PrintWriter writer = new PrintWriter(new OutputStreamWriter(out, "UTF-8"));
-
-            writer.print(textdoc);
+           // ServletOutputStream out = response.getOutputStream();
+  //          PrintWriter writer = new PrintWriter(new OutputStreamWriter(out, "UTF-8"));
+          response.getOutputStream().write(textdoc.getBytes());
+          response.getOutputStream().flush();
+  //          writer.print(textdoc);
             return null;
         } else {
           return "redirect:/";
