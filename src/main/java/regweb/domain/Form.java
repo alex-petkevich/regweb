@@ -33,58 +33,58 @@ public class Form implements Serializable {
     @Column(name = "IS_REGISTERED")
     private boolean is_registered;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "SURNAME_1")
     private String surname_1;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "SURNAME_2")
     private String surname_2;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "NAME_3")
     private String name_3;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "BIRTHDATE_4")
     private String birthdate_4;
 
-    @Size(min=1,max=50, message="{errors.requiredfield}")
+    @Size(min = 1, max = 50, message = "{errors.requiredfield}")
     @Column(name = "PLACEDATE_5")
     private String placedate_5;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "COUNTRY_6")
     private String country_6;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "CITIZENSHIP_7")
     private String citizenship_7;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "CITIZENSHIP_BORN_8")
     private String citizenship_born_8;
 
-    @Size(min=1,max=3, message="{errors.requiredfield}")
+    @Size(min = 1, max = 3, message = "{errors.requiredfield}")
     @Column(name = "SEX_9")
     private String sex_9;
 
-    @Size(min=1,max=4, message="{errors.requiredfield}")
+    @Size(min = 1, max = 4, message = "{errors.requiredfield}")
     @Column(name = "FAMILY_10")
     private String family_10;
 
-    @Size(min=0,max=100, message="{errors.requiredfield}")
+    @Size(min = 0, max = 100, message = "{errors.requiredfield}")
     @Column(name = "IDENTNUM_11")
     private String identnum_11;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "PASSDATA_12")
     private String passdata_12;
 
     @Column(name = "PASSDATA_12_OTHER")
     private String passdata_12_other;
 
-    @Size(min=1,max=111, message="{errors.requiredfield}")
+    @Size(min = 1, max = 111, message = "{errors.requiredfield}")
     @Column(name = "PASSNUM_13")
     private String passnum_13;
 
@@ -98,7 +98,7 @@ public class Form implements Serializable {
     @Column(name = "PASSEXPIRATION_15")
     private String passexpiration_15;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "PASSBY_16")
     private String passby_16;
 
@@ -133,7 +133,7 @@ public class Form implements Serializable {
     @Column(name = "CITIZENSHIP_CHILD2")
     private String citizenship_child2;
 
-  @Column(name = "NAME_CHILD2")
+    @Column(name = "NAME_CHILD2")
     private String name_child2;
 
     @Column(name = "SURNAME_CHILD2")
@@ -154,23 +154,23 @@ public class Form implements Serializable {
     @Column(name = "ADDRESS_CHILD2")
     private String address_child2;
 
-  @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "COUNTRY_17")
     private String country_17;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "STATE_17")
     private String state_17;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "CITY_17")
     private String city_17;
 
-    @Size(min=1,max=6, message="{errors.requiredfield}")
+    @Size(min = 1, max = 6, message = "{errors.requiredfield}")
     @Column(name = "INDEX_17")
     private String index_17;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "ADDRESS_17")
     private String address_17;
 
@@ -182,15 +182,15 @@ public class Form implements Serializable {
     @Column(name = "EMAIL_17")
     private String email_17;
 
-    @Size(min=1,max=10, message="{errors.requiredfield}")
+    @Size(min = 1, max = 10, message = "{errors.requiredfield}")
     @Column(name = "PREFTEL_17")
     private String preftel_17;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "TEL_17")
     private String tel_17;
 
-    @Size(min=1,max=3, message="{errors.requiredfield}")
+    @Size(min = 1, max = 3, message = "{errors.requiredfield}")
     @Column(name = "COUNTRYVISITOR_18")
     private String countryvisitor_18;
 
@@ -203,49 +203,49 @@ public class Form implements Serializable {
     @Column(name = "EXPDATE_18")
     private String expdate_18;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "PROFESSION_19")
     private String profession_19;
 
     @Column(name = "EMPLOYEE_20")
     private String employee_20;
 
-    @Size(min=0,max=255, message="{errors.requiredfield}")
+    @Size(min = 0, max = 255, message = "{errors.requiredfield}")
     @Column(name = "COUNTRY_20")
     private String country_20;
 
-    @Size(min=0,max=255, message="{errors.requiredfield}")
+    @Size(min = 0, max = 255, message = "{errors.requiredfield}")
     @Column(name = "STATE_20")
     private String state_20;
 
-    @Size(min=0,max=255, message="{errors.requiredfield}")
+    @Size(min = 0, max = 255, message = "{errors.requiredfield}")
     @Column(name = "CITY_20")
     private String city_20;
 
-    @Size(min=0,max=255, message="{errors.requiredfield}")
+    @Size(min = 0, max = 255, message = "{errors.requiredfield}")
     @Column(name = "INDEX_20")
     private String index_20;
 
-    @Size(min=0,max=255, message="{errors.requiredfield}")
+    @Size(min = 0, max = 255, message = "{errors.requiredfield}")
     @Column(name = "ADDRESS_20")
     private String address_20;
 
-    @Size(min=0,max=10, message="{errors.requiredfield}")
+    @Size(min = 0, max = 10, message = "{errors.requiredfield}")
     @Column(name = "PREFTEL_20")
     private String preftel_20;
 
-    @Size(min=0,max=255, message="{errors.requiredfield}")
+    @Size(min = 0, max = 255, message = "{errors.requiredfield}")
     @Column(name = "TEL_20")
     private String tel_20;
 
-    @Size(min=0,max=255, message="{errors.requiredfield}")
+    @Size(min = 0, max = 255, message = "{errors.requiredfield}")
     @Column(name = "TITLE_20")
     private String title_20;
 
     @Column(name = "EMAIL_20")
     private String email_20;
 
-    @Size(max=10, message="{errors.requiredfield}")
+    @Size(max = 10, message = "{errors.requiredfield}")
     @Column(name = "PREFFAX_20")
     private String preffax_20;
 
@@ -259,19 +259,19 @@ public class Form implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<String> goal_21 = new ArrayList<String>();
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "DEST_COUNTRY_22")
     private String dest_country_22;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "FIRST_COUNTRY_23")
     private String first_country_23;
 
-    @Size(min=1,max=2, message="{errors.requiredfield}")
+    @Size(min = 1, max = 2, message = "{errors.requiredfield}")
     @Column(name = "TYPEVISA_24")
     private String typevisa_24;
 
-    @Size(min=1,max=2, message="{errors.requiredfield}")
+    @Size(min = 1, max = 2, message = "{errors.requiredfield}")
     @Column(name = "LENVISA_25")
     private String lenvisa_25;
 
@@ -315,48 +315,48 @@ public class Form implements Serializable {
     @Column(name = "SURNAME_31")
     private String surname_31;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "COUNTRY_31")
     private String country_31;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "CITY_31")
     private String city_31;
 
-    @Size(min=1,max=10, message="{errors.requiredfield}")
+    @Size(min = 1, max = 10, message = "{errors.requiredfield}")
     @Column(name = "INDEX_31")
     private String index_31;
 
-    @Size(min=1,max=10, message="{errors.requiredfield}")
+    @Size(min = 1, max = 10, message = "{errors.requiredfield}")
     @Column(name = "PREFTEL_31")
     private String preftel_31;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "TEL_31")
     private String tel_31;
 
     @Column(name = "PREFFAX_31")
-    @Size(max=10, message="{errors.requiredfield}")
+    @Size(max = 10, message = "{errors.requiredfield}")
     private String preffax_31;
 
     @Column(name = "FAX_31")
     private String fax_31;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "ADDRESS_31")
     private String address_31;
 
     @Column(name = "BUILDING_31")
     private String building_31;
 
-    @Size(min=0,max=5, message="{errors.requiredfield}")
+    @Size(min = 0, max = 5, message = "{errors.requiredfield}")
     @Column(name = "FLAT_31")
     private String flat_31;
 
     @Column(name = "EMAIL_31")
     private String email_31;
 
-    @Size(min=1,max=255, message="{errors.requiredfield}")
+    @Size(min = 1, max = 255, message = "{errors.requiredfield}")
     @Column(name = "EXPENCIES_33")
     private String expencies_33;
 
@@ -394,7 +394,7 @@ public class Form implements Serializable {
     @Column(name = "EXPENCIES_33_OTHER")
     private boolean expencies_33_other;
 
-  @Column(name = "PERSONALDATAES_34")
+    @Column(name = "PERSONALDATAES_34")
     private String personaldataes_34;
 
     @Column(name = "PERSONALDATASURNAME_34")
@@ -1116,202 +1116,202 @@ public class Form implements Serializable {
 
 
     public String getFingerprint_27() {
-      return fingerprint_27;
+        return fingerprint_27;
     }
 
     public void setFingerprint_27(String fingerprint_27) {
-      this.fingerprint_27 = fingerprint_27;
+        this.fingerprint_27 = fingerprint_27;
     }
 
     public String getEndcountrypermit_28() {
-      return endcountrypermit_28;
+        return endcountrypermit_28;
     }
 
     public void setEndcountrypermit_28(String endcountrypermit_28) {
-      this.endcountrypermit_28 = endcountrypermit_28;
+        this.endcountrypermit_28 = endcountrypermit_28;
     }
 
     public String getEndcountryby_28() {
-      return endcountryby_28;
+        return endcountryby_28;
     }
 
     public void setEndcountryby_28(String endcountryby_28) {
-      this.endcountryby_28 = endcountryby_28;
+        this.endcountryby_28 = endcountryby_28;
     }
 
     public String getEndcountryfrom_28() {
-      return endcountryfrom_28;
+        return endcountryfrom_28;
     }
 
     public void setEndcountryfrom_28(String endcountryfrom_28) {
-      this.endcountryfrom_28 = endcountryfrom_28;
+        this.endcountryfrom_28 = endcountryfrom_28;
     }
 
     public String getEndcountryto_28() {
-      return endcountryto_28;
+        return endcountryto_28;
     }
 
     public void setEndcountryto_28(String endcountryto_28) {
-      this.endcountryto_28 = endcountryto_28;
+        this.endcountryto_28 = endcountryto_28;
     }
 
     public String getPersonaldataes_34() {
-      return personaldataes_34;
+        return personaldataes_34;
     }
 
     public void setPersonaldataes_34(String personaldataes_34) {
-      this.personaldataes_34 = personaldataes_34;
+        this.personaldataes_34 = personaldataes_34;
     }
 
     public String getPersonaldatasurname_34() {
-      return personaldatasurname_34;
+        return personaldatasurname_34;
     }
 
     public void setPersonaldatasurname_34(String personaldatasurname_34) {
-      this.personaldatasurname_34 = personaldatasurname_34;
+        this.personaldatasurname_34 = personaldatasurname_34;
     }
 
     public String getPersonaldataname_34() {
-      return personaldataname_34;
+        return personaldataname_34;
     }
 
     public void setPersonaldataname_34(String personaldataname_34) {
-      this.personaldataname_34 = personaldataname_34;
+        this.personaldataname_34 = personaldataname_34;
     }
 
     public String getPersonaldatadate_34() {
-      return personaldatadate_34;
+        return personaldatadate_34;
     }
 
     public void setPersonaldatadate_34(String personaldatadate_34) {
-      this.personaldatadate_34 = personaldatadate_34;
+        this.personaldatadate_34 = personaldatadate_34;
     }
 
     public String getPersonaldatapass_34() {
-      return personaldatapass_34;
+        return personaldatapass_34;
     }
 
     public void setPersonaldatapass_34(String personaldatapass_34) {
-      this.personaldatapass_34 = personaldatapass_34;
+        this.personaldatapass_34 = personaldatapass_34;
     }
 
     public String getPersonaldatacitizen_34() {
-      return personaldatacitizen_34;
+        return personaldatacitizen_34;
     }
 
     public void setPersonaldatacitizen_34(String personaldatacitizen_34) {
-      this.personaldatacitizen_34 = personaldatacitizen_34;
+        this.personaldatacitizen_34 = personaldatacitizen_34;
     }
 
     public String getPersonaldatarelation_34() {
-      return personaldatarelation_34;
+        return personaldatarelation_34;
     }
 
     public void setPersonaldatarelation_34(String personaldatarelation_34) {
-      this.personaldatarelation_34 = personaldatarelation_34;
+        this.personaldatarelation_34 = personaldatarelation_34;
     }
 
     public String getName_child2() {
-      return name_child2;
+        return name_child2;
     }
 
     public void setName_child2(String name_child2) {
-      this.name_child2 = name_child2;
+        this.name_child2 = name_child2;
     }
 
     public String getSurname_child2() {
-      return surname_child2;
+        return surname_child2;
     }
 
     public void setSurname_child2(String surname_child2) {
-      this.surname_child2 = surname_child2;
+        this.surname_child2 = surname_child2;
     }
 
     public String getCountry_child2() {
-      return country_child2;
+        return country_child2;
     }
 
     public void setCountry_child2(String country_child2) {
-      this.country_child2 = country_child2;
+        this.country_child2 = country_child2;
     }
 
     public String getState_child2() {
-      return state_child2;
+        return state_child2;
     }
 
     public void setState_child2(String state_child2) {
-      this.state_child2 = state_child2;
+        this.state_child2 = state_child2;
     }
 
     public String getCity_child2() {
-      return city_child2;
+        return city_child2;
     }
 
     public void setCity_child2(String city_child2) {
-      this.city_child2 = city_child2;
+        this.city_child2 = city_child2;
     }
 
     public String getIndex_child2() {
-      return index_child2;
+        return index_child2;
     }
 
     public void setIndex_child2(String index_child2) {
-      this.index_child2 = index_child2;
+        this.index_child2 = index_child2;
     }
 
     public String getAddress_child2() {
-      return address_child2;
+        return address_child2;
     }
 
     public void setAddress_child2(String address_child2) {
-      this.address_child2 = address_child2;
+        this.address_child2 = address_child2;
     }
 
     public String getCitizenship_child2() {
-      return citizenship_child2;
+        return citizenship_child2;
     }
 
     public void setCitizenship_child2(String citizenship_child2) {
-      this.citizenship_child2 = citizenship_child2;
+        this.citizenship_child2 = citizenship_child2;
     }
 
     public String getFilename() {
-      return filename;
+        return filename;
     }
 
     public void setFilename(String filename) {
-      this.filename = filename;
+        this.filename = filename;
     }
 
     public boolean isExpdate_18_unlimited() {
-      return expdate_18_unlimited;
+        return expdate_18_unlimited;
     }
 
     public void setExpdate_18_unlimited(boolean expdate_18_unlimited) {
-      this.expdate_18_unlimited = expdate_18_unlimited;
+        this.expdate_18_unlimited = expdate_18_unlimited;
     }
 
     public String getPassdata_12_other() {
-      return passdata_12_other;
+        return passdata_12_other;
     }
 
     public void setPassdata_12_other(String passdata_12_other) {
-      this.passdata_12_other = passdata_12_other;
+        this.passdata_12_other = passdata_12_other;
     }
 
     public boolean getExpencies_33_above() {
-      return expencies_33_above;
+        return expencies_33_above;
     }
 
     public void setExpencies_33_above(boolean expencies_33_above) {
-      this.expencies_33_above = expencies_33_above;
+        this.expencies_33_above = expencies_33_above;
     }
 
     public boolean getExpencies_33_other() {
-      return expencies_33_other;
+        return expencies_33_other;
     }
 
     public void setExpencies_33_other(boolean expencies_33_other) {
-      this.expencies_33_other = expencies_33_other;
+        this.expencies_33_other = expencies_33_other;
     }
 }

@@ -45,13 +45,13 @@ package regweb.util;
 
 import com.itextpdf.text.pdf.parser.*;
 
-public class MyStrategy implements TextExtractionStrategy {
+class MyStrategy implements TextExtractionStrategy {
 
     private Vector lastStart;
     private Vector lastEnd;
 
     /** used to store the resulting String. */
-    private final StringBuffer result = new StringBuffer();;
+    private final StringBuffer result = new StringBuffer();
 
     /**
      * Creates a new text extraction renderer.
@@ -102,12 +102,11 @@ public class MyStrategy implements TextExtractionStrategy {
         Vector end = segment.getEndPoint();
 
         if (!firstRender){
-            Vector x0 = start;
             Vector x1 = lastStart;
             Vector x2 = lastEnd;
 
             // see http://mathworld.wolfram.com/Point-LineDistance2-Dimensional.html
-            float dist = (x2.subtract(x1)).cross((x1.subtract(x0))).lengthSquared() / x2.subtract(x1).lengthSquared();
+            float dist = (x2.subtract(x1)).cross((x1.subtract(start))).lengthSquared() / x2.subtract(x1).lengthSquared();
 
             float sameLineThreshold = 1f; // we should probably base this on the current font metrics, but 1 pt seems to be sufficient for the time being
             if (dist > sameLineThreshold)
@@ -128,8 +127,6 @@ public class MyStrategy implements TextExtractionStrategy {
                     System.out.println("Inserting implied space before '" + renderInfo.getText() + "'");
                 }
             }
-        } else {
-            //System.out.println("Displaying first string of content '" + text + "' :: x1 = " + x1);
         }
 
         System.out.print(renderInfo.getText());

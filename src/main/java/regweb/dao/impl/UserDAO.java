@@ -89,7 +89,7 @@ public class UserDAO implements IUserDAO {
         userQ.setParameter(0,name);
         List<User> result = userQ.list();
         if (result.size() > 0)
-            return (User)result.get(0);
+            return result.get(0);
         else
             return null;
     }
@@ -97,10 +97,8 @@ public class UserDAO implements IUserDAO {
     @Override
     public User getUser(Integer id) {
 
-        User user = (User) sessionFactory.getCurrentSession().get(
+        return (User) sessionFactory.getCurrentSession().get(
                 User.class, id);
-
-        return user;
     }
 
     @Override

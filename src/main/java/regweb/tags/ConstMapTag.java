@@ -33,7 +33,8 @@ public class ConstMapTag extends TagSupport {
   public int doStartTag () throws JspException {
     // Use Reflection to look up the desired field.
     try {
-      Class<?> clazz = null;
+        //noinspection UnusedAssignment
+        Class<?> clazz = null;
       try {
         clazz = Class.forName (path);
       } catch (ClassNotFoundException ex) {
@@ -42,24 +43,24 @@ public class ConstMapTag extends TagSupport {
       Field [] flds = clazz.getDeclaredFields ();
       // Go through all the fields, and put static ones in a Map.
       Map<String, Object> constMap = new TreeMap<String, Object> ();
-      for (int i = 0; i < flds.length; i++) {
-        // Check to see if this is public static final. If not, it's not a constant.
-        int mods = flds [i].getModifiers ();
-        if (!Modifier.isFinal (mods) || !Modifier.isStatic (mods) ||
-            !Modifier.isPublic (mods)) {
-          continue;
+        for (Field fld : flds) {
+            // Check to see if this is public static final. If not, it's not a constant.
+            int mods = fld.getModifiers();
+            if (!Modifier.isFinal(mods) || !Modifier.isStatic(mods) ||
+                    !Modifier.isPublic(mods)) {
+                continue;
+            }
+            Object val = null;
+            try {
+                val = fld.get(null);    // null for static fields.
+            } catch (Exception ex) {
+                System.out.println("Problem getting value of " + fld.getName());
+                continue;
+            }
+            // flds [i].get () automatically wraps primitives.
+            // Place the constant into the Map.
+            constMap.put(fld.getName(), val);
         }
-        Object val = null;
-        try {
-          val = flds [i].get (null);    // null for static fields.
-        } catch (Exception ex) {
-          System.out.println ("Problem getting value of " + flds [i].getName ());
-          continue;
-        }
-        // flds [i].get () automatically wraps primitives.
-        // Place the constant into the Map.
-        constMap.put (flds [i].getName (), val);
-      }
       // Export the Map as a Page variable.
       pageContext.setAttribute (var, constMap);
     } catch (Exception ex) {

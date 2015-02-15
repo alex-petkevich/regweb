@@ -35,7 +35,7 @@
                 <li><a href="<spring:url value="/addform" />"><span>Добавление анкеты</span></a></li>
                 <li><a href="<spring:url value="/settings" />"><span>Настройки</span></a></li>
                 <sec:authorize ifAnyGranted="ROLE_ADMIN">
-                    <li><a href="<spring:url value="/users" />"><span>Пользователи</a></span></li>
+                    <li><a href="<spring:url value="/users" />"><span>Пользователи</span></a></li>
                     <li><a href="<spring:url value="/adduser" />"><span>Добавить пользователя</span></a></li>
                 </sec:authorize>
 

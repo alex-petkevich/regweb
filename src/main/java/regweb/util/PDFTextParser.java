@@ -11,9 +11,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 
 import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.parser.LocationTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
-import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 
 public class PDFTextParser {

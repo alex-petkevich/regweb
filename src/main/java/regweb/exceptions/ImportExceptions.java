@@ -8,7 +8,7 @@ import java.util.List;
 public class ImportExceptions extends Exception {
   final int total;
 
-  public ImportExceptions(int total,String text) {
+  private ImportExceptions(int total, String text) {
 
     super(text);
     this.total = total;

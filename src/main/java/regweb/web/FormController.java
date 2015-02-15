@@ -22,22 +22,19 @@ import regweb.domain.Form;
 import regweb.exceptions.ImportExceptions;
 import regweb.service.FormService;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Controller
-public class FormController {
+class FormController {
 
-  public static final String TEMPLATES_AUTOFILL_VM = "autofill.vm";
-  @Autowired
+    private static final String TEMPLATES_AUTOFILL_VM = "autofill.vm";
+    @Autowired
     private FormService formService;
 
     @Autowired
@@ -47,129 +44,128 @@ public class FormController {
     private VelocityEngine velocityEngine;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String actionForms(@RequestParam(value="action",required = false)  Integer action,
-                              @RequestParam(value="selusers",required = false) String[] selusers,HttpServletResponse response) throws IOException {
+    public String actionForms(@RequestParam(value = "action", required = false) Integer action,
+                              @RequestParam(value = "selusers", required = false) String[] selusers, HttpServletResponse response) throws IOException {
 
-      if (action == null)
-        action = 0;
+        if (action == null)
+            action = 0;
 
-      switch (action) {
-        case Actions.REMOVE :
-          if (selusers!=null)
-            for (int i=0;i<selusers.length;i++) {
-              formService.removeForm(Integer.parseInt(selusers[i]));
-            }
-        break;
-        case Actions.DOWNLOAD :
-          if (selusers!=null) {
+        switch (action) {
+            case Actions.REMOVE:
+                if (selusers != null)
+                    for (String seluser : selusers) {
+                        formService.removeForm(Integer.parseInt(seluser));
+                    }
+                break;
+            case Actions.DOWNLOAD:
+                if (selusers != null) {
 
-            Set<File> files = new HashSet<File>();
-            for (int i = 0; i < selusers.length; i++) {
+                    Set<File> files = new HashSet<File>();
+                    for (String seluser : selusers) {
 
-              Map<String, Object> model = new HashMap<String, Object>();
-              Form form = formService.getForm(Integer.parseInt(selusers[i]));
-              model.put("form",form);
-              String textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM,"utf-8", model);
-              String filename = (form.getFilename()!=null && !form.getFilename().equals("") ? form.getFilename() : "form_"+form.getPassnum_13());
-              File temp = File.createTempFile(filename, ".txt");
-              BufferedWriter fos = new BufferedWriter(new OutputStreamWriter(
-                  new FileOutputStream(temp), "UTF-8"
-              ));
-              fos.write(textdoc);
-              fos.flush();
-              String newFilePath = temp.getAbsolutePath().replace(temp.getName(), "") + filename + ".txt";
-              File newFile = new File(newFilePath);
-              temp.renameTo(newFile);
-              files.add(newFile);
-            }
-            File outFile = File.createTempFile("package", ".zip");
-            this.zipIt(outFile.getAbsolutePath(),files);
-            FileInputStream in = new FileInputStream(outFile);
-            //send to browser
-            response.setContentType("application/zip");
-            String headerKey = "Content-Disposition";
-            String headerValue = String.format("attachment; filename=\"%s\"","package.zip");
-            response.setHeader(headerKey, headerValue);
-            byte[] outputByte = new byte[4096];
-            while(in.read(outputByte, 0, 4096) != -1)
-            {
-              response.getOutputStream().write(outputByte, 0, 4096);
-            }
-            in.close();
-            response.getOutputStream().flush();
-            response.getOutputStream().close();
-            // delete all temp files
-            outFile.delete();
-            for (File file : files) {
-              file.delete();
-            }
+                        Map<String, Object> model = new HashMap<String, Object>();
+                        Form form = formService.getForm(Integer.parseInt(seluser));
+                        model.put("form", form);
+                        String textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, "utf-8", model);
+                        String filename = (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() : "form_" + form.getPassnum_13());
+                        File temp = File.createTempFile(filename, ".txt");
+                        BufferedWriter fos = new BufferedWriter(new OutputStreamWriter(
+                                new FileOutputStream(temp), "UTF-8"
+                        ));
+                        fos.write(textdoc);
+                        fos.flush();
+                        String newFilePath = temp.getAbsolutePath().replace(temp.getName(), "") + filename + ".txt";
+                        File newFile = new File(newFilePath);
+                        temp.renameTo(newFile);
+                        files.add(newFile);
+                    }
+                    File outFile = File.createTempFile("package", ".zip");
+                    this.zipIt(outFile.getAbsolutePath(), files);
+                    FileInputStream in = new FileInputStream(outFile);
+                    //send to browser
+                    response.setContentType("application/zip");
+                    String headerKey = "Content-Disposition";
+                    String headerValue = String.format("attachment; filename=\"%s\"", "package.zip");
+                    response.setHeader(headerKey, headerValue);
+                    byte[] outputByte = new byte[4096];
+                    while (in.read(outputByte, 0, 4096) != -1) {
+                        response.getOutputStream().write(outputByte, 0, 4096);
+                    }
+                    in.close();
+                    response.getOutputStream().flush();
+                    response.getOutputStream().close();
+                    // delete all temp files
+                    outFile.delete();
+                    for (File file : files) {
+                        file.delete();
+                    }
 
-          }
-        break;
-        default:
-          if (selusers!=null)
-            for (int i=0;i<selusers.length;i++) {
-              Form form = formService.getForm(Integer.parseInt(selusers[i]));
-              form.setIs_registered(true);
-              formService.save(form);
-            }
+                }
+                break;
+            default:
+                if (selusers != null)
+                    for (String seluser : selusers) {
+                        Form form = formService.getForm(Integer.parseInt(seluser));
+                        form.setIs_registered(true);
+                        formService.save(form);
+                    }
 
-      }
+        }
 
         return "redirect:/";
     }
-    
+
 
     @RequestMapping(value = "/")
-    public String listForms(@RequestParam(value="sort",required = false)  String sort,
-                            @RequestParam(value="dir",required = false)  String dir,
-                            @RequestParam(value="text",required = false)  String text,
-                            @RequestParam(value="from",required = false)  String from,
-                            @RequestParam(value="to",required = false)  String to,
-                            @RequestParam(value="not_reg",required = false)  String not_reg,
-                            @RequestParam(value="user_id",required = false)  String user_id,
-                            @RequestParam(value="clear",required = false)  String clear,
+    public String listForms(@RequestParam(value = "sort", required = false) String sort,
+                            @RequestParam(value = "dir", required = false) String dir,
+                            @RequestParam(value = "text", required = false) String text,
+                            @RequestParam(value = "from", required = false) String from,
+                            @RequestParam(value = "to", required = false) String to,
+                            @RequestParam(value = "not_reg", required = false) String not_reg,
+                            @RequestParam(value = "user_id", required = false) String user_id,
+                            @RequestParam(value = "clear", required = false) String clear,
                             Map<String, Object> map,
                             HttpSession session) {
         if (session.getAttribute("searchForm") == null) {
-            session.setAttribute("searchForm",new HashMap<String,String>());
+            session.setAttribute("searchForm", new HashMap<String, String>());
         }
-        Map<String,String> searchVal = (HashMap<String,String>)session.getAttribute("searchForm");
-        
+        Map<String, String> searchVal = (HashMap<String, String>) session.getAttribute("searchForm");
+
         if (is_admin()) {
-            if (user_id!=null) {
-                searchVal.put("user_id",user_id);
-            } 
-        }  else {
-            searchVal.put("user_id",SecurityContextHolder.getContext().getAuthentication().getName());
+            if (user_id != null) {
+                searchVal.put("user_id", user_id);
+            }
+        } else {
+            searchVal.put("user_id", SecurityContextHolder.getContext().getAuthentication().getName());
         }
-        if (text!=null) {
-            searchVal.put("text",text);
+        if (text != null) {
+            searchVal.put("text", text);
         }
-        if (from!=null) {
-            searchVal.put("from",from);
+        if (from != null) {
+            searchVal.put("from", from);
         }
-        if (to!=null){
-            searchVal.put("to",to);
+        if (to != null) {
+            searchVal.put("to", to);
         }
-        if (not_reg!=null && not_reg.equals("1")) {
-            searchVal.put("not_reg",not_reg);
-        } else if (clear!=null) {
-            searchVal.put("not_reg",null);
+        if (not_reg != null && not_reg.equals("1")) {
+            searchVal.put("not_reg", not_reg);
+        } else if (clear != null) {
+            searchVal.put("not_reg", null);
         }
-        session.setAttribute("searchForm",searchVal);
-        if (clear!=null && clear.equals("1")) {
-            session.setAttribute("searchForm",null);
+        session.setAttribute("searchForm", searchVal);
+        if (clear != null && clear.equals("1")) {
+            session.setAttribute("searchForm", null);
             searchVal.clear();
         }
         String to_sort = "";
         String to_dir = "";
-        if (sort==null) {
+        if (sort == null) {
             to_sort = "added";
             to_dir = "desc";
         } else {
             if (sort.equals("added")) {
-                 to_sort = "added";
+                to_sort = "added";
             }
             if (sort.equals("surname")) {
                 to_sort = "surname_1";
@@ -184,14 +180,14 @@ public class FormController {
                 to_sort = "is_registered";
             }
         }
-        if (dir!=null) {
+        if (dir != null) {
             to_dir = dir;
         }
 
-        map.put("formsList", formService.listForms(searchVal,to_sort,to_dir,0,0));
-        map.put("sort",sort);
-        map.put("dir",dir);
-        map.put("search",searchVal);
+        map.put("formsList", formService.listForms(searchVal, to_sort, to_dir, 0, 0));
+        map.put("sort", sort);
+        map.put("dir", dir);
+        map.put("search", searchVal);
 
         return "forms";
     }
@@ -211,64 +207,64 @@ public class FormController {
         model.put("form", form);
         return "add";
     }
-    
+
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importForm(FileUpload fileUpload, BindingResult result, Map model,Locale locale,@RequestParam("id")  Integer id,MultipartHttpServletRequest request) {
-        
-        if (fileUpload.getFileData()!=null && fileUpload.getFileData().getContentType().equals("application/pdf")) {
+    public String importForm(FileUpload fileUpload, BindingResult result, Map model, Locale locale, @RequestParam("id") Integer id, MultipartHttpServletRequest request) {
+
+        if (fileUpload.getFileData() != null && fileUpload.getFileData().getContentType().equals("application/pdf")) {
             try {
                 formService.parseFromPDF(fileUpload.getFileData().getInputStream());
                 return "redirect:/";
             } catch (IOException e) {
-                model.put("importError", messageSource.getMessage("errors.importReadError",null,locale));
+                model.put("importError", messageSource.getMessage("errors.importReadError", null, locale));
             }
 
-        } else if (fileUpload.getFileData()!=null && fileUpload.getFileData().getContentType().equals("text/html")) {
+        } else if (fileUpload.getFileData() != null && fileUpload.getFileData().getContentType().equals("text/html")) {
 
-          int total = 0;
-          try {
-            total = formService.parseFromRoboHTML(fileUpload.getFileData().getInputStream());
-            return "redirect:/?totalConverted="+total;
-          } catch (IOException e) {
-            model.put("importError", messageSource.getMessage("errors.importReadError",null,locale));
-          } catch(ImportExceptions ex) {
-            request.getSession().setAttribute("errorImport", ex.getMessage());
+            int total;
+            try {
+                total = formService.parseFromRoboHTML(fileUpload.getFileData().getInputStream());
+                return "redirect:/?totalConverted=" + total;
+            } catch (IOException e) {
+                model.put("importError", messageSource.getMessage("errors.importReadError", null, locale));
+            } catch (ImportExceptions ex) {
+                request.getSession().setAttribute("errorImport", ex.getMessage());
 
-            return "redirect:/addform?errorConvert=1&totalConverted="+ex.getTotal();
-          }
+                return "redirect:/addform?errorConvert=1&totalConverted=" + ex.getTotal();
+            }
 
-        }else {
-            model.put("importError", messageSource.getMessage("errors.incorrectPDFFormat",null,locale));
-            
+        } else {
+            model.put("importError", messageSource.getMessage("errors.incorrectPDFFormat", null, locale));
+
         }
-        
+
         model.putAll(fillDictionary());
         model.put("form", new Form());
-        
+
         return "add";
-    
-        
+
+
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteForm(Map<String, Object> model, @PathVariable("id") Integer id) {
-        if (id!=null) {
+        if (id != null) {
             formService.removeForm(id);
         }
         return "redirect:/";
     }
 
     @RequestMapping(value = "/addform", method = RequestMethod.POST)
-    public String processForm(@Valid Form form,BindingResult result,@RequestParam("copy")  String copy,@RequestParam(value="is_children",required = false)  String is_children, Map model) {
-        
+    public String processForm(@Valid Form form, BindingResult result, @RequestParam("copy") String copy, @RequestParam(value = "is_children", required = false) String is_children, Map model) {
+
         model.putAll(fillDictionary());
-        
+
         if (result.hasErrors()) {
             return "add";
         }
         Form prevForm = formService.getForm(form.getId());
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
-        if (form.getId() == null  || !copy.equals("")) {
+        if (form.getId() == null || !copy.equals("")) {
             form.setAdded(new Date());
             form.setUser_id(authentic.getName());
             form.setId(null);
@@ -277,10 +273,10 @@ public class FormController {
             form.setAdded(prevForm.getAdded());
             form.setUser_id(prevForm.getUser_id());
         }
-        form.setIs_children(is_children==null || !is_children.equals("1"));
+        form.setIs_children(is_children == null || !is_children.equals("1"));
         formService.save(form);
         if (!copy.equals("")) {
-            return "redirect:/edit/"+form.getId();
+            return "redirect:/edit/" + form.getId();
         } else {
             return "redirect:/";
         }
@@ -292,32 +288,29 @@ public class FormController {
     }
 
     @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
-    public String downloadForm(Map<String, Object> model, @PathVariable("id") Integer id,HttpServletResponse response) throws IOException {
+    public String downloadForm(Map<String, Object> model, @PathVariable("id") Integer id, HttpServletResponse response) throws IOException {
         Form form;
-        if (id!=null) {
+        if (id != null) {
             form = formService.getForm(id);
-            String filename = (form.getFilename()!=null && !form.getFilename().equals("") ? form.getFilename() + ".txt" : "form_"+form.getPassnum_13()+".txt");
-            model.put("form",form);
-            if (form.getPassdata_12()!=null) {
-              //model.put("doctitle", ConstLists.docTypeList.get(form.getPassdata_12()));
-            }
+            String filename = (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() + ".txt" : "form_" + form.getPassnum_13() + ".txt");
+            model.put("form", form);
             response.setContentType("text/plain; charset=utf-8");
             String headerKey = "Content-Disposition";
-            String headerValue = String.format("attachment; filename=\"%s\"",filename);
+            String headerValue = String.format("attachment; filename=\"%s\"", filename);
             response.setHeader(headerKey, headerValue);
             response.setCharacterEncoding("utf-8");
 
-            String textdoc= null;
+            String textdoc = null;
             try {
-              textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM,"utf-8", model);
+                textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, "utf-8", model);
             } catch (VelocityException e) {
-              e.printStackTrace();
+                e.printStackTrace();
             }
-            response.getOutputStream().write(textdoc.getBytes());
+            response.getOutputStream().write(textdoc!=null ? textdoc.getBytes() : null);
             response.getOutputStream().flush();
             return null;
         } else {
-          return "redirect:/";
+            return "redirect:/";
         }
     }
 
@@ -325,13 +318,13 @@ public class FormController {
     private boolean is_admin() {
         boolean is_admin = false;
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
-        for(GrantedAuthority role : authentic.getAuthorities()) {
+        for (GrantedAuthority role : authentic.getAuthorities()) {
             if (role.getAuthority().equals("ROLE_ADMIN"))
                 is_admin = true;
         }
         return is_admin;
     }
-    
+
     private Map fillDictionary() {
         Map model = new HashMap();
 
@@ -355,42 +348,43 @@ public class FormController {
     }
 
 
-  /**
-   * Zip it
-   * @param zipFile output ZIP file location
-   */
-  public void zipIt(String zipFile, Set<File> fileList){
+    /**
+     * Zip it
+     *
+     * @param zipFile output ZIP file location
+     */
+    void zipIt(String zipFile, Set<File> fileList) {
 
-    byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[1024];
 
-    try{
+        try {
 
-      FileOutputStream fos = new FileOutputStream(zipFile);
-      ZipOutputStream zos = new ZipOutputStream(fos);
+            FileOutputStream fos = new FileOutputStream(zipFile);
+            ZipOutputStream zos = new ZipOutputStream(fos);
 
-      for(File file : fileList){
+            for (File file : fileList) {
 
-        ZipEntry ze= new ZipEntry(file.getName());
-        zos.putNextEntry(ze);
+                ZipEntry ze = new ZipEntry(file.getName());
+                zos.putNextEntry(ze);
 
-        FileInputStream in = new FileInputStream(file);
+                FileInputStream in = new FileInputStream(file);
 
-        int len;
-        while ((len = in.read(buffer)) > 0) {
-          zos.write(buffer, 0, len);
+                int len;
+                while ((len = in.read(buffer)) > 0) {
+                    zos.write(buffer, 0, len);
+                }
+
+                in.close();
+            }
+
+            zos.closeEntry();
+            //remember close it
+            zos.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
-
-        in.close();
-      }
-
-      zos.closeEntry();
-      //remember close it
-      zos.close();
-
-    }catch(IOException ex){
-      ex.printStackTrace();
     }
-  }
 
 
 }

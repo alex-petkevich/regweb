@@ -853,10 +853,27 @@
             </tr>
 
         </table>
+
+    </div>
+
+
+    <div class="box">
+        <!-- Box Head -->
+        <div class="box-head">
+            <h2>Данные гражданина ЕС</h2>
+        </div>
+
+
+    </div>
+
+    <div class="box">
+        <!-- Box Head -->
+
         <div class="buttons">  <input type="submit" value="Сохранить" class="button" /> <c:if test="${not empty form.id}"><input type="button" id="copy" class="button" value="Скопировать в новую анкету" /></c:if>
 
         </div>
     </div>
+
     <input id="ctl00_cp_f_chkNieDotyczy43" type="hidden" name="ctl00$cp$f$chkNieDotyczy43" value="1">
 
     <input id="ctl00_cp_f_chk44Oswiadczenie1" type="hidden" name="ctl00$cp$f$chkNieD1otyczy43" value="1">
