@@ -8,80 +8,80 @@ import java.util.*;
  * Time: 0:54
  */
 public class ConstLists {
-    public static final Map<String, String> sexList = new LinkedHashMap<String , String>() {{
+    public static final Map<String, String> sexList = Collections.unmodifiableMap(new LinkedHashMap<String, String>() {{
         put("M", "Мужчина");
         put("F", "женщина");
-    }};
+    }});
 
-    public static final Map<String, String> mStatusList = new LinkedHashMap<String , String>() {{
+    public static final Map<String, String> mStatusList = Collections.unmodifiableMap(new LinkedHashMap<String , String>() {{
         put("KP", "Холост/не замужем");
         put("ZZ", "Женат/Замужем");
         put("SP", "не проживает с супругом");
         put("RR", "Разведен/-а");
         put("WW", "Вдовец/вдова");
         put("IN", "другой");
-    }};
+    }});
 
-    public static final List<String> goalsList = Arrays.asList(
-        "Туризм",
-        "Деловая",
-        "Посещение родственников или друзей",
-        "Культура",
-        "Спорт",
-        "Официальная",
-        "Лечение",
-        "Учеба",
-        "Транзит",
-        "Транзит ч. аэропорт",
-        "Иная (указать)"        
-    );
+    public static final List<String> goalsList = Collections.unmodifiableList(Arrays.asList(
+            "Туризм",
+            "Деловая",
+            "Посещение родственников или друзей",
+            "Культура",
+            "Спорт",
+            "Официальная",
+            "Лечение",
+            "Учеба",
+            "Транзит",
+            "Транзит ч. аэропорт",
+            "Иная (указать)"
+    ));
 
-    public static final List<String> moneyList = Arrays.asList(
-        "Наличные деньги",
-        "Дорожные чеки",
-        "Кредитная карточка",
-        "Размещение",
-        "Предоплачен транспорт",
-        "Обеспечиваются все расходы во время пребывания",
-        "Иные (указать)"
-    );
+    public static final List<String> moneyList = Collections.unmodifiableList(Arrays.asList(
+            "Наличные деньги",
+            "Дорожные чеки",
+            "Кредитная карточка",
+            "Размещение",
+            "Предоплачен транспорт",
+            "Обеспечиваются все расходы во время пребывания",
+            "Иные (указать)"
+    ));
 
-    public static final Map<String, String> countryPosList = new LinkedHashMap<String , String>() {{
+    public static final Map<String, String> countryPosList = Collections.unmodifiableMap(new LinkedHashMap<String , String>() {{
         put("Nie", "Нет");
         put("Tak", "Да. Вид на жительство или равноценный документ");
-    }};
+    }});
 
-    public static final Map<String, String> employeeList = new LinkedHashMap<String , String>() {{
+    public static final Map<String, String> employeeList = Collections.unmodifiableMap(new LinkedHashMap<String , String>() {{
         put("PRA", "Работодатель");
         put("UCZ", "Учебное заведение");
-    }};
+    }});
     
-    public static final Map<String, String> invList = new LinkedHashMap<String , String>() {{
+    public static final Map<String, String> invList = Collections.unmodifiableMap(new LinkedHashMap<String , String>() {{
         put("0", "человек");
         put("1", "фирма");
-    }};
+    }});
 
-    public static final Map<String, String> qtyList = new LinkedHashMap<String , String>() {{
+    public static final Map<String, String> qtyList = Collections.unmodifiableMap(new LinkedHashMap<String , String>() {{
         put("1", "Однократного въезда");
         put("2", "Двукратного въезда");
         put("3", "Многократного въезда");
-    }};
+    }});
 
-    public static final Map<String, String> expenciesList = new LinkedHashMap<String , String>() {{
+    public static final Map<String, String> expenciesList = Collections.unmodifiableMap(new LinkedHashMap<String , String>() {{
         put("1", "Сам заявитель");
         put("2", "Спонсор (приглашающее лицо, предприятие, организация), указать");
-    }};
+    }});
 
-    public static final Map<String, String> docTypeList = new LinkedHashMap<String , String>() {{
+    public static final Map<String, String> docTypeList = Collections.unmodifiableMap(new LinkedHashMap<String , String>() {{
         put("1", "Обычный паспорт");
         put("2", "Дипломатический паспорт");
         put("3", "Служебный паспорт");
         put("4", "Официальный паспорт");
         put("5", "Особый паспорт");
         put("6", "Иной проездной документ");
-    }};
+    }});
 
-    public static final Map<String, String> inputCountriesList = new LinkedHashMap<String , String>() {{
+    public static final Map<String, String> inputCountriesList = Collections.unmodifiableMap(new LinkedHashMap<String , String>() {{
         put("", "");
         put("AUT", "АВСТРИЯ");
         put("BEL", "БЕЛЬГИЯ");
@@ -109,9 +109,9 @@ public class ConstLists {
         put("CHE", "ШВЕЙЦАРИЯ");
         put("SWE", "ШВЕЦИЯ");
         put("EST", "ЭСТОНИЯ");
-    }};
+    }});
 
-    public static final Map<String, String> professionList = new LinkedHashMap<String , String>() {{
+    public static final Map<String, String> professionList = Collections.unmodifiableMap(new LinkedHashMap<String , String>() {{
         put("", "");
         put("35", "Административно-судебный служащий");
         put("05", "Артист");
@@ -149,10 +149,10 @@ public class ConstLists {
         put("36", "Член правления фирмы");
         put("18", "Электрик");
         put("04", "Юрист");
-    }};
+    }});
 
 
-    public static final Map<String, String> countriesList = new LinkedHashMap<String , String>() {{
+    public static final Map<String, String> countriesList = Collections.unmodifiableMap(new LinkedHashMap<String , String>() {{
         put("", "");
         put("TF", "FRANCUSKIE TERYTORIA POŁUDNIOWE I ANTARKTYCZNE");
         put("RKS", "KOCOBO");
@@ -380,9 +380,9 @@ public class ConstLists {
         put("ZAF", "ЮЖНО-АФРИКАНСКАЯ РЕСПУБЛИКА");
         put("JAM", "ЯМАЙКА");
         put("JPN", "ЯПОНИЯ");
-    }};
+    }});
 
-    public static final Map<String, String> countriesOldList = new LinkedHashMap<String , String>() {{
+    public static final Map<String, String> countriesOldList = Collections.unmodifiableMap(new LinkedHashMap<String , String>() {{
         put("", "");
         put("TF", "FRANCUSKIE TERYTORIA POŁUDNIOWE I ANTARKTYCZNE");
         put("RKS", "KOCOBO");
@@ -645,7 +645,7 @@ public class ConstLists {
         put("ZAF", "ЮЖНО-АФРИКАНСКАЯ РЕСПУБЛИКА");
         put("JAM", "ЯМАЙКА");
         put("JPN", "ЯПОНИЯ");
-    }};
+    }});
     
     public static String getKeyByValue(Map<String , String> map,String valueToFind) {
       if (map.containsValue(valueToFind)) {

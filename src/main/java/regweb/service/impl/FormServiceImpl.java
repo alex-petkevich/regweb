@@ -49,8 +49,6 @@ public class FormServiceImpl implements FormService {
     }
     
     public void parseFromPDF(InputStream fileStream) {
-        Form form = new Form();
-
         PDFTextParser pdfTextParserObj = new PDFTextParser();
         
         try {

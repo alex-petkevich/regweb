@@ -364,17 +364,23 @@ class FormController {
 
             for (File file : fileList) {
 
-                ZipEntry ze = new ZipEntry(file.getName());
-                zos.putNextEntry(ze);
+                FileInputStream in = null;
+                try {
+                    ZipEntry ze = new ZipEntry(file.getName());
+                    zos.putNextEntry(ze);
 
-                FileInputStream in = new FileInputStream(file);
+                    in = new FileInputStream(file);
 
-                int len;
-                while ((len = in.read(buffer)) > 0) {
-                    zos.write(buffer, 0, len);
+                    int len;
+                    while ((len = in.read(buffer)) > 0) {
+                        zos.write(buffer, 0, len);
+                    }
+                } finally {
+                    if (in != null) {
+                        in.close();
+                    }
                 }
 
-                in.close();
             }
 
             zos.closeEntry();
