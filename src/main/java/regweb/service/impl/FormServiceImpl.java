@@ -1,5 +1,7 @@
 package regweb.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +27,11 @@ import java.util.*;
  */
 @Service
 public class FormServiceImpl implements FormService {
+    public static final String OU_FILE = "d:\\out.txt";
     @Autowired
     private IFormDAO IFormDAO;
+
+    Logger logger = LoggerFactory.getLogger(FormServiceImpl.class);
 
     @Transactional
     public void save(Form form) {
@@ -52,9 +57,9 @@ public class FormServiceImpl implements FormService {
         PDFTextParser pdfTextParserObj = new PDFTextParser();
         
         try {
-            pdfTextParserObj.parsePdf(fileStream, "d:\\out.txt");
+            pdfTextParserObj.parsePdf(fileStream, OU_FILE);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warn("Can't parse PDF file");
         }
 
     }
@@ -95,7 +100,7 @@ public class FormServiceImpl implements FormService {
         }
       }
     } catch (IOException e) {
-      e.printStackTrace();
+        logger.warn("Can't parse Roboform file");
     }
 
     if (errors.size() > 0) {

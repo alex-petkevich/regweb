@@ -418,6 +418,8 @@ public class Form implements Serializable {
     @Column(name = "FILENAME")
     private String filename;
 
+    static final long serialVersionUID = 1212121211212L;
+
     public Integer getId() {
         return id;
     }

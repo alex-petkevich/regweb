@@ -2,6 +2,8 @@ package regweb.web;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import regweb.Actions;
 import regweb.ConstLists;
+import regweb.ConstPaths;
 import regweb.domain.FileUpload;
 import regweb.domain.Form;
 import regweb.exceptions.ImportExceptions;
@@ -34,6 +37,7 @@ import java.util.zip.ZipOutputStream;
 class FormController {
 
     private static final String TEMPLATES_AUTOFILL_VM = "autofill.vm";
+    public static final String PACKAGE_NAME = "package.zip";
     @Autowired
     private FormService formService;
 
@@ -42,6 +46,11 @@ class FormController {
 
     @Autowired
     private VelocityEngine velocityEngine;
+
+    @Autowired
+    private Properties properties;
+
+    Logger logger = LoggerFactory.getLogger(FormController.class);
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String actionForms(@RequestParam(value = "action", required = false) Integer action,
@@ -53,8 +62,8 @@ class FormController {
         switch (action) {
             case Actions.REMOVE:
                 if (selusers != null)
-                    for (String seluser : selusers) {
-                        formService.removeForm(Integer.parseInt(seluser));
+                    for (String selUser : selusers) {
+                        formService.removeForm(Integer.parseInt(selUser));
                     }
                 break;
             case Actions.DOWNLOAD:
@@ -66,18 +75,22 @@ class FormController {
                         Map<String, Object> model = new HashMap<String, Object>();
                         Form form = formService.getForm(Integer.parseInt(seluser));
                         model.put("form", form);
-                        String textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, "utf-8", model);
+                        String textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, properties.getProperty("source.encoding"), model);
                         String filename = (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() : "form_" + form.getPassnum_13());
                         File temp = File.createTempFile(filename, ".txt");
-                        BufferedWriter fos = new BufferedWriter(new OutputStreamWriter(
-                                new FileOutputStream(temp), "UTF-8"
-                        ));
-                        fos.write(textdoc);
-                        fos.flush();
-                        String newFilePath = temp.getAbsolutePath().replace(temp.getName(), "") + filename + ".txt";
-                        File newFile = new File(newFilePath);
-                        temp.renameTo(newFile);
-                        files.add(newFile);
+                        try {
+                            BufferedWriter fos = new BufferedWriter(new OutputStreamWriter(
+                                    new FileOutputStream(temp), properties.getProperty("source.encoding")
+                            ));
+                            fos.write(textdoc);
+                            fos.flush();
+                            String newFilePath = temp.getAbsolutePath().replace(temp.getName(), "") + filename + ".txt";
+                            File newFile = new File(newFilePath);
+                            temp.renameTo(newFile);
+                            files.add(newFile);
+                        } catch (IOException e) {
+                            logger.warn("Problem with file saving");
+                        }
                     }
                     File outFile = File.createTempFile("package", ".zip");
                     this.zipIt(outFile.getAbsolutePath(), files);
@@ -85,7 +98,7 @@ class FormController {
                     //send to browser
                     response.setContentType("application/zip");
                     String headerKey = "Content-Disposition";
-                    String headerValue = String.format("attachment; filename=\"%s\"", "package.zip");
+                    String headerValue = String.format("attachment; filename=\"%s\"", PACKAGE_NAME);
                     response.setHeader(headerKey, headerValue);
                     byte[] outputByte = new byte[4096];
                     while (in.read(outputByte, 0, 4096) != -1) {
@@ -95,24 +108,28 @@ class FormController {
                     response.getOutputStream().flush();
                     response.getOutputStream().close();
                     // delete all temp files
-                    outFile.delete();
-                    for (File file : files) {
-                        file.delete();
+                    try {
+                        outFile.delete();
+                        for (File file : files) {
+                            file.delete();
+                        }
+                    } catch (Exception exception) {
+                        logger.warn("Can't delete file %s", outFile.getAbsoluteFile());
                     }
 
                 }
                 break;
             default:
                 if (selusers != null)
-                    for (String seluser : selusers) {
-                        Form form = formService.getForm(Integer.parseInt(seluser));
+                    for (String selUser : selusers) {
+                        Form form = formService.getForm(Integer.parseInt(selUser));
                         form.setIs_registered(true);
                         formService.save(form);
                     }
 
         }
 
-        return "redirect:/";
+        return ConstPaths.ROOT_REDIRECT;
     }
 
 
@@ -189,14 +206,14 @@ class FormController {
         map.put("dir", dir);
         map.put("search", searchVal);
 
-        return "forms";
+        return ConstPaths.FORMS;
     }
 
     @RequestMapping(value = "/addform", method = RequestMethod.GET)
     public String addForm(Map<String, Object> model) {
         model.putAll(fillDictionary());
         model.put("form", new Form());
-        return "add";
+        return ConstPaths.ADD;
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -205,7 +222,7 @@ class FormController {
 
         Form form = formService.getForm(id);
         model.put("form", form);
-        return "add";
+        return ConstPaths.ADD;
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
@@ -214,7 +231,7 @@ class FormController {
         if (fileUpload.getFileData() != null && fileUpload.getFileData().getContentType().equals("application/pdf")) {
             try {
                 formService.parseFromPDF(fileUpload.getFileData().getInputStream());
-                return "redirect:/";
+                return ConstPaths.ROOT_REDIRECT;
             } catch (IOException e) {
                 model.put("importError", messageSource.getMessage("errors.importReadError", null, locale));
             }
@@ -229,8 +246,7 @@ class FormController {
                 model.put("importError", messageSource.getMessage("errors.importReadError", null, locale));
             } catch (ImportExceptions ex) {
                 request.getSession().setAttribute("errorImport", ex.getMessage());
-
-                return "redirect:/addform?errorConvert=1&totalConverted=" + ex.getTotal();
+                return ConstPaths.ROOT_REDIRECT + "addform?errorConvert=1&totalConverted=" + ex.getTotal();
             }
 
         } else {
@@ -241,7 +257,7 @@ class FormController {
         model.putAll(fillDictionary());
         model.put("form", new Form());
 
-        return "add";
+        return ConstPaths.ADD;
 
 
     }
@@ -251,16 +267,19 @@ class FormController {
         if (id != null) {
             formService.removeForm(id);
         }
-        return "redirect:/";
+        return ConstPaths.ROOT_REDIRECT;
     }
 
     @RequestMapping(value = "/addform", method = RequestMethod.POST)
-    public String processForm(@Valid Form form, BindingResult result, @RequestParam("copy") String copy, @RequestParam(value = "is_children", required = false) String is_children, Map model) {
+    public String processForm(@Valid Form form,
+                              BindingResult result,
+                              @RequestParam("copy") String copy,
+                              @RequestParam(value = "is_children", required = false) String is_children, Map model) {
 
         model.putAll(fillDictionary());
 
         if (result.hasErrors()) {
-            return "add";
+            return ConstPaths.ADD;
         }
         Form prevForm = formService.getForm(form.getId());
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
@@ -276,15 +295,15 @@ class FormController {
         form.setIs_children(is_children == null || !is_children.equals("1"));
         formService.save(form);
         if (!copy.equals("")) {
-            return "redirect:/edit/" + form.getId();
+            return ConstPaths.ROOT_REDIRECT + "edit/" + form.getId();
         } else {
-            return "redirect:/";
+            return ConstPaths.ROOT_REDIRECT;
         }
     }
 
     @RequestMapping("/index")
     public String home() {
-        return "redirect:/";
+        return ConstPaths.ROOT_REDIRECT;
     }
 
     @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
@@ -294,23 +313,25 @@ class FormController {
             form = formService.getForm(id);
             String filename = (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() + ".txt" : "form_" + form.getPassnum_13() + ".txt");
             model.put("form", form);
-            response.setContentType("text/plain; charset=utf-8");
+            response.setContentType("text/plain; charset="+properties.getProperty("source.encoding"));
             String headerKey = "Content-Disposition";
             String headerValue = String.format("attachment; filename=\"%s\"", filename);
             response.setHeader(headerKey, headerValue);
-            response.setCharacterEncoding("utf-8");
+            response.setCharacterEncoding(properties.getProperty("source.encoding"));
 
             String textdoc = null;
             try {
-                textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, "utf-8", model);
+                textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, properties.getProperty("source.encoding"), model);
             } catch (VelocityException e) {
                 e.printStackTrace();
             }
-            response.getOutputStream().write(textdoc!=null ? textdoc.getBytes() : null);
+            if (textdoc!=null) {
+                response.getOutputStream().write(textdoc.getBytes());
+            }
             response.getOutputStream().flush();
             return null;
         } else {
-            return "redirect:/";
+            return ConstPaths.ROOT_REDIRECT;
         }
     }
 
@@ -388,7 +409,7 @@ class FormController {
             zos.close();
 
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.warn("Problem with zip file %s", zipFile);
         }
     }
 

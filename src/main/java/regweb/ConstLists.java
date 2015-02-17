@@ -649,9 +649,9 @@ public class ConstLists {
     
     public static String getKeyByValue(Map<String , String> map,String valueToFind) {
       if (map.containsValue(valueToFind)) {
-        for (final String entry : map.keySet()) {
-          if (map.get(entry).equals(valueToFind)) {
-            return entry;
+        for (final Map.Entry<String, String> entry : map.entrySet()) {
+          if (entry.getValue().equals(valueToFind)) {
+            return entry.getKey();
           }
         }
       }
