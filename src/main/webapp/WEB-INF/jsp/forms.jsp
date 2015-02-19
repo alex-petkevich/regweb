@@ -5,7 +5,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="md" uri="/WEB-INF/tags/ConstDescriptor.tld" %>
 
-<md:constMap path="regweb.Actions" var="consts" />
+<md:constMap path="regweb.constants.Actions" var="consts" />
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>

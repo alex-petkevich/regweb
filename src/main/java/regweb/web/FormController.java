@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import regweb.Actions;
-import regweb.ConstLists;
-import regweb.ConstPaths;
+import regweb.constants.Actions;
+import regweb.constants.Lists;
+import regweb.constants.Paths;
 import regweb.domain.FileUpload;
 import regweb.domain.Form;
 import regweb.exceptions.ImportExceptions;
@@ -129,7 +129,7 @@ class FormController {
 
         }
 
-        return ConstPaths.ROOT_REDIRECT;
+        return Paths.ROOT_REDIRECT;
     }
 
 
@@ -206,14 +206,14 @@ class FormController {
         map.put("dir", dir);
         map.put("search", searchVal);
 
-        return ConstPaths.FORMS;
+        return Paths.FORMS;
     }
 
     @RequestMapping(value = "/addform", method = RequestMethod.GET)
     public String addForm(Map<String, Object> model) {
         model.putAll(fillDictionary());
         model.put("form", new Form());
-        return ConstPaths.ADD;
+        return Paths.ADD;
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
@@ -222,7 +222,7 @@ class FormController {
 
         Form form = formService.getForm(id);
         model.put("form", form);
-        return ConstPaths.ADD;
+        return Paths.ADD;
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
@@ -231,7 +231,7 @@ class FormController {
         if (fileUpload.getFileData() != null && fileUpload.getFileData().getContentType().equals("application/pdf")) {
             try {
                 formService.parseFromPDF(fileUpload.getFileData().getInputStream());
-                return ConstPaths.ROOT_REDIRECT;
+                return Paths.ROOT_REDIRECT;
             } catch (IOException e) {
                 model.put("importError", messageSource.getMessage("errors.importReadError", null, locale));
             }
@@ -246,7 +246,7 @@ class FormController {
                 model.put("importError", messageSource.getMessage("errors.importReadError", null, locale));
             } catch (ImportExceptions ex) {
                 request.getSession().setAttribute("errorImport", ex.getMessage());
-                return ConstPaths.ROOT_REDIRECT + "addform?errorConvert=1&totalConverted=" + ex.getTotal();
+                return Paths.ROOT_REDIRECT + "addform?errorConvert=1&totalConverted=" + ex.getTotal();
             }
 
         } else {
@@ -257,7 +257,7 @@ class FormController {
         model.putAll(fillDictionary());
         model.put("form", new Form());
 
-        return ConstPaths.ADD;
+        return Paths.ADD;
 
 
     }
@@ -267,7 +267,7 @@ class FormController {
         if (id != null) {
             formService.removeForm(id);
         }
-        return ConstPaths.ROOT_REDIRECT;
+        return Paths.ROOT_REDIRECT;
     }
 
     @RequestMapping(value = "/addform", method = RequestMethod.POST)
@@ -279,7 +279,7 @@ class FormController {
         model.putAll(fillDictionary());
 
         if (result.hasErrors()) {
-            return ConstPaths.ADD;
+            return Paths.ADD;
         }
         Form prevForm = formService.getForm(form.getId());
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
@@ -295,15 +295,15 @@ class FormController {
         form.setIs_children(is_children == null || !is_children.equals("1"));
         formService.save(form);
         if (!copy.equals("")) {
-            return ConstPaths.ROOT_REDIRECT + "edit/" + form.getId();
+            return Paths.ROOT_REDIRECT + "edit/" + form.getId();
         } else {
-            return ConstPaths.ROOT_REDIRECT;
+            return Paths.ROOT_REDIRECT;
         }
     }
 
     @RequestMapping("/index")
     public String home() {
-        return ConstPaths.ROOT_REDIRECT;
+        return Paths.ROOT_REDIRECT;
     }
 
     @RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
@@ -331,7 +331,7 @@ class FormController {
             response.getOutputStream().flush();
             return null;
         } else {
-            return ConstPaths.ROOT_REDIRECT;
+            return Paths.ROOT_REDIRECT;
         }
     }
 
@@ -349,23 +349,23 @@ class FormController {
     private Map fillDictionary() {
         Map model = new HashMap();
 
-        model.put("sexList", ConstLists.sexList);
-        model.put("mStatusList", ConstLists.mStatusList);
-        model.put("countiresOldList", ConstLists.countriesOldList);
-        model.put("countiresList", ConstLists.countriesList);
-        model.put("docTypeList", ConstLists.docTypeList);
-        model.put("countryPosList", ConstLists.countryPosList);
-        model.put("professionList", ConstLists.professionList);
-        model.put("employeeList", ConstLists.employeeList);
-        model.put("goalsList", ConstLists.goalsList);
-        model.put("inputCountriesList", ConstLists.inputCountriesList);
-        model.put("qtyList", ConstLists.qtyList);
-        model.put("invList", ConstLists.invList);
-        model.put("expenciesList", ConstLists.expenciesList);
-        model.put("moneyList", ConstLists.moneyList);
+        model.put("sexList", Lists.sexList);
+        model.put("mStatusList", Lists.mStatusList);
+        model.put("countiresOldList", Lists.countriesOldList);
+        model.put("countiresList", Lists.countriesList);
+        model.put("docTypeList", Lists.docTypeList);
+        model.put("countryPosList", Lists.countryPosList);
+        model.put("professionList", Lists.professionList);
+        model.put("employeeList", Lists.employeeList);
+        model.put("goalsList", Lists.goalsList);
+        model.put("inputCountriesList", Lists.inputCountriesList);
+        model.put("qtyList", Lists.qtyList);
+        model.put("invList", Lists.invList);
+        model.put("expenciesList", Lists.expenciesList);
+        model.put("moneyList", Lists.moneyList);
         model.put("fileUpload", new FileUpload());
-        model.put("relationshipList", ConstLists.relationshipList);
-        model.put("fingerprintList", ConstLists.fingerprintList);
+        model.put("relationshipList", Lists.relationshipList);
+        model.put("fingerprintList", Lists.fingerprintList);
 
         return model;
     }

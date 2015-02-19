@@ -1,4 +1,4 @@
-package regweb;
+package regweb.constants;
 
 import java.util.*;
 
@@ -7,7 +7,7 @@ import java.util.*;
  * Date: 31.03.13
  * Time: 0:54
  */
-public class ConstLists {
+public class Lists {
     public static final Map<String, String> sexList = Collections.unmodifiableMap(new LinkedHashMap<String, String>() {{
         put("M", "Мужчина");
         put("F", "женщина");

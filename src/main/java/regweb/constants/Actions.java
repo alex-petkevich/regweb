@@ -1,4 +1,4 @@
-package regweb;
+package regweb.constants;
 
 /**
  * Created by alex on 12/16/14.

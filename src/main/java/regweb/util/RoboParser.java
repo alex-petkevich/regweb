@@ -5,7 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import regweb.domain.Form;
-import regweb.ConstLists;
+import regweb.constants.Lists;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,9 +41,9 @@ public class RoboParser {
       currentForm.setName_3(getColumnValue("txtimiona", rows));
       currentForm.setBirthdate_4(getColumnValue("txtdataurodzin", rows));
       currentForm.setPlacedate_5(getColumnValue("txtmiejsceurodzenia", rows));
-      currentForm.setCountry_6(ConstLists.getKeyByValue(ConstLists.countriesList, getColumnValue("cbkrajurodzenia", rows)));
-      currentForm.setCitizenship_7(ConstLists.getKeyByValue(ConstLists.countriesList, getColumnValue("cbobecneobywatelstwo", rows)));
-      currentForm.setCitizenship_born_8(ConstLists.getKeyByValue(ConstLists.countriesList, getColumnValue("cbposiadaneobywatelstwo", rows)));
+      currentForm.setCountry_6(Lists.getKeyByValue(Lists.countriesList, getColumnValue("cbkrajurodzenia", rows)));
+      currentForm.setCitizenship_7(Lists.getKeyByValue(Lists.countriesList, getColumnValue("cbobecneobywatelstwo", rows)));
+      currentForm.setCitizenship_born_8(Lists.getKeyByValue(Lists.countriesList, getColumnValue("cbposiadaneobywatelstwo", rows)));
       currentForm.setSex_9(getColumnKeyPart("rbplec", rows));
       currentForm.setFamily_10(getColumnKeyPart("rbstancywilny", rows));
       currentForm.setIdentnum_11(getColumnValue("txt5numerdowodu", rows));
@@ -53,7 +53,7 @@ public class RoboParser {
       currentForm.setPassissuedate_14(getColumnValue("txt16wydanydnia", rows));
       currentForm.setPassexpiration_15(getColumnValue("txt17waznydo", rows));
       currentForm.setPassby_16(getColumnValue("txt15wydanyprzez", rows));
-      currentForm.setCountry_17(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("ddl45panstwo", rows)));
+      currentForm.setCountry_17(Lists.getKeyByValue(Lists.countriesList, getColumnValue("ddl45panstwo", rows)));
       currentForm.setState_17(getColumnValue("txt45stanprowincja", rows));
       currentForm.setCity_17(getColumnValue("txt45miejscowosc", rows));
       currentForm.setIndex_17(getColumnValue("txt45kod", rows));
@@ -63,8 +63,8 @@ public class RoboParser {
       currentForm.setTel_17(getColumnValue("txt46telefonnumer0", rows));
       if (!getColumnValue("chkNieDotyczy",rows).equals("")) {
         currentForm.setIs_children(true);
-        currentForm.setCountry_child(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbpanstwo1", rows)));
-        currentForm.setCitizenship_child(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbobywatelstwo1", rows)));
+        currentForm.setCountry_child(Lists.getKeyByValue(Lists.countriesList, getColumnValue("cbpanstwo1", rows)));
+        currentForm.setCitizenship_child(Lists.getKeyByValue(Lists.countriesList, getColumnValue("cbobywatelstwo1", rows)));
         currentForm.setName_child(getColumnValue("txtimie1",rows));
         currentForm.setSurname_child(getColumnValue("txtimie1",rows));
         currentForm.setState_child(getColumnValue("txtnazwisko1",rows));
@@ -72,8 +72,8 @@ public class RoboParser {
         currentForm.setIndex_child(getColumnValue("txtkod1",rows));
         currentForm.setAddress_child(getColumnValue("txtadres1",rows));
 
-        currentForm.setCountry_child2(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbpanstwo2", rows)));
-        currentForm.setCitizenship_child2(ConstLists.getKeyByValue(ConstLists.countriesList,  getColumnValue("cbobywatelstwo2", rows)));
+        currentForm.setCountry_child2(Lists.getKeyByValue(Lists.countriesList, getColumnValue("cbpanstwo2", rows)));
+        currentForm.setCitizenship_child2(Lists.getKeyByValue(Lists.countriesList, getColumnValue("cbobywatelstwo2", rows)));
         currentForm.setName_child2(getColumnValue("txtimie2",rows));
         currentForm.setSurname_child2(getColumnValue("txtimie2",rows));
         currentForm.setState_child2(getColumnValue("txtnazwisko2",rows));
@@ -96,10 +96,10 @@ public class RoboParser {
       } else {
         currentForm.setCountryvisitor_18("Nie");
       }
-      currentForm.setProfession_19(ConstLists.getKeyByValue(ConstLists.professionList,  getColumnValue("ddl19wykonywanyzawod", rows)));
+      currentForm.setProfession_19(Lists.getKeyByValue(Lists.professionList, getColumnValue("ddl19wykonywanyzawod", rows)));
       currentForm.setEmployee_20(getColumnKeyPart("rbl20", rows));
-      currentForm.setCountry_20(ConstLists
-          .getKeyByValue(ConstLists.countriesList, getColumnValue("dd20bpanstwo", rows)));
+      currentForm.setCountry_20(Lists
+          .getKeyByValue(Lists.countriesList, getColumnValue("dd20bpanstwo", rows)));
       currentForm.setState_20(getColumnValue("txt20cstanprowincja", rows));
       currentForm.setCity_20(getColumnValue("txt20dmiejscowosc", rows));
       currentForm.setIndex_20(getColumnValue("txt20ekodpocztowy", rows));
@@ -125,10 +125,10 @@ public class RoboParser {
 
       currentForm.setGoal_21(goals);
       currentForm.setGoalother_21(getColumnValue("txt29celpodrozy", rows));
-      currentForm.setDest_country_22(ConstLists
-          .getKeyByValue(ConstLists.inputCountriesList, getColumnValue("ddl21krajdocelowy", rows)));
-      currentForm.setFirst_country_23(ConstLists
-          .getKeyByValue(ConstLists.inputCountriesList, getColumnValue("ddl23pierwszywjazd", rows)));
+      currentForm.setDest_country_22(Lists
+          .getKeyByValue(Lists.inputCountriesList, getColumnValue("ddl21krajdocelowy", rows)));
+      currentForm.setFirst_country_23(Lists
+          .getKeyByValue(Lists.inputCountriesList, getColumnValue("ddl23pierwszywjazd", rows)));
       currentForm.setTypevisa_24(getColumnKeyPart("rbl24", rows));
       currentForm.setLenvisa_25(getColumnValue("txt25okrespobytu", rows));
       currentForm.setPrevvisastart1_26(getColumnValue("poprzedniewizy_0_txtdataod", rows));
@@ -150,8 +150,8 @@ public class RoboParser {
       currentForm.setTitle_31(getColumnValue("txt34nazwa", rows));
       currentForm.setName_31(getColumnValue("txt34imie", rows));
       currentForm.setSurname_31(getColumnValue("txt34nazwisko", rows));
-      currentForm.setCountry_31(ConstLists
-          .getKeyByValue(ConstLists.inputCountriesList, getColumnValue("ddl34panstwo", rows)));
+      currentForm.setCountry_31(Lists
+          .getKeyByValue(Lists.inputCountriesList, getColumnValue("ddl34panstwo", rows)));
       currentForm.setCity_31(getColumnValue("txt34miejscowosc", rows));
       currentForm.setIndex_31(getColumnValue("txt34kod", rows));
       currentForm.setPreftel_31(getColumnValue("txt34prefikstel", rows));
@@ -204,8 +204,8 @@ public class RoboParser {
       currentForm.setPersonaldatasurname_34(getColumnValue("txt43nazwisko", rows));
       currentForm.setPersonaldatadate_34(getColumnValue("txt43dataurodzenia", rows));
       currentForm.setPersonaldatapass_34(getColumnValue("txt43paszport", rows));
-      currentForm.setPersonaldatacitizen_34(ConstLists
-          .getKeyByValue(ConstLists.inputCountriesList, getColumnValue("ddl43obywatelstwo", rows)));
+      currentForm.setPersonaldatacitizen_34(Lists
+          .getKeyByValue(Lists.inputCountriesList, getColumnValue("ddl43obywatelstwo", rows)));
       currentForm.setPersonaldatarelation_34(getColumnKeyPart("rbl43", rows));
 
       result.add(currentForm);
