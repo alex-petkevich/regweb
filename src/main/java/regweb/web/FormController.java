@@ -364,6 +364,8 @@ class FormController {
         model.put("expenciesList", ConstLists.expenciesList);
         model.put("moneyList", ConstLists.moneyList);
         model.put("fileUpload", new FileUpload());
+        model.put("relationshipList", ConstLists.relationshipList);
+        model.put("fingerprintList", ConstLists.fingerprintList);
 
         return model;
     }

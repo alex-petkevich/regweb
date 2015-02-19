@@ -19,7 +19,7 @@ public class RoboParser {
   public List<Form> parseHTML(InputStream text) throws IOException {
     List<Form> result = new ArrayList<Form>();
 
-    Document doc = Jsoup.parse(text,"UTF-8","");
+    Document doc = Jsoup.parse(text,"UTF-16","");
     Elements tables = doc.getElementsByClass("orph");
 
     for(Element table : tables) {
@@ -36,6 +36,7 @@ public class RoboParser {
 
       currentForm.setSurname_1(getColumnValue("txtnazwisko",rows));
       currentForm.setSurname_2(getColumnValue("txtnazwiskorodowe", rows));
+
 
       currentForm.setName_3(getColumnValue("txtimiona", rows));
       currentForm.setBirthdate_4(getColumnValue("txtdataurodzin", rows));

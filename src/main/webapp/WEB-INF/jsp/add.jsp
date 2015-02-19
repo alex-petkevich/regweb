@@ -26,6 +26,14 @@
                     check_children(true);
                 }
             });
+            $("#ctl00_cp_f_chkNieDotyczy43").on('click',function(){
+                if (this.checked) {
+                    check_es(false);
+                } else {
+                    check_es(true);
+                }
+            });
+
             $("#more_children").on('click',function(){
                 $('#more_children_table').show();
             });
@@ -93,6 +101,31 @@
         function ZbindujPanstwa() {
             return null;
         }
+        function check_es(enable) {
+            if (enable) {
+                $('#ctl000_cp_f_txt43Nazwisko').removeAttr("disabled");
+                $('#ctl000_cp_f_txt43Imie').removeAttr("disabled");
+                $('#ctl000_cp_f_txt43DataUrodzenia').removeAttr("disabled");
+                $('#ctl000_cp_f_txt43Paszport').removeAttr("disabled");
+                $('#ctl000_cp_f_ddl43Obywatelstwo').removeAttr("disabled");
+                $('#ctl000_cp_f_rbl43_1').removeAttr("disabled");
+                $('#ctl000_cp_f_rbl43_2').removeAttr("disabled");
+                $('#ctl000_cp_f_rbl43_3').removeAttr("disabled");
+                $('#ctl000_cp_f_rbl43_4').removeAttr("disabled");
+            } else {
+                $('#ctl000_cp_f_txt43Nazwisko').attr("disabled","disabled");
+                $('#ctl000_cp_f_txt43Imie').attr("disabled","disabled");
+                $('#ctl000_cp_f_txt43DataUrodzenia').attr("disabled","disabled");
+                $('#ctl000_cp_f_txt43Paszport').attr("disabled","disabled");
+                $('#ctl000_cp_f_ddl43Obywatelstwo').attr("disabled","disabled");
+                $('#ctl000_cp_f_rbl43_1').attr("disabled","disabled");
+                $('#ctl000_cp_f_rbl43_2').attr("disabled","disabled");
+                $('#ctl000_cp_f_rbl43_3').attr("disabled","disabled");
+                $('#ctl000_cp_f_rbl43_4').attr("disabled","disabled");
+            }
+
+        }
+
     </script>
 </head>
 <body>
@@ -679,21 +712,17 @@
                     <form:input cssClass="datepicker field" path="prevvisaend3_26" /></td>
 
             </tr>
+
+            <tr>
+                <td colspan="2">
+                    <b>Отпечатки пальцев, предоставленные ранее при подаче заявки на получение шенгенской визы</b><Br />
+                    <form:radiobuttons delimiter="<br>" id="ctl00_cp_f_rbl27_" items="${fingerprintList}" path="fingerprint_27" />
+                </td>
+            </tr>
+
         </table>
     </div>
-    <input id="ctl00_cp_f_rbl27" type="hidden" name="ctl00$cp$f$rbl27" value="Nie">
-    <input id="ctl00_cp_f_chkNiedotyczy28" type="hidden" name="ctl00$cp$f$chkNiedotyczy28" value="1" />
 
-    <input id="ctl00_cp_f_txt27WydanePrzez" type="hidden" name="ctl00$cp$f$chkNiedotyczy28" value="1" />
-    <input id="ctl00_cp_f_txt27WazneOd" type="hidden" name="ctl00$cp$f$chkNiedotyczy28" value="1" />
-    <input id="ctl00_cp_f_txt27WazneDo" type="hidden" name="ctl00$cp$f$chkNiedotyczy28" value="1" />
-
-    <input id="ctl00_cp_f_txt43Nazwisko" type="hidden" name="ctl00_cp_f_txt43Nazwisko" value="1" />
-    <input id="ctl00_cp_f_txt43Imie" type="hidden" name="ctl00_cp_f_txt43Imie" value="1" />
-    <input id="ctl00_cp_f_txt43DataUrodzenia" type="hidden" name="ctl00_cp_f_txt43DataUrodzenia" value="1" />
-    <input id="ctl00_cp_f_txt43Paszport" type="hidden" name="ctl00_cp_f_txt43Paszport" value="1" />
-    <input id="ctl00_cp_f_ddl43Obywatelstwo" type="hidden" name="ctl00_cp_f_ddl43Obywatelstwo" value="1" />
-    <input id="ctl00_cp_f_rbl43_0" type="hidden" name="ctl00_cp_f_rbl43_0" value="1" />
     <div class="hide">
         <span id="ctl00_cp_f_rfv27WydanePrzez" style="color:Red;display:none;">Поле для обязательного заполнения </span>
         <input name="ctl00$cp$f$txt27WazneOd" type="text" maxlength="50" id="ctl00_cp_f_txt27WazneOd" style="width:360px;" />
@@ -717,6 +746,48 @@
         <span id="ctl00_cp_f_CustomValidator1" style="color:Red;display:none;">Поле для обязательного заполнения </span>
         <span id="ctl00_cp_f_CustomValidator2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
     </div>
+
+    <div class="box">
+        <!-- Box Head -->
+        <div class="box-head">
+            <h2>Разрешение на въезд в страну конечного следования, если необходимо</h2>
+        </div>
+
+        <table>
+            <tr>
+                <td colspan="2">
+                    <c:choose><c:when test="${form.endcountrypermit_28 == '0'}">
+                        <input type="checkbox" name="endcountrypermit_28" id="cp_f_chkNiedotyczy28" value="0" checked="checked" />
+                    </c:when><c:otherwise>
+                        <input type="checkbox" name="endcountrypermit_28" id="cp_f_chkNiedotyczy28" value="*"  />
+                    </c:otherwise></c:choose>
+                    <label for="cp_f_chkNiedotyczy28">Не касается</label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><form:label path="endcountryby_28" cssClass="sign">кем выдано</form:label><span id="ctl000_cp_f_txt27WydanePrzez" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                    <div class="errors"> <form:errors path="endcountryby_28" /></div>
+                    <form:input path="endcountryby_28" cssClass="field size1" maxlength="150" id="ctl000_cp_f_txt27WydanePrzez" /></td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><form:label path="endcountryfrom_28" cssClass="sign">Действительно с (год-месяц-день)</form:label><span id="ctl00_cp_f_txt27WazneOd1" style="color:Red;display:none;">Неправильное значение</span>
+                    <span id="ctl00_cp_f_txt27WazneOd2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+                    <br/>
+                    <div class="errors"> <form:errors path="endcountryfrom_28" /></div>
+                    <form:input path="endcountryfrom_28" cssClass="datepicker field" maxlength="250" id="ctl000_cp_f_txt27WazneOd" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><form:label path="endcountryto_28" cssClass="sign">Действительно до (год-месяц-день)</form:label><span id="ctl000_cp_f_txt27WazneDo1" style="color:Red;display:none;">Неправильное значение</span>
+                    <span id="ctl00_cp_f_txt27WazneDo2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+                    <br/>
+                    <div class="errors"> <form:errors path="endcountryto_28" /></div>
+                    <form:input path="endcountryto_28" cssClass="datepicker field" maxlength="250" id="ctl000_cp_f_txt27WazneDo" /></td>
+            </tr>
+        </table>
+    </div>
+
+
     <div class="box">
         <!-- Box Head -->
         <div class="box-head">
@@ -863,7 +934,53 @@
             <h2>Данные гражданина ЕС</h2>
         </div>
 
+        <table>
+            <tr>
+                <td colspan="2">
+                    <c:choose><c:when test="${form.personaldataes_34 == '0'}">
+                        <input type="checkbox" name="personaldataes_34" id="ctl00_cp_f_chkNieDotyczy43" value="0" checked="checked" />
+                    </c:when><c:otherwise>
+                        <input type="checkbox" name="personaldataes_34" id="ctl00_cp_f_chkNieDotyczy43" value="*"  />
+                    </c:otherwise></c:choose>
+                    <label for="ctl00_cp_f_chkNieDotyczy43">Не касается</label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><form:label path="personaldatasurname_34" cssClass="sign">Фамилия</form:label><span id="ctl00_cp_f_txt43Nazwisko1" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                    <div class="errors"> <form:errors path="personaldatasurname_34" /></div>
+                    <form:input path="personaldatasurname_34" cssClass="field size1" maxlength="150" id="ctl000_cp_f_txt43Nazwisko" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><form:label path="personaldataname_34" cssClass="sign">Имя</form:label><span id="ctl00_cp_f_txt43Imie1" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                    <div class="errors"> <form:errors path="personaldataname_34" /></div>
+                    <form:input path="personaldataname_34" cssClass="field size1" maxlength="50" id="ctl000_cp_f_txt43Imie" /></td>
+            </tr>
 
+            <tr>
+                <td colspan="2"><form:label path="personaldatadate_34" cssClass="sign">Дата рождения (год-месяц-день)</form:label><span id="ctl00_cp_f_txt43DataUrodzenia1" style="color:Red;display:none;">Неправильное значение</span>
+                    <span id="ctl00_cp_f_txt43DataUrodzenia2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+                    <br/>
+                    <div class="errors"> <form:errors path="personaldatadate_34" /></div>
+                    <form:input path="personaldatadate_34" cssClass="datepicker field" maxlength="250" id="ctl000_cp_f_txt43DataUrodzenia" /></td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><form:label path="personaldatapass_34" cssClass="sign">Номер паспорта</form:label><span id="ctl00_cp_f_txt43Paszport1" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                    <div class="errors"> <form:errors path="personaldatapass_34" /></div>
+                    <form:input path="personaldatapass_34" cssClass="field size1" maxlength="50" id="ctl000_cp_f_txt43Paszport" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><form:label path="personaldatacitizen_34" cssClass="sign">Гражданство </form:label> <span id="ctl00_cp_f_ddl43Obywatelstwo1" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                    <div class="errors"> <form:errors path="personaldatacitizen_34" /></div>
+                    <form:select items="${countiresOldList}" cssClass="field size1" id="ctl000_cp_f_ddl43Obywatelstwo" path="personaldatacitizen_34" /></td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><form:label path="personaldatarelation_34" cssClass="sign">Родство</form:label><span id="ctl00_cp_f_personaldatarelation_34" style="color:Red;display:none;">Поле для обязательного заполнения </span><br/>
+                    <div class="errors"> <form:errors path="personaldatarelation_34" /></div>
+                    <form:radiobuttons delimiter="<br>" id="ctl000_cp_f_rbl43_" items="${relationshipList}" path="personaldatarelation_34" /><br /></td>
+            </tr>
+            </table>
     </div>
 
     <div class="box">
@@ -873,16 +990,6 @@
 
         </div>
     </div>
-
-    <input id="ctl00_cp_f_chkNieDotyczy43" type="hidden" name="ctl00$cp$f$chkNieDotyczy43" value="1">
-
-    <input id="ctl00_cp_f_chk44Oswiadczenie1" type="hidden" name="ctl00$cp$f$chkNieD1otyczy43" value="1">
-
-    <input id="ctl00_cp_f_chk44Oswiadczenie2" type="hidden" name="ctl00$cp$f$chkNieD3otyczy43" value="1">
-
-    <input id="ctl00_cp_f_chk44Oswiadczenie3" type="hidden" name="ctl00$cp$f$chkNieDo4tyczy43" value="1">
-
-
 
     <jsp:include page="validation.jsp" />
 

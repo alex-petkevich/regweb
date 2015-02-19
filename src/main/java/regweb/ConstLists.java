@@ -13,6 +13,11 @@ public class ConstLists {
         put("F", "женщина");
     }});
 
+    public static final Map<String, String> fingerprintList = Collections.unmodifiableMap(new LinkedHashMap<String, String>() {{
+        put("Nie", "Нет");
+        put("Tak", "Да");
+    }});
+
     public static final Map<String, String> mStatusList = Collections.unmodifiableMap(new LinkedHashMap<String , String>() {{
         put("KP", "Холост/не замужем");
         put("ZZ", "Женат/Замужем");
@@ -20,6 +25,13 @@ public class ConstLists {
         put("RR", "Разведен/-а");
         put("WW", "Вдовец/вдова");
         put("IN", "другой");
+    }});
+
+    public static final Map<String, String> relationshipList = Collections.unmodifiableMap(new LinkedHashMap<String , String>() {{
+        put("1", "Супруг/-а");
+        put("2", "Ребенок");
+        put("3", "Внук/- чка");
+        put("4", "Иждивенец");
     }});
 
     public static final List<String> goalsList = Collections.unmodifiableList(Arrays.asList(
