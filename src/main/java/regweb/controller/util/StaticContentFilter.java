@@ -1,4 +1,4 @@
-package regweb.web.util;
+package regweb.controller.util;
 
 import java.io.IOException;
 

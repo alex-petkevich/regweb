@@ -233,10 +233,10 @@ PoprzednieWizy_2_txtDataDo	$!form.prevvisaend3_26	(?:^PoprzednieWizy_2_txtDataDo
 #else
 Нет	(?:^Nie$)	(?:^ctl00\$cp\$f\$rbl27$)	(?:)	true	true
 #end
-#if ($form.endcountrypermit_28 != "*")
-Ctl00$cp$f$chkNiedotyczy28	(?:^on$)	(?:^ctl00\$cp\$f\$chkNiedotyczy28$)	(?:)	true	true
-#else
+#if ($form.endcountrypermit_28 != "0")
 Ctl00$cp$f$chkNiedotyczy28	(?:^on$)	(?:^ctl00\$cp\$f\$chkNiedotyczy28$)	(?:)	false	true
+#else
+Ctl00$cp$f$chkNiedotyczy28	(?:^on$)	(?:^ctl00\$cp\$f\$chkNiedotyczy28$)	(?:)	true	true
 Ctl00$cp$f$txt27WydanePrzez	$!form.endcountryby_28	(?:^ctl00\$cp\$f\$txt27WydanePrzez$)	(?:)	true	true
 Ctl00$cp$f$txt27WazneOd	$!form.endcountryfrom_28	(?:^ctl00\$cp\$f\$txt27WazneOd$)	(?:)	true	true
 Ctl00$cp$f$txt27WazneDo	$!form.endcountryto_28	(?:^ctl00\$cp\$f\$txt27WazneDo$)	(?:)	true	true
@@ -272,7 +272,7 @@ Ctl00$cp$f$ctrl31_$txt34Email	$!form.email_31	(?:^ctl00\$cp\$f\$ctrl31_\$txt34Em
 #end
 #if ($form.expencies_33_other)
 Иные (указать)	(?:^on$)	(?:^ctl00\$cp\$f\$lbl35a_inny$)	(?:)	true	true
-Ctl00$cp$f$txt35KtoPokrywaKoszty	$!form.money_type_other_33	(?:^ctl00\$cp\$f\$txt35KtoPokrywaKoszty$)	(?:)	true	true
+Ctl00$cp$f$txt35KtoPokrywaKoszty	$!form.expenciesother_33	(?:^ctl00\$cp\$f\$txt35KtoPokrywaKoszty$)	(?:)	true	true
 #else
 Иные (указать)	(?:^on$)	(?:^ctl00\$cp\$f\$lbl35a_inny$)	(?:)	false	true
 #end
@@ -354,7 +354,12 @@ Ctl00$cp$f$txt35KtoPokrywaKoszty	$!form.money_type_other_33	(?:^ctl00\$cp\$f\$tx
 Иные (указать)	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Inne$)	(?:)	false	true
 #set ($fnd = true)
 #end
+#if ($form.inshurance_33 != '')
+Страхование поездки / медицинское страхование. Действительно до  (год-месяц-день)	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Ubezpieczenie$)	(?:)	true	true
+Ctl00$cp$f$txt36WazneDo	$!form.inshurance_33	(?:^ctl00\$cp\$f\$txt36WazneDo$)	(?:)	true	true
+#else
 Страхование поездки / медицинское страхование. Действительно до  (год-месяц-день)	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Ubezpieczenie$)	(?:)	false	true
+#end
 #if ($form.personaldataes_34 != '0')
 Ctl00$cp$f$chkNieDotyczy43	(?:^on$)	(?:^ctl00\$cp\$f\$chkNieDotyczy43$)	(?:)	true	true
 #else

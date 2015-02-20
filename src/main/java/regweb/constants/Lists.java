@@ -172,6 +172,7 @@ public class Lists {
         put("PM", "SAINT PIERRE I MIQUELON ");
         put("WS", "SAMOA");
         put("AUS", "АВСТРАЛИЯ");
+        put("AUT", "АВСТРИЯ");
         put("AZE", "АЗЕРБАЙДЖАН");
         put("ALB", "АЛБАНИЯ");
         put("DZA", "АЛЖИР");

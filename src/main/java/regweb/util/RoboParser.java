@@ -61,7 +61,7 @@ public class RoboParser {
       currentForm.setEmail_17(getColumnValue("txt17email", rows));
       currentForm.setPreftel_17(getColumnValue("txt46telefonprefiks0", rows));
       currentForm.setTel_17(getColumnValue("txt46telefonnumer0", rows));
-      if (!getColumnValue("chkNieDotyczy",rows).equals("")) {
+      if (!getColumnValue("chkniedotyczy",rows).equals("")) {
         currentForm.setIs_children(true);
         currentForm.setCountry_child(Lists.getKeyByValue(Lists.countriesList, getColumnValue("cbpanstwo1", rows)));
         currentForm.setCitizenship_child(Lists.getKeyByValue(Lists.countriesList, getColumnValue("cbobywatelstwo1", rows)));
@@ -138,11 +138,9 @@ public class RoboParser {
       currentForm.setPrevvisastart3_26(getColumnValue("poprzedniewizy_2_txtdataod", rows));
       currentForm.setPrevvisaend3_26(getColumnValue("poprzedniewizy_2_txtdatado", rows));
       currentForm.setFingerprint_27(getColumnKeyPart("rbl27", rows));
-      if (getColumnValue("chkniedotyczy28",rows).equals("")) {
-        currentForm.setEndcountrypermit_28("Tak");
-      }
-      currentForm.setEndcountryby_28(getColumnValue("ctl00$cp$f$txt27WydanePrzez", rows));
-      currentForm.setEndcountryfrom_28(getColumnValue("txt27wydaneprzez", rows));
+      currentForm.setEndcountrypermit_28(getColumnValue("chkniedotyczy28",rows));
+      currentForm.setEndcountryby_28(getColumnValue("txt27wydaneprzez", rows));
+      currentForm.setEndcountryfrom_28(getColumnValue("txt27wazneod", rows));
       currentForm.setEndcountryto_28(getColumnValue("txt27waznedo", rows));
       currentForm.setStartvisa_29(getColumnValue("txt30datawjazdu", rows));
       currentForm.setEndvisa_30(getColumnValue("txt31datawyjazdu", rows));
@@ -202,7 +200,8 @@ public class RoboParser {
       currentForm.setInshurance_33(getColumnValue("txt36waznedo", rows));
       currentForm.setPersonaldataes_34(getColumnValue("chkniedotyczy43", rows));
       currentForm.setPersonaldatasurname_34(getColumnValue("txt43nazwisko", rows));
-      currentForm.setPersonaldatadate_34(getColumnValue("txt43dataurodzenia", rows));
+      currentForm.setPersonaldataname_34(getColumnValue("txt43imie", rows));
+        currentForm.setPersonaldatadate_34(getColumnValue("txt43dataurodzenia", rows));
       currentForm.setPersonaldatapass_34(getColumnValue("txt43paszport", rows));
       currentForm.setPersonaldatacitizen_34(Lists
           .getKeyByValue(Lists.inputCountriesList, getColumnValue("ddl43obywatelstwo", rows)));

@@ -757,9 +757,9 @@
             <tr>
                 <td colspan="2">
                     <c:choose><c:when test="${form.endcountrypermit_28 == '0'}">
-                        <input type="checkbox" name="endcountrypermit_28" id="cp_f_chkNiedotyczy28" value="0" checked="checked" />
-                    </c:when><c:otherwise>
                         <input type="checkbox" name="endcountrypermit_28" id="cp_f_chkNiedotyczy28" value="*"  />
+                    </c:when><c:otherwise>
+                        <input type="checkbox" name="endcountrypermit_28" id="cp_f_chkNiedotyczy28" value="0" checked="checked" />
                     </c:otherwise></c:choose>
                     <label for="cp_f_chkNiedotyczy28">Не касается</label>
                 </td>

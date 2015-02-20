@@ -1,4 +1,4 @@
-package regweb.web;
+package regweb.controller;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
@@ -236,7 +236,7 @@ class FormController {
                 model.put("importError", messageSource.getMessage("errors.importReadError", null, locale));
             }
 
-        } else if (fileUpload.getFileData() != null && fileUpload.getFileData().getContentType().equals("text/html")) {
+        } else if (fileUpload.getFileData() != null && ("text/html".equals(fileUpload.getFileData().getContentType()) || "text/plain".equals(fileUpload.getFileData().getContentType()))) {
 
             int total;
             try {
