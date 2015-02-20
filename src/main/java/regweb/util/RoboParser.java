@@ -88,7 +88,7 @@ public class RoboParser {
         currentForm.setCountryvisitor_18("Tak");
         currentForm.setVisitdoc_18(getColumnValue("txt18anumer", rows));
         currentForm.setExpdate_18(getColumnValue("txt18bdatawaznosci", rows));
-        if (getColumnValue("chk18bezterminowo",rows).equals("")) {
+        if (getColumnValue("chk18bezterminowo",rows).equals("0")) {
           currentForm.setExpdate_18_unlimited(false);
         } else {
           currentForm.setExpdate_18_unlimited(true);
