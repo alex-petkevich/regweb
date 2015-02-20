@@ -937,10 +937,10 @@
         <table>
             <tr>
                 <td colspan="2">
-                    <c:choose><c:when test="${form.personaldataes_34 == '0'}">
-                        <input type="checkbox" name="personaldataes_34" id="ctl00_cp_f_chkNieDotyczy43" value="0" checked="checked" />
+                    <c:choose><c:when test="${form.personaldataes_34 eq '0'}">
+                        <input type="checkbox" name="personaldataes_34" id="ctl00_cp_f_chkNieDotyczy43" value="*" />
                     </c:when><c:otherwise>
-                        <input type="checkbox" name="personaldataes_34" id="ctl00_cp_f_chkNieDotyczy43" value="*"  />
+                        <input type="checkbox" name="personaldataes_34" id="ctl00_cp_f_chkNieDotyczy43" value="0" checked="checked"  />
                     </c:otherwise></c:choose>
                     <label for="ctl00_cp_f_chkNieDotyczy43">Не касается</label>
                 </td>

@@ -61,13 +61,13 @@ public class RoboParser {
       currentForm.setEmail_17(getColumnValue("txt17email", rows));
       currentForm.setPreftel_17(getColumnValue("txt46telefonprefiks0", rows));
       currentForm.setTel_17(getColumnValue("txt46telefonnumer0", rows));
-      if (!getColumnValue("chkniedotyczy",rows).equals("")) {
+      if (getColumnValue("chkniedotyczy",rows).equals("0")) {
         currentForm.setIs_children(true);
         currentForm.setCountry_child(Lists.getKeyByValue(Lists.countriesList, getColumnValue("cbpanstwo1", rows)));
         currentForm.setCitizenship_child(Lists.getKeyByValue(Lists.countriesList, getColumnValue("cbobywatelstwo1", rows)));
         currentForm.setName_child(getColumnValue("txtimie1",rows));
-        currentForm.setSurname_child(getColumnValue("txtimie1",rows));
-        currentForm.setState_child(getColumnValue("txtnazwisko1",rows));
+        currentForm.setSurname_child(getColumnValue("txtnazwisko1",rows));
+        currentForm.setState_child(getColumnValue("txtstanprowincja1",rows));
         currentForm.setCity_child(getColumnValue("txtmiejscowosc1",rows));
         currentForm.setIndex_child(getColumnValue("txtkod1",rows));
         currentForm.setAddress_child(getColumnValue("txtadres1",rows));
@@ -75,8 +75,8 @@ public class RoboParser {
         currentForm.setCountry_child2(Lists.getKeyByValue(Lists.countriesList, getColumnValue("cbpanstwo2", rows)));
         currentForm.setCitizenship_child2(Lists.getKeyByValue(Lists.countriesList, getColumnValue("cbobywatelstwo2", rows)));
         currentForm.setName_child2(getColumnValue("txtimie2",rows));
-        currentForm.setSurname_child2(getColumnValue("txtimie2",rows));
-        currentForm.setState_child2(getColumnValue("txtnazwisko2",rows));
+        currentForm.setSurname_child2(getColumnValue("txtnazwisko2",rows));
+        currentForm.setState_child2(getColumnValue("txtstanprowincja2",rows));
         currentForm.setCity_child2(getColumnValue("txtmiejscowosc2",rows));
         currentForm.setIndex_child2(getColumnValue("txtkod2",rows));
         currentForm.setAddress_child2(getColumnValue("txtadres2",rows));

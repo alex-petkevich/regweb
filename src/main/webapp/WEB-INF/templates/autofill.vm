@@ -23,7 +23,7 @@ Ctl00$cp$f$txt14NumerPaszportu	$!form.passnum_13	(?:^ctl00\$cp\$f\$txt14NumerPas
 Ctl00$cp$f$txt16WydanyDnia	$!form.passissuedate_14	(?:^ctl00\$cp\$f\$txt16WydanyDnia$)	(?:)	true	true
 Ctl00$cp$f$txt17WaznyDo	$!form.passexpiration_15	(?:^ctl00\$cp\$f\$txt17WaznyDo$)	(?:)	true	true
 Ctl00$cp$f$txt15WydanyPrzez	$!form.passby_16	(?:^ctl00\$cp\$f\$txt15WydanyPrzez$)	(?:)	true	true
-#if ($!form.is_children)
+#if ($form.is_children)
 Ctl00$cp$f$opiekunowie$chkNieDotyczy	(?:^on$)	(?:^ctl00\$cp\$f\$opiekunowie\$chkNieDotyczy$)	(?:)	false	true
 Ctl00$cp$f$opiekunowie$cbObywatelstwo1	(?:^$!form.citizenship_child$)	(?:^ctl00\$cp\$f\$opiekunowie\$cbObywatelstwo1$)	(?:)	true	true
 Ctl00$cp$f$opiekunowie$txtImie1	$!form.name_child	(?:^ctl00\$cp\$f\$opiekunowie\$txtImie1$)	(?:)	true	true
@@ -234,9 +234,9 @@ PoprzednieWizy_2_txtDataDo	$!form.prevvisaend3_26	(?:^PoprzednieWizy_2_txtDataDo
 Нет	(?:^Nie$)	(?:^ctl00\$cp\$f\$rbl27$)	(?:)	true	true
 #end
 #if ($form.endcountrypermit_28 != "0")
-Ctl00$cp$f$chkNiedotyczy28	(?:^on$)	(?:^ctl00\$cp\$f\$chkNiedotyczy28$)	(?:)	false	true
-#else
 Ctl00$cp$f$chkNiedotyczy28	(?:^on$)	(?:^ctl00\$cp\$f\$chkNiedotyczy28$)	(?:)	true	true
+#else
+Ctl00$cp$f$chkNiedotyczy28	(?:^on$)	(?:^ctl00\$cp\$f\$chkNiedotyczy28$)	(?:)	false	true
 Ctl00$cp$f$txt27WydanePrzez	$!form.endcountryby_28	(?:^ctl00\$cp\$f\$txt27WydanePrzez$)	(?:)	true	true
 Ctl00$cp$f$txt27WazneOd	$!form.endcountryfrom_28	(?:^ctl00\$cp\$f\$txt27WazneOd$)	(?:)	true	true
 Ctl00$cp$f$txt27WazneDo	$!form.endcountryto_28	(?:^ctl00\$cp\$f\$txt27WazneDo$)	(?:)	true	true
@@ -347,6 +347,7 @@ Ctl00$cp$f$txt35KtoPokrywaKoszty	$!form.expenciesother_33	(?:^ctl00\$cp\$f\$txt3
 #foreach($money in $form.money_type_33)
 #if ($money == "Иные (указать)")
 Иные (указать)	(?:^on$)	(?:^ctl00\$cp\$f\$rb36Inne$)	(?:)	true	true
+Ctl00$cp$f$txt36Inne	$!form.money_type_other_33	(?:^ctl00\$cp\$f\$txt36Inne$)	(?:)	true	true
 #set ($fnd = false)
 #end
 #end
