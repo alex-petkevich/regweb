@@ -42,11 +42,7 @@
 
 <!-- Footer -->
 <div id="footer">
-    <div class="shell">
-        <span class="left">&copy; 2010 - mrdoggy</span>
-		<span class="right">
-			Developed by <a href="http://mrdoggy.info" target="_blank" title="">mrdoggy.info</a>
-		</span>
+    <div class="shell">&nbsp;
     </div>
 </div>
 <!-- End Footer -->
