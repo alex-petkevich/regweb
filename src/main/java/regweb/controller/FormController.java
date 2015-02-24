@@ -228,6 +228,8 @@ class FormController {
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String importForm(FileUpload fileUpload, BindingResult result, Map model, Locale locale, @RequestParam("id") Integer id, MultipartHttpServletRequest request) {
 
+        Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentic.getName();
         if (fileUpload.getFileData() != null && fileUpload.getFileData().getContentType().equals("application/pdf")) {
             try {
                 formService.parseFromPDF(fileUpload.getFileData().getInputStream());
@@ -240,7 +242,7 @@ class FormController {
 
             int total;
             try {
-                total = formService.parseFromRoboHTML(fileUpload.getFileData().getInputStream());
+                total = formService.parseFromRoboHTML(fileUpload.getFileData().getInputStream(), userId);
                 return "redirect:/?totalConverted=" + total;
             } catch (IOException e) {
                 model.put("importError", messageSource.getMessage("errors.importReadError", null, locale));

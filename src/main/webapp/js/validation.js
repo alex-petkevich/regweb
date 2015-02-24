@@ -26,6 +26,8 @@ function AllValidatorsValid(validators) {
     if ((typeof(validators) != "undefined") && (validators != null)) {
         var i;
         for (i = 0; i < validators.length; i++) {
+            if (validators[i] == null)
+                continue;
             if (!validators[i].isvalid) {
                 return false;
             }
@@ -125,7 +127,7 @@ function Page_ClientValidate(validationGroup) {
 }
 function ValidatorCommonOnSubmit() {
     Page_InvalidControlToBeFocused = null;
-    var result = !Page_BlockSubmit;          
+    var result = !Page_BlockSubmit;
     if ((typeof(window.event) != "undefined") && (window.event != null)) {
         window.event.returnValue = result;
     }
@@ -250,9 +252,9 @@ function ValidatorSetFocus(val, event) {
 function IsInVisibleContainer(ctrl) {
     if (typeof(ctrl.style) != "undefined" &&
         ( ( typeof(ctrl.style.display) != "undefined" &&
-            ctrl.style.display == "none") ||
-            ( typeof(ctrl.style.visibility) != "undefined" &&
-                ctrl.style.visibility == "hidden") ) ) {
+        ctrl.style.display == "none") ||
+        ( typeof(ctrl.style.visibility) != "undefined" &&
+        ctrl.style.visibility == "hidden") ) ) {
         return false;
     }
     else if (typeof(ctrl.parentNode) != "undefined" &&
@@ -278,7 +280,9 @@ function ValidatorOnLoad() {
     var i, val;
     for (i = 0; i < Page_Validators.length; i++) {
         val = Page_Validators[i];
-        if (typeof(val.evaluationfunction) == "string") {
+        if (val == null)
+            continue;
+        if (val!=null && typeof(val.evaluationfunction) == "string") {
             eval("val.evaluationfunction = " + val.evaluationfunction + ";");
         }
         if (typeof(val.isvalid) == "string") {
@@ -341,8 +345,8 @@ function ValidatorConvert(op, dataType, val) {
             beginGroupSize = subsequentGroupSize = "+";
         }
         exp = new RegExp("^\\s*([-\\+])?((\\d" + beginGroupSize + "(\\" + val.groupchar + "\\d" + subsequentGroupSize + ")+)|\\d*)"
-            + (hasDigits ? "\\" + val.decimalchar + "?(\\d{0," + val.digits + "})" : "")
-            + "\\s*$");
+        + (hasDigits ? "\\" + val.decimalchar + "?(\\d{0," + val.digits + "})" : "")
+        + "\\s*$");
         m = op.match(exp);
         if (m == null)
             return null;
@@ -471,7 +475,7 @@ function RangeValidatorEvaluateIsValid(val) {
     if (ValidatorTrim(value).length == 0)
         return true;
     return (ValidatorCompare(value, val.minimumvalue, "GreaterThanEqual", val) &&
-        ValidatorCompare(value, val.maximumvalue, "LessThanEqual", val));
+    ValidatorCompare(value, val.maximumvalue, "LessThanEqual", val));
 }
 function ValidationSummaryOnSubmit(validationGroup) {
     if (typeof(Page_ValidationSummaries) == "undefined")
@@ -480,6 +484,7 @@ function ValidationSummaryOnSubmit(validationGroup) {
     var headerSep, first, pre, post, end;
     for (sums = 0; sums < Page_ValidationSummaries.length; sums++) {
         summary = Page_ValidationSummaries[sums];
+        if (!summary) continue;
         summary.style.display = "none";
         if (!Page_IsValid && IsValidationGroupMatch(summary, validationGroup)) {
             var i;
@@ -558,4 +563,125 @@ function ValidationSummaryOnSubmit(validationGroup) {
             }
         }
     }
+}
+if (window.jQuery) {
+    (function ($) {
+        var dataValidationAttribute = "data-val",
+            dataValidationSummaryAttribute = "data-valsummary",
+            normalizedAttributes = { validationgroup: "validationGroup", focusonerror: "focusOnError" };
+        function getAttributesWithPrefix(element, prefix) {
+            var i,
+                attribute,
+                list = {},
+                attributes = element.attributes,
+                length = attributes.length,
+                prefixLength = prefix.length;
+            prefix = prefix.toLowerCase();
+            for (i = 0; i < length; i++) {
+                attribute = attributes[i];
+                if (attribute.specified && attribute.name.substr(0, prefixLength).toLowerCase() === prefix) {
+                    list[attribute.name.substr(prefixLength)] = attribute.value;
+                }
+            }
+            return list;
+        }
+        function normalizeKey(key) {
+            key = key.toLowerCase();
+            return normalizedAttributes[key] === undefined ? key : normalizedAttributes[key];
+        }
+        function addValidationExpando(element) {
+            var attributes = getAttributesWithPrefix(element, dataValidationAttribute + "-");
+            $.each(attributes, function (key, value) {
+                element[normalizeKey(key)] = value;
+            });
+        }
+        function dispose(element) {
+            var index = $.inArray(element, Page_Validators);
+            if (index >= 0) {
+                Page_Validators.splice(index, 1);
+            }
+        }
+        function addNormalizedAttribute(name, normalizedName) {
+            normalizedAttributes[name.toLowerCase()] = normalizedName;
+        }
+        function parseSpecificAttribute(selector, attribute, validatorsArray) {
+            return $(selector).find("[" + attribute + "='true']").each(function (index, element) {
+                addValidationExpando(element);
+                element.dispose = function () { dispose(element); element.dispose = null; };
+                if ($.inArray(element, validatorsArray) === -1) {
+                    validatorsArray.push(element);
+                }
+            }).length;
+        }
+        function parse(selector) {
+            var length = parseSpecificAttribute(selector, dataValidationAttribute, Page_Validators);
+            length += parseSpecificAttribute(selector, dataValidationSummaryAttribute, Page_ValidationSummaries);
+            return length;
+        }
+        function loadValidators() {
+            if (typeof (ValidatorOnLoad) === "function") {
+                ValidatorOnLoad();
+            }
+            if (typeof (ValidatorOnSubmit) === "undefined") {
+                window.ValidatorOnSubmit = function () {
+                    return Page_ValidationActive ? ValidatorCommonOnSubmit() : true;
+                };
+            }
+        }
+        function registerUpdatePanel() {
+            if (window.Sys && Sys.WebForms && Sys.WebForms.PageRequestManager) {
+                var prm = Sys.WebForms.PageRequestManager.getInstance(),
+                    postBackElement, endRequestHandler;
+                if (prm.get_isInAsyncPostBack()) {
+                    endRequestHandler = function (sender, args) {
+                        if (parse(document)) {
+                            loadValidators();
+                        }
+                        prm.remove_endRequest(endRequestHandler);
+                        endRequestHandler = null;
+                    };
+                    prm.add_endRequest(endRequestHandler);
+                }
+                prm.add_beginRequest(function (sender, args) {
+                    postBackElement = args.get_postBackElement();
+                });
+                prm.add_pageLoaded(function (sender, args) {
+                    var i, panels, valFound = 0;
+                    if (typeof (postBackElement) === "undefined") {
+                        return;
+                    }
+                    panels = args.get_panelsUpdated();
+                    for (i = 0; i < panels.length; i++) {
+                        valFound += parse(panels[i]);
+                    }
+                    panels = args.get_panelsCreated();
+                    for (i = 0; i < panels.length; i++) {
+                        valFound += parse(panels[i]);
+                    }
+                    if (valFound) {
+                        loadValidators();
+                    }
+                });
+            }
+        }
+        $(function () {
+            if (typeof (Page_Validators) === "undefined") {
+                window.Page_Validators = [];
+            }
+            if (typeof (Page_ValidationSummaries) === "undefined") {
+                window.Page_ValidationSummaries = [];
+            }
+            if (typeof (Page_ValidationActive) === "undefined") {
+                window.Page_ValidationActive = false;
+            }
+            $.WebFormValidator = {
+                addNormalizedAttribute: addNormalizedAttribute,
+                parse: parse
+            };
+            if (parse(document)) {
+                loadValidators();
+            }
+            registerUpdatePanel();
+        });
+    } (jQuery));
 }

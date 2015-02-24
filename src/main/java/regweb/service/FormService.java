@@ -24,5 +24,5 @@ public interface FormService {
     
     public void parseFromPDF(InputStream fileStream);
 
-    public int parseFromRoboHTML(InputStream fileStream) throws ImportExceptions;
+    public int parseFromRoboHTML(InputStream fileStream, String userId) throws ImportExceptions;
 }

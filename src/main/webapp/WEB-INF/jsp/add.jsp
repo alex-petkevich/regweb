@@ -632,7 +632,7 @@
                     <span id="ctl00_cp_f_cv29" style="color:Red;display:none;">Поле для обязательного заполнения </span>
                     <span id="ctl00_cp_f_rfvKonsultacja11" style="color:Red;display:none;">Неправильное значение</span><br/>
                     <div class="errors"> <form:errors path="goal_21" /></div>
-                    <form:checkboxes delimiter="<br>" items="${goalsList}" id="ctl00_cp_f_rbl29_"  path="goal_21" />
+                    <form:checkboxes delimiter="<br>" items="${goalsList}" id="cp_f_rbl29_"  path="goal_21" />
                     <br>
                     <form:input path="goalother_21" id="ctl00_cp_f_txt29CelPodrozy" cssClass="field size1" />
                 </td>
@@ -725,11 +725,6 @@
 
     <div class="hide">
         <span id="ctl00_cp_f_rfv27WydanePrzez" style="color:Red;display:none;">Поле для обязательного заполнения </span>
-        <input name="ctl00$cp$f$txt27WazneOd" type="text" maxlength="50" id="ctl00_cp_f_txt27WazneOd" style="width:360px;" />
-        <span id="ctl00_cp_f_rfv27WazneOd" style="color:Red;display:none;">Поле для обязательного заполнения </span>
-        <span id="ctl00_cp_f_rev27WazneOd" style="color:Red;display:none;">Неправильное значение</span>
-        <span id="ctl00_cp_f_rfv27WazneDo" style="color:Red;display:none;">Поле для обязательного заполнения </span>
-        <span id="ctl00_cp_f_rev27WazneDo" style="color:Red;display:none;">Неправильное значение</span>
         <span id="ctl00_cp_f_rfv35Sponsor" style="color:Red;display:none;">Поле для обязательного заполнения </span>
         <span id="ctl00_cp_f_rfv43_Nazwisko" style="color:Red;display:none;">Поле для обязательного заполнения </span>
         <span id="ctl00_cp_f_rfvKonsultacja12" style="color:Red;display:none;">Неправильное значение</span>
@@ -771,15 +766,15 @@
             </tr>
 
             <tr>
-                <td colspan="2"><form:label path="endcountryfrom_28" cssClass="sign">Действительно с (год-месяц-день)</form:label><span id="ctl00_cp_f_txt27WazneOd1" style="color:Red;display:none;">Неправильное значение</span>
-                    <span id="ctl00_cp_f_txt27WazneOd2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+                <td colspan="2"><form:label path="endcountryfrom_28" cssClass="sign">Действительно с (год-месяц-день)</form:label><span id="ctl00_cp_f_txt27WazneOd" style="color:Red;display:none;">Неправильное значение</span>
+                    <span id="ctl00_cp_f_txt27WazneOd" style="color:Red;display:none;">Поле для обязательного заполнения </span>
                     <br/>
                     <div class="errors"> <form:errors path="endcountryfrom_28" /></div>
                     <form:input path="endcountryfrom_28" cssClass="datepicker field" maxlength="250" id="ctl000_cp_f_txt27WazneOd" /></td>
             </tr>
             <tr>
-                <td colspan="2"><form:label path="endcountryto_28" cssClass="sign">Действительно до (год-месяц-день)</form:label><span id="ctl000_cp_f_txt27WazneDo1" style="color:Red;display:none;">Неправильное значение</span>
-                    <span id="ctl00_cp_f_txt27WazneDo2" style="color:Red;display:none;">Поле для обязательного заполнения </span>
+                <td colspan="2"><form:label path="endcountryto_28" cssClass="sign">Действительно до (год-месяц-день)</form:label><span id="ctl000_cp_f_txt27WazneDo" style="color:Red;display:none;">Неправильное значение</span>
+                    <span id="ctl00_cp_f_txt27WazneDo" style="color:Red;display:none;">Поле для обязательного заполнения </span>
                     <br/>
                     <div class="errors"> <form:errors path="endcountryto_28" /></div>
                     <form:input path="endcountryto_28" cssClass="datepicker field" maxlength="250" id="ctl000_cp_f_txt27WazneDo" /></td>
