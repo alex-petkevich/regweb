@@ -11,6 +11,7 @@
 
     <decorator name="out" page="out.jsp">
         <pattern>/login.jsp*</pattern>
+        <pattern>/addnewacc*</pattern>
     </decorator>
 
 </decorators>

@@ -20,7 +20,7 @@ public class User {
     @GeneratedValue
     private Integer id;
 
-    @Size(min=1,max=20, message="{errors.requiredfield}")
+    @Size(min=1,max=100, message="{errors.requiredfield}")
     @Column(name = "USERNAME")
     private String username;
 

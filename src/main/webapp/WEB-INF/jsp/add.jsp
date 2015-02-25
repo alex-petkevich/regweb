@@ -129,66 +129,83 @@
     </script>
 </head>
 <body>
-<spring:url value="/import" var="importUrl" />
-<form:form modelAttribute="fileUpload"  method="post" action="${importUrl}"  enctype="multipart/form-data">
-    <input type="hidden" name="id" value="${form.id}" />
-    <!--
-    <div class="box">
-    <div class="box-head">
-    <h2>Импорт анкеты</h2>
-    </div>
-    <table>
-    <tr>
-    <td colspan="2">
-    <div class="errors"> ${importError}</div>
-
-    Импорт из PDF анкеты:    <form:input path="fileData" type="file"/>
-    </td>
-    </tr>
-    </table>
-    <div class="buttons">
-    <input type="submit" value="Сохранить" class="button" />
-
-    </div>
-
-    </div>       -->
-</form:form>
-<spring:url value="/import" var="importUrl" />
-<form:form modelAttribute="fileUpload"  method="post" action="${importUrl}"  enctype="multipart/form-data">
-    <input type="hidden" name="id" value="${form.id}" />
-
-    <div class="box">
-        <div class="box-head">
-            <h2>Импорт анкеты</h2>
-        </div>
-        <table>
-            <tr>
-                <td colspan="2">
-                    <div class="errors"> ${importError}</div>
-
-                    Импорт из Roboform XML:    <form:input path="fileData" type="file"/>
-                </td>
-            </tr>
-        </table>
-        <div class="buttons">
-            <input type="submit" value="Сохранить" class="button" />
-
-        </div>
-
-    </div>
-</form:form>
-<c:if test="${not empty param.totalConverted}">
-    <div class="msg msg-ok">
-        <p><strong>Успешно сконвертировано анкет: ${param.totalConverted}</strong></p>
-    </div>
-</c:if>
-<c:if test="${not empty param.errorConvert}">
-    <div class="msg msg-error">
-        <p><strong>При конвертации найдены ошибки в исходных данных: <br /> ${sessionScope["errorImport"]}</strong></p>
-    </div>
-</c:if>
 
 <spring:url value="/addform" var="postUrl" />
+<c:choose>
+<c:when test="${empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
+<spring:url value="/addnewacc" var="postUrl" />
+<div class="box">
+    <div class="box-head">
+        <h2>Незарегистрированный пользователь</h2>
+    </div>
+    <div style="padding:20px;font-size:16px;line-height:25px;"><b>Внимание!</b> После добавления анкеты вам на электронную почту будут отправлены автоматически сгенерированный логин и пароль для доступа к вашей анкете. У вас будет возможность войти в защищенную зону для того, чтобы отредактировать анкету, либо добавить новые анкеты.</div>
+</div></c:when>
+    <c:otherwise>
+
+
+
+    <spring:url value="/import" var="importUrl" />
+    <form:form modelAttribute="fileUpload"  method="post" action="${importUrl}"  enctype="multipart/form-data">
+        <input type="hidden" name="id" value="${form.id}" />
+        <!--
+        <div class="box">
+        <div class="box-head">
+        <h2>Импорт анкеты</h2>
+        </div>
+        <table>
+        <tr>
+        <td colspan="2">
+        <div class="errors"> ${importError}</div>
+
+        Импорт из PDF анкеты:    <form:input path="fileData" type="file"/>
+        </td>
+        </tr>
+        </table>
+        <div class="buttons">
+        <input type="submit" value="Сохранить" class="button" />
+
+        </div>
+
+        </div>       -->
+    </form:form>
+    <spring:url value="/import" var="importUrl" />
+    <form:form modelAttribute="fileUpload"  method="post" action="${importUrl}"  enctype="multipart/form-data">
+        <input type="hidden" name="id" value="${form.id}" />
+
+        <div class="box">
+            <div class="box-head">
+                <h2>Импорт анкеты</h2>
+            </div>
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <div class="errors"> ${importError}</div>
+
+                        Импорт из Roboform XML:    <form:input path="fileData" type="file"/>
+                    </td>
+                </tr>
+            </table>
+            <div class="buttons">
+                <input type="submit" value="Сохранить" class="button" />
+
+            </div>
+
+        </div>
+    </form:form>
+    <c:if test="${not empty param.totalConverted}">
+        <div class="msg msg-ok">
+            <p><strong>Успешно сконвертировано анкет: ${param.totalConverted}</strong></p>
+        </div>
+    </c:if>
+    <c:if test="${not empty param.errorConvert}">
+        <div class="msg msg-error">
+            <p><strong>При конвертации найдены ошибки в исходных данных: <br /> ${sessionScope["errorImport"]}</strong></p>
+        </div>
+    </c:if>
+
+    </c:otherwise>
+</c:choose>
+
 <form:form method="post" action="${postUrl}" commandName="form" name="aspnetForm"  id="aspnetForm" onsubmit="javascript:return WebForm_OnSubmit();">
     <form:hidden path="id" />
     <input type="hidden" name="copy" id="copy_val" value="" />

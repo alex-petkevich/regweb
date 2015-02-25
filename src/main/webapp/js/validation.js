@@ -196,6 +196,8 @@ function ValidatedControlOnBlur(event) {
     }
 }
 function ValidatorValidate(val, validationGroup, event) {
+    if (val == null)
+        return;
     val.isvalid = true;
     if ((typeof(val.enabled) == "undefined" || val.enabled != false) && IsValidationGroupMatch(val, validationGroup)) {
         if (typeof(val.evaluationfunction) == "function") {

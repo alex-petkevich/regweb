@@ -19,7 +19,7 @@
     <div class="shell">
         <!-- Logo + Top Nav -->
         <div id="top">
-            <h1><a href="#">Регистрация пользователей</a></h1>
+            <h1><a href="<spring:url value="/login" />">Регистрация пользователей</a></h1>
             <div id="top-navigation">
                 Привет, <a href="<spring:url value="/settings" />"><strong>${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}</strong></a>
                 <span>|</span>

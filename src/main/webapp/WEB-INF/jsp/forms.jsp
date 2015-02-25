@@ -53,9 +53,12 @@
         <p><strong>Успешно сконвертировано анкет: ${param.totalConverted}</strong></p>
     </div>
 </c:if>
-        <p>Выбранные: <input type="BUTTON" class="button" id="mark-sel" value="Отметить как готовые">
+<sec:authorize ifAnyGranted="ROLE_ADMIN">
+        <p>Выбранные:
+            <input type="BUTTON" class="button" id="mark-sel" value="Отметить как готовые">
             <input type="BUTTON" class="button" id="bulk-down" value="Скачать">
             <input type="BUTTON" class="button" id="bulk-remove" value="Удалить"></p><br>
+</sec:authorize>
         <spring:url value="/" var="postUrl" />
         <!-- Box -->
         <div class="box">
@@ -115,7 +118,7 @@
                             <sec:authorize ifAnyGranted="ROLE_ADMIN">
                                 <td<c:if test="${form.is_registered}"> class="reged"</c:if>><a href="<spring:url value="/user/edit/" />${form.user_id}">${form.user_id}</a></td>
                             </sec:authorize>
-                            <td<c:if test="${form.is_registered}"> class="reged"</c:if>><a href="download/${form.id}" id="ln_${form.id}" class="ico down">&nbsp;</a>&nbsp;<a href="edit/${form.id}" class="ico edit">&nbsp;</a>&nbsp;<a href="delete/${form.id}"  class="ico del">&nbsp;</a></td>
+                            <td<c:if test="${form.is_registered}"> class="reged"</c:if>><sec:authorize ifAnyGranted="ROLE_ADMIN"><a href="download/${form.id}" id="ln_${form.id}" class="ico down">&nbsp;</a>&nbsp;</sec:authorize><a href="edit/${form.id}" class="ico edit">&nbsp;</a>&nbsp;<a href="delete/${form.id}"  class="ico del">&nbsp;</a></td>
                         </tr>
                     </c:forEach>
                 </table>

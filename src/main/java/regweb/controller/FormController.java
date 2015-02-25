@@ -1,10 +1,12 @@
 package regweb.controller;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,8 +24,11 @@ import regweb.constants.Lists;
 import regweb.constants.Paths;
 import regweb.domain.FileUpload;
 import regweb.domain.Form;
+import regweb.domain.User;
 import regweb.exceptions.ImportExceptions;
 import regweb.service.FormService;
+import regweb.service.SendNotificationService;
+import regweb.service.UserService;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -37,7 +42,9 @@ import java.util.zip.ZipOutputStream;
 class FormController {
 
     private static final String TEMPLATES_AUTOFILL_VM = "autofill.vm";
+    private static final String TEMPLATES_EMAIL_NEW_USER = "new_user_email.vm";
     public static final String PACKAGE_NAME = "package.zip";
+    public static final String EMAIL_NEW_USER_SUBJECT = "Новый пользователь зарегистрирован";
     @Autowired
     private FormService formService;
 
@@ -49,6 +56,13 @@ class FormController {
 
     @Autowired
     private Properties properties;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    @Qualifier("emailNotification")
+    private SendNotificationService sendNotificationService;
 
     Logger logger = LoggerFactory.getLogger(FormController.class);
 
@@ -216,6 +230,13 @@ class FormController {
         return Paths.ADD;
     }
 
+    @RequestMapping(value = "/addnewacc", method = RequestMethod.GET)
+    public String addNewAcc(Map<String, Object> model) {
+        model.putAll(fillDictionary());
+        model.put("form", new Form());
+        return Paths.ADD;
+    }
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editForm(Map<String, Object> model, @PathVariable("id") Integer id) {
         model.putAll(fillDictionary());
@@ -293,9 +314,11 @@ class FormController {
 
         Form prevForm = formService.getForm(form.getId());
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentic.getName();
+
         if (form.getId() == null || !copy.equals("")) {
             form.setAdded(new Date());
-            form.setUser_id(authentic.getName());
+            form.setUser_id(userId);
             form.setId(null);
             form.setIs_registered(false);
         } else {
@@ -310,6 +333,66 @@ class FormController {
         } else {
             return Paths.ROOT_REDIRECT;
         }
+    }
+
+    @RequestMapping(value = "/addnewacc", method = RequestMethod.POST)
+    public String processNewAcc(@Valid Form form,
+                              BindingResult result,
+                              @RequestParam("copy") String copy,
+                              @RequestParam(value = "is_children", required = false) String is_children, Map model) {
+
+        model.putAll(fillDictionary());
+
+        Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
+        if (!"guest".equals(authentic.getName())) {
+            return Paths.ROOT_REDIRECT;
+        }
+
+        if (result.hasErrors()) {
+            return Paths.ADD;
+        }
+
+        if (form.getPersonaldataes_34() == null) {
+            form.setPersonaldataes_34("0");
+        }
+        if (form.getEndcountrypermit_28() == null) {
+            form.setEndcountrypermit_28("0");
+        }
+
+        String userId = null;
+        if ("guest".equals(authentic.getName())) {
+            // create new user account
+            String newUsername = generateUserId(15);
+            String password = generateUserId(10);
+            User newUser = new User();
+            newUser.setAdded(new Date());
+            newUser.setId(null);
+            newUser.setUsername(newUsername);
+            newUser.setPassword(password);
+            newUser.setEmail(form.getEmail_17());
+            newUser.setEnabled(true);
+            userService.save(newUser);
+            userService.addRole(newUser.getUsername(), "ROLE_USER");
+            userId = newUser.getUsername();
+            model.put("user",newUser);
+
+            String body = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_EMAIL_NEW_USER, properties.getProperty("source.encoding"), model);
+            sendNotificationService.send(form.getEmail_17(), EMAIL_NEW_USER_SUBJECT, body);
+        }
+
+        form.setAdded(new Date());
+        form.setUser_id(userId);
+        form.setId(null);
+        form.setIs_registered(false);
+        form.setIs_children(is_children == null || !is_children.equals("1"));
+
+        formService.save(form);
+
+        return Paths.LOGIN_REDIRECT + "?successreg=1";
+    }
+
+    private String generateUserId(int length) {
+        return RandomStringUtils.randomAlphanumeric(length);
     }
 
     @RequestMapping("/index")

@@ -19,7 +19,7 @@
     <div class="shell">
         <!-- Logo + Top Nav -->
         <div id="top">
-            <h1><a href="#">Начальная страница</a></h1>
+            <h1><a href="<spring:url value="/" />">Начальная страница</a></h1>
         </div>
         <!-- End Logo + Top Nav -->
 
@@ -31,6 +31,12 @@
 <!-- Container -->
 <div id="container">
     <div class="shell">
+
+        <c:if test="${not empty param.successreg}">
+            <div class="msg msg-ok">
+                <p><strong>Ваша анкета успешно зарегистрирована</strong></p>
+            </div>
+        </c:if>
 
         <decorator:body/>
 

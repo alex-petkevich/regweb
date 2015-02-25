@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <c:if test="${not empty param.error}">
     <div class="msg msg-error">
@@ -34,5 +33,7 @@
 
         </div>
     </div>
-
+<div align="center">
+    <a href="<spring:url value="/addnewacc" />" class="fill_href">Заполнить заявку без регистрации</a>
+</div>
 </form>
