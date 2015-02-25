@@ -76,7 +76,7 @@ class FormController {
                         Form form = formService.getForm(Integer.parseInt(seluser));
                         model.put("form", form);
                         String textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, properties.getProperty("source.encoding"), model);
-                        String filename = (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() : "form_" + form.getPassnum_13());
+                        String filename = (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() : form.getSurname_1() + "_" + form.getName_3());
                         File temp = File.createTempFile(filename, ".txt");
                         try {
                             BufferedWriter fos = new BufferedWriter(new OutputStreamWriter(
@@ -283,6 +283,14 @@ class FormController {
         if (result.hasErrors()) {
             return Paths.ADD;
         }
+
+        if (form.getPersonaldataes_34() == null) {
+            form.setPersonaldataes_34("0");
+        }
+        if (form.getEndcountrypermit_28() == null) {
+            form.setEndcountrypermit_28("0");
+        }
+
         Form prevForm = formService.getForm(form.getId());
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
         if (form.getId() == null || !copy.equals("")) {
@@ -293,6 +301,7 @@ class FormController {
         } else {
             form.setAdded(prevForm.getAdded());
             form.setUser_id(prevForm.getUser_id());
+            form.setFilename(prevForm.getFilename());
         }
         form.setIs_children(is_children == null || !is_children.equals("1"));
         formService.save(form);
@@ -313,7 +322,7 @@ class FormController {
         Form form;
         if (id != null) {
             form = formService.getForm(id);
-            String filename = (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() + ".txt" : "form_" + form.getPassnum_13() + ".txt");
+            String filename = (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() + ".txt" : form.getSurname_1() + "_" + form.getName_3() + ".txt");
             model.put("form", form);
             response.setContentType("text/plain; charset="+properties.getProperty("source.encoding"));
             String headerKey = "Content-Disposition";
