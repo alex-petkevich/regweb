@@ -91,6 +91,9 @@ public class FormDAO implements IFormDAO {
         else if (sortOrder.equals("desc")) {
             req.addOrder(Order.desc(sortField));
         }
+        if ("city".equals(sortField)) {
+            req.addOrder(Order.asc("type"));
+        }
         return req.list();
 
     }

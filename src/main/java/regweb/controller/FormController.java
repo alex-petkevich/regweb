@@ -192,7 +192,7 @@ class FormController {
         String to_sort = "";
         String to_dir = "";
         if (sort == null) {
-            to_sort = "added";
+            to_sort = "city";
             to_dir = "desc";
         } else {
             if (sort.equals("added")) {
@@ -204,8 +204,11 @@ class FormController {
             if (sort.equals("name")) {
                 to_sort = "name_3";
             }
-            if (sort.equals("passnum")) {
-                to_sort = "passnum_13";
+            if (sort.equals("city")) {
+                to_sort = "city";
+            }
+            if (sort.equals("type")) {
+                to_sort = "type";
             }
             if (sort.equals("registered")) {
                 to_sort = "is_registered";

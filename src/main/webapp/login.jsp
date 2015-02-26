@@ -6,6 +6,12 @@
         <p><strong>ошибка: ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</strong></p>
     </div>
 </c:if>
+<c:if test="${not empty param.successreg}">
+    <div class="msg msg-ok">
+        <p><strong>Ваша анкета успешно зарегистрирована</strong></p>
+    </div>
+</c:if>
+
 <form method="POST" action="<c:url value="/j_spring_security_check" />">
     <div class="box">
         <!-- Box Head -->

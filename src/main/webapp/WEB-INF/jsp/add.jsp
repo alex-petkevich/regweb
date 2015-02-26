@@ -10,6 +10,37 @@
     <script type="text/javascript" src="<spring:url value="/js/validation.js" />"></script>
 
     <script>
+
+        var types = {
+            minsk : {
+                other : "Визы с иной целью",
+                business : "Деловые",
+                tourism : "Туристические визы"
+            },
+            brest : {
+                tourism : "Шенген - туризм",
+                guests : "Шенген - гости",
+                sport : "Шенген - спорт",
+                business : "Шенген - деловая",
+                work : "Шенген - работа в РП",
+                culture : "Шенген - культура",
+                shopping : "Шенген - покупки",
+                other : "Шенген - другие (не покупки)",
+                drivers : "Шенген - водители TIR"
+            },
+            grodno : {
+                shopping : "Шенген - покупки",
+                tourism : "Шенген - туризм",
+                guests : "Шенген - гости",
+                sport : "Шенген - спорт",
+                culture : "Шенген - культура",
+                other : "Шенген - другие (не покупки)",
+                work : "Шенген - работа в РП",
+                business : "Шенген - деловая",
+                drivers : "Шенген - водители TIR"
+            },
+        };
+
         $(function() {
             $( ".datepicker" ).datepicker({
                 showOtherMonths: true,
@@ -32,6 +63,27 @@
                 } else {
                     check_es(true);
                 }
+            });
+            $("#city").on('change',function() {
+                $("#type").empty();
+                $("#type").append('<option value="">=========</option>');
+                if ($(this).val() != "") {
+                    for (var key in types[$(this).val()]) {
+                        $("#type").append('<option value="'+key+'">' + types[$(this).val()][key] + '</option>');
+                    }
+                    if ($("#type_hid").val()!="") {
+                        $("#type").val($("#type_hid").val());
+                    }
+                }
+            });
+            if ($("#city").val()!="") {
+                $("#city").change();
+            }
+            $("#type").on('change',function() {
+                $("#type_hid").val();
+            });
+            $("#city").on('change',function() {
+                $("#city_hid").val();
             });
 
             $("#more_children").on('click',function(){
@@ -126,6 +178,19 @@
 
         }
 
+        function checkRoboSubmit() {
+            var res = true;
+            if ($("#city").val() == "") {
+                res = false;
+                $("#city_err").show();
+            }
+            if ($("#type").val() == "") {
+                res = false;
+                $("#type_err").show();
+            }
+            return res;
+        }
+
     </script>
 </head>
 <body>
@@ -169,7 +234,7 @@
         </div>       -->
     </form:form>
     <spring:url value="/import" var="importUrl" />
-    <form:form modelAttribute="fileUpload"  method="post" action="${importUrl}"  enctype="multipart/form-data">
+    <form:form modelAttribute="fileUpload"  method="post" action="${importUrl}" onsubmit="return checkRoboSubmit()"  enctype="multipart/form-data">
         <input type="hidden" name="id" value="${form.id}" />
 
         <div class="box">
@@ -209,6 +274,30 @@
 <form:form method="post" action="${postUrl}" commandName="form" name="aspnetForm"  id="aspnetForm" onsubmit="javascript:return WebForm_OnSubmit();">
     <form:hidden path="id" />
     <input type="hidden" name="copy" id="copy_val" value="" />
+
+    <div class="box">
+        <div class="box-head">
+            <h2>Выбор цели и города</h2>
+        </div>
+        <div style="padding: 20px">
+            <div id="city_err" class="errors hide">Поле Город подачи для обязательного заполнения </div>
+            <div class="errors"><form:errors path="city" /></div>
+
+            Город подачи: <select name="city" id="city">
+                <option value="">=======</option>
+                <option value="minsk"<c:if test="${form.city eq 'minsk'}"> selected="selected" </c:if>> Минск</option>
+                <option value="brest"<c:if test="${form.city eq 'brest'}"> selected="selected" </c:if>>Брест</option>
+                <option value="grodno"<c:if test="${form.city eq 'grodno'}"> selected="selected" </c:if>>Гродно</option>
+            </select> <input type="hidden" name="city_hid" id="city_hid" value="${form.city}" /><br /><br />
+            <div id="type_err" class="errors hide">Поле Тип для обязательного заполнения </div>
+            <div class="errors"><form:errors path="type" /></div>
+            Тип: <select name="type" id="type">
+                <option value="">=======</option>
+            </select> <input type="hidden" name="type_hid" id="type_hid" value="${form.type}" />
+        </div>
+    </div>
+
+
     <div class="box">
         <!-- Box Head -->
         <div class="box-head">

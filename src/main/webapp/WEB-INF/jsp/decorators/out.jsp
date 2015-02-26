@@ -32,11 +32,6 @@
 <div id="container">
     <div class="shell">
 
-        <c:if test="${not empty param.successreg}">
-            <div class="msg msg-ok">
-                <p><strong>Ваша анкета успешно зарегистрирована</strong></p>
-            </div>
-        </c:if>
 
         <decorator:body/>
 

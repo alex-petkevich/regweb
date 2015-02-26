@@ -418,6 +418,14 @@ public class Form implements Serializable {
     @Column(name = "FILENAME")
     private String filename;
 
+    @Size(min = 1, max = 50, message = "{errors.requiredfield}")
+    @Column(name = "CITY")
+    private String city;
+
+    @Size(min = 1, max = 50, message = "{errors.requiredfield}")
+    @Column(name = "TYPE")
+    private String type;
+
     static final long serialVersionUID = 1212121211212L;
 
     public Integer getId() {
@@ -1315,5 +1323,21 @@ public class Form implements Serializable {
 
     public void setExpencies_33_other(boolean expencies_33_other) {
         this.expencies_33_other = expencies_33_other;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
