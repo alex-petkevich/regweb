@@ -63,6 +63,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public String parseSettings(String settings, String parameter) {
         String result = "";
+        if (settings == null)
+            return result;
         String[] settingsList = settings.split("\\|");
         for (String group : settingsList) {
             String[] paramList = group.split("=");

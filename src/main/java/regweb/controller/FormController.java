@@ -558,51 +558,6 @@ class FormController {
         return model;
     }
 
-
-    /**
-     * Zip it
-     *
-     * @param zipFile output ZIP file location
-     */
-    void zipIt(String zipFile, Set<File> fileList) {
-
-        byte[] buffer = new byte[1024];
-
-        try {
-
-            FileOutputStream fos = new FileOutputStream(zipFile);
-            ZipOutputStream zos = new ZipOutputStream(fos);
-
-            for (File file : fileList) {
-
-                FileInputStream in = null;
-                try {
-                    ZipEntry ze = new ZipEntry(file.getName());
-                    zos.putNextEntry(ze);
-
-                    in = new FileInputStream(file);
-
-                    int len;
-                    while ((len = in.read(buffer)) > 0) {
-                        zos.write(buffer, 0, len);
-                    }
-                } finally {
-                    if (in != null) {
-                        in.close();
-                    }
-                }
-
-            }
-
-            zos.closeEntry();
-            //remember close it
-            zos.close();
-
-        } catch (IOException ex) {
-            logger.warn("Problem with zip file %s", zipFile);
-        }
-    }
-
     private String formatBlockedDays(String blocked) {
 
         String res = "";
