@@ -447,6 +447,18 @@ class FormController {
         }
     }
 
+    @RequestMapping("/buildinfo")
+    public String buildInfo(HttpServletResponse response) throws IOException {
+        StringBuilder result = new StringBuilder();
+        result.append("build version: ");
+        result.append(properties.getProperty("build.version"));
+        result.append("\n");
+        result.append("build time: ");
+        result.append(properties.getProperty("build.timestamp"));
+        response.getOutputStream().print(result.toString());
+        return null;
+    }
+
     private List<String> getAvailableDates(String blocked_days) {
         User userAdmin = userService.getUserByName("admin");
         String from = userService.parseSettings(userAdmin.getSettings(), "from");
@@ -490,7 +502,7 @@ class FormController {
     }
 
     private String getFieldname(Form form) {
-        return (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() + ".txt" : form.getSurname_1() + "_" + form.getName_3() + ".txt");
+        return (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() : form.getSurname_1() + "_" + form.getName_3()) + "_" + form.getUser_id() + ".txt";
     }
 
 
