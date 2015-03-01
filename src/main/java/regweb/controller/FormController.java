@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.zeroturnaround.zip.ZipUtil;
 import regweb.constants.Actions;
 import regweb.constants.Lists;
 import regweb.constants.Paths;
@@ -38,6 +39,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.*;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -89,7 +92,9 @@ class FormController {
             case Actions.DOWNLOAD:
                 if (selusers != null) {
 
-                    Set<File> files = new HashSet<File>();
+                    Path tmpdir = Files.createTempDirectory(null);
+                    recursiveDeleteOnShutdownHook(tmpdir);
+
                     for (String seluser : selusers) {
 
                         Map<String, Object> model = new HashMap<String, Object>();
@@ -99,6 +104,25 @@ class FormController {
                         model.put("form", form);
                         String textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, properties.getProperty("source.encoding"), model);
                         String filename = getFieldname(form);
+                        // create dir structure
+                        StringBuilder pathBuild = new StringBuilder();
+                        pathBuild.append(tmpdir.toAbsolutePath());
+                        pathBuild.append(File.separator);
+                        if (form.getCity()!=null && !"".equals(form.getCity())) {
+                            pathBuild.append(form.getCity());
+                            pathBuild.append(File.separator);
+                        }
+                        if (form.getType()!=null && !"".equals(form.getType())) {
+                            pathBuild.append(form.getType());
+                            pathBuild.append(File.separator);
+                        }
+                        if (form.getUser_id()!=null && !"".equals(form.getUser_id())) {
+                            pathBuild.append(form.getUser_id());
+                            pathBuild.append(File.separator);
+                        }
+                        Path currentDir = FileSystems.getDefault().getPath(pathBuild.toString());
+                        if (!Files.exists(currentDir))
+                            Files.createDirectories(currentDir);
                         File temp = File.createTempFile(filename, ".txt");
                         try {
                             BufferedWriter fos = new BufferedWriter(new OutputStreamWriter(
@@ -106,16 +130,14 @@ class FormController {
                             ));
                             fos.write(textdoc);
                             fos.flush();
-                            String newFilePath = temp.getAbsolutePath().replace(temp.getName(), "") + filename + ".txt";
-                            File newFile = new File(newFilePath);
+                            File newFile = new File(currentDir.toAbsolutePath() + File.separator + filename);
                             temp.renameTo(newFile);
-                            files.add(newFile);
                         } catch (IOException e) {
                             logger.warn("Problem with file saving");
                         }
                     }
                     File outFile = File.createTempFile("package", ".zip");
-                    this.zipIt(outFile.getAbsolutePath(), files);
+                    ZipUtil.pack(tmpdir.toFile(), outFile);
                     FileInputStream in = new FileInputStream(outFile);
                     //send to browser
                     response.setContentType("application/zip");
@@ -129,15 +151,6 @@ class FormController {
                     in.close();
                     response.getOutputStream().flush();
                     response.getOutputStream().close();
-                    // delete all temp files
-                    try {
-                        outFile.delete();
-                        for (File file : files) {
-                            file.delete();
-                        }
-                    } catch (Exception exception) {
-                        logger.warn("Can't delete file %s", outFile.getAbsoluteFile());
-                    }
 
                 }
                 break;
@@ -502,7 +515,7 @@ class FormController {
     }
 
     private String getFieldname(Form form) {
-        return (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() : form.getSurname_1() + "_" + form.getName_3()) + "_" + form.getUser_id() + ".txt";
+        return (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() : form.getSurname_1() + "_" + form.getName_3()) + (form.getUser_id()!=null ? form.getUser_id() + "_"  : "" ) + ".txt";
     }
 
 
@@ -608,6 +621,9 @@ class FormController {
 
     private List<Date> getDatesFromField(String blocked) {
         List<Date> dateList = new ArrayList<Date>();
+        if (blocked == null || "".equals(blocked)) {
+            return dateList;
+        }
         try {
             JsonParserFactory factory= JsonParserFactory.getInstance();
             JSONParser parser=factory.newJsonParser();
@@ -626,5 +642,36 @@ class FormController {
         return dateList;
     }
 
+    public static void recursiveDeleteOnShutdownHook(final Path path) {
+        Runtime.getRuntime().addShutdownHook(new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+                                @Override
+                                public FileVisitResult visitFile(Path file,
+                                                                 @SuppressWarnings("unused") BasicFileAttributes attrs)
+                                        throws IOException {
+                                    Files.delete(file);
+                                    return FileVisitResult.CONTINUE;
+                                }
 
+                                @Override
+                                public FileVisitResult postVisitDirectory(Path dir, IOException e)
+                                        throws IOException {
+                                    if (e == null) {
+                                        Files.delete(dir);
+                                        return FileVisitResult.CONTINUE;
+                                    }
+                                    // directory iteration failed
+                                    throw e;
+                                }
+                            });
+                        } catch (IOException e) {
+                            throw new RuntimeException("Failed to delete " + path, e);
+                        }
+                    }
+                }));
+    }
 }
