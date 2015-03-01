@@ -1,3 +1,13 @@
+<formMetaData>
+    <owner>$!form.user_id</owner>
+    <city>$!form.city</city>
+    <type>$!form.type</type>
+    <acceptableDates>
+    #foreach($date in $availableDates)
+        <date>$date</date>
+    #end
+    </acceptableDates>
+</formMetaData>
 autofillForms@blueimp.net	0.9.8.2	$!form.passnum_13	(?:^https:\/\/rejestracja\.by\.e-konsulat\.gov\.pl)
 
 Ctl00$cp$f$daneOs$txtNazwisko	$!form.surname_1	(?:^ctl00\$cp\$f\$daneOs\$txtNazwisko$)	(?:)	true	true

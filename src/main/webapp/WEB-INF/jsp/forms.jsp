@@ -100,6 +100,7 @@
                         <th><a href="<spring:url value="/" />?sort=added<c:if test="${empty dir}">&dir=desc</c:if>">Дата добавления</a></th>
                         <th><a href="<spring:url value="/" />?sort=surname<c:if test="${empty dir}">&dir=desc</c:if>">Фамилия</a></th>
                         <th><a href="<spring:url value="/" />?sort=name<c:if test="${empty dir}">&dir=desc</c:if>">Имя</a></th>
+                        <th>Ограничения по дате подачи</th>
                         <th><a href="<spring:url value="/" />?sort=city<c:if test="${empty dir}">&dir=desc</c:if>">Город</a></th>
                         <th><a href="<spring:url value="/" />?sort=type<c:if test="${empty dir}">&dir=desc</c:if>">Тип</a></th>
                         <th><a href="<spring:url value="/" />?sort=registered<c:if test="${empty dir}">&dir=desc</c:if>">Результат</a></th>
@@ -114,6 +115,7 @@
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>><fmt:formatDate dateStyle="full" pattern="dd.MM.yyyy HH:mm" value="${form.added}"/></td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.surname_1}</td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.name_3}</td>
+                            <td<c:if test="${form.is_registered}"> class="reged"</c:if> style="word-wrap:break-word;max-width: 200px;">${form.blocked_days}</td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.city}</td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.type}</td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>><c:if test="${form.is_registered}">готово</c:if></td>

@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public List<User> listUsers(Map<String,String> searchValue,String sortField,String sortOrder,Integer offset,Integer limit) {
-        return userDAO.listUsers(searchValue,sortField,sortOrder,offset,limit);
+    public List<User> listUsers(Map<String, String> searchValue, String sortField, String sortOrder, Integer offset, Integer limit) {
+        return userDAO.listUsers(searchValue, sortField, sortOrder, offset, limit);
     }
 
     @Transactional
@@ -51,12 +51,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void addRole(String username,String role) {
-        userDAO.addRole(username,role);
+    public void addRole(String username, String role) {
+        userDAO.addRole(username, role);
     }
 
     @Transactional
-    public void removeRole(String username,String role) {
-        userDAO.removeRole(username,role);
+    public void removeRole(String username, String role) {
+        userDAO.removeRole(username, role);
+    }
+
+    @Override
+    public String parseSettings(String settings, String parameter) {
+        String result = "";
+        String[] settingsList = settings.split("\\|");
+        for (String group : settingsList) {
+            String[] paramList = group.split("=");
+            if (paramList[0].equals(parameter)) {
+                result = paramList[1];
+            }
+        }
+        return result;
     }
 }

@@ -426,6 +426,9 @@ public class Form implements Serializable {
     @Column(name = "TYPE")
     private String type;
 
+    @Column(name = "BLOCKED_DAYS")
+    private String blocked_days;
+
     static final long serialVersionUID = 1212121211212L;
 
     public Integer getId() {
@@ -1339,5 +1342,13 @@ public class Form implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getBlocked_days() {
+        return blocked_days;
+    }
+
+    public void setBlocked_days(String blocked_days) {
+        this.blocked_days = blocked_days;
     }
 }

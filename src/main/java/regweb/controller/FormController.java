@@ -1,5 +1,7 @@
 package regweb.controller;
 
+import com.codesnippets4all.json.parsers.JsonParserFactory;
+import com.codesnippets4all.json.parsers.JSONParser;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
@@ -13,6 +15,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +38,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -88,9 +94,11 @@ class FormController {
 
                         Map<String, Object> model = new HashMap<String, Object>();
                         Form form = formService.getForm(Integer.parseInt(seluser));
+                        List<String> availableDates = getAvailableDates(form.getBlocked_days());
+                        model.put("availableDates",availableDates);
                         model.put("form", form);
                         String textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, properties.getProperty("source.encoding"), model);
-                        String filename = (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() : form.getSurname_1() + "_" + form.getName_3());
+                        String filename = getFieldname(form);
                         File temp = File.createTempFile(filename, ".txt");
                         try {
                             BufferedWriter fos = new BufferedWriter(new OutputStreamWriter(
@@ -218,7 +226,12 @@ class FormController {
             to_dir = dir;
         }
 
-        map.put("formsList", formService.listForms(searchVal, to_sort, to_dir, 0, 0));
+
+        List<Form> forms = formService.listForms(searchVal, to_sort, to_dir, 0, 0);
+        for(Form form : forms) {
+            form.setBlocked_days(formatBlockedDays(form.getBlocked_days()));
+        }
+        map.put("formsList", forms);
         map.put("sort", sort);
         map.put("dir", dir);
         map.put("search", searchVal);
@@ -408,7 +421,9 @@ class FormController {
         Form form;
         if (id != null) {
             form = formService.getForm(id);
-            String filename = (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() + ".txt" : form.getSurname_1() + "_" + form.getName_3() + ".txt");
+            String filename = getFieldname(form);
+            List<String> availableDates = getAvailableDates(form.getBlocked_days());
+            model.put("availableDates",availableDates);
             model.put("form", form);
             response.setContentType("text/plain; charset="+properties.getProperty("source.encoding"));
             String headerKey = "Content-Disposition";
@@ -430,6 +445,52 @@ class FormController {
         } else {
             return Paths.ROOT_REDIRECT;
         }
+    }
+
+    private List<String> getAvailableDates(String blocked_days) {
+        User userAdmin = userService.getUserByName("admin");
+        String from = userService.parseSettings(userAdmin.getSettings(), "from");
+        String to = userService.parseSettings(userAdmin.getSettings(), "to");
+
+        List<String> result = new ArrayList<String>();
+        List<Date> inaccessDates = getDatesFromField(blocked_days);
+        try {
+            if (from!=null && to!=null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date fromDate = sdf.parse(from);
+                Date toDate = sdf.parse(to);
+                List<Date> dates = getDaysBetweenDates(fromDate,toDate);
+                for(Date date : dates) {
+                    if (!inaccessDates.contains(date)) {
+                        result.add(sdf.format(date));
+                    }
+                }
+
+            }
+        } catch (ParseException e) {
+           logger.warn("incorrect from-to dates period: {} {}",from,to);
+        }
+
+        return result;
+    }
+
+    public static List<Date> getDaysBetweenDates(Date startdate, Date enddate)
+    {
+        List<Date> dates = new ArrayList<Date>();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(startdate);
+
+        while (calendar.getTime().before(enddate))
+        {
+            Date result = calendar.getTime();
+            dates.add(result);
+            calendar.add(Calendar.DATE, 1);
+        }
+        return dates;
+    }
+
+    private String getFieldname(Form form) {
+        return (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() + ".txt" : form.getSurname_1() + "_" + form.getName_3() + ".txt");
     }
 
 
@@ -463,6 +524,11 @@ class FormController {
         model.put("fileUpload", new FileUpload());
         model.put("relationshipList", Lists.relationshipList);
         model.put("fingerprintList", Lists.fingerprintList);
+
+        // fill the settings
+        User userAdmin = userService.getUserByName("admin");
+        model.put("reg_from", userService.parseSettings(userAdmin.getSettings(), "from"));
+        model.put("reg_to", userService.parseSettings(userAdmin.getSettings(),"to"));
 
         return model;
     }
@@ -510,6 +576,42 @@ class FormController {
         } catch (IOException ex) {
             logger.warn("Problem with zip file %s", zipFile);
         }
+    }
+
+    private String formatBlockedDays(String blocked) {
+
+        String res = "";
+        if (!"".equals(blocked) && blocked != null){
+            List<Date> dateList = getDatesFromField(blocked);
+            List<String> resArray = new ArrayList<String>();
+            for (Date date : dateList) {
+                SimpleDateFormat formatterSDF = new SimpleDateFormat("dd.MM");
+                resArray.add(formatterSDF.format(date));
+            }
+
+            res = StringUtils.collectionToCommaDelimitedString(resArray);
+        }
+        return res;
+    }
+
+    private List<Date> getDatesFromField(String blocked) {
+        List<Date> dateList = new ArrayList<Date>();
+        try {
+            JsonParserFactory factory= JsonParserFactory.getInstance();
+            JSONParser parser=factory.newJsonParser();
+            Map jsonData=parser.parseJson(blocked);
+            ArrayList<HashMap> rootElements = (ArrayList<HashMap>)jsonData.get("root");
+            for(HashMap<String, String> date : rootElements) {
+                String cDate = date.get("date");
+                SimpleDateFormat parserSDF=new SimpleDateFormat("yyyy-MM-dd");
+                Date newDate = parserSDF.parse(cDate);
+                dateList.add(newDate);
+            }
+            Collections.sort(dateList);
+        } catch (ParseException e) {
+            logger.warn("Incorrect date, can't parse {}", blocked);
+        }
+        return dateList;
     }
 
 

@@ -91,7 +91,9 @@ public class UserController {
         if (authentic.getName()!=null) {
         
             User user = userService.getUserByName(authentic.getName());
-            
+
+            map.put("reg_from", userService.parseSettings(user.getSettings(), "from"));
+            map.put("reg_to", userService.parseSettings(user.getSettings(),"to"));
             map.put("user", user);
             
         }
@@ -103,6 +105,8 @@ public class UserController {
     public String saveUserSettings(@RequestParam(value="email",required = false)  String email,
                                    @RequestParam(value="password",required = false)  String password,
                                    @RequestParam(value="password_confirm",required = false)  String password_confirm,
+                                   @RequestParam(value="reg_from",required = false)  String reg_from,
+                                   @RequestParam(value="reg_to",required = false)  String reg_to,
                                    Map<String, Object> map) {
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
 
@@ -112,17 +116,27 @@ public class UserController {
 
             user = userService.getUserByName(authentic.getName());
             
-            if (password.equals("") || !password.equals(password_confirm)) {
+            if (!password.equals(password_confirm)) {
                 map.put("error",true);
             }  else {
+                if ("admin".equals(user.getUsername())) {
+                    StringBuilder additional_settings = new StringBuilder();
+                    additional_settings.append("from=").append(reg_from);
+                    additional_settings.append("|");
+                    additional_settings.append("to=").append(reg_to);
+                    user.setSettings(additional_settings.toString());
+                }
                 user.setEmail(email);
-                user.setPassword(password);
+                if (!"".equals(password))
+                    user.setPassword(password);
                 userService.save(user);
                 map.put("ok",true);
             }
 
         }
 
+        map.put("reg_from", userService.parseSettings(user.getSettings(), "from"));
+        map.put("reg_to", userService.parseSettings(user.getSettings(),"to"));
         map.put("user", user);
         return "user_settings";
     }

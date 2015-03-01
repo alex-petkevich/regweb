@@ -7,6 +7,18 @@
 
 <head>
     <title>Настройки пользователя</title>
+    <script type="text/javascript">
+        $(function() {
+            $( ".datepicker" ).datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "yy-mm-dd"
+
+            });
+        });
+    </script>
 </head>
 <body>
 <spring:url value="/settings" var="postUrl" />
@@ -26,6 +38,24 @@
         <p><strong>Ошибка: неверный пароль</strong></p>
     </div>
     <!-- End Message Error -->
+    </c:if>
+
+    <c:if test="${user.username eq 'admin'}">
+        <div class="box">
+            <!-- Box Head -->
+            <div class="box-head">
+                <h2>Настройки системы</h2>
+            </div>
+            <!-- Form -->
+            <div class="form">
+                <p>
+                    <label>Даты начала и окончания регистрации: </label>
+                    с: <input type="text" name="reg_from" value="${reg_from}" class="field datepicker" />
+                    по: <input type="text" name="reg_to" value="${reg_to}" class="field datepicker" />
+                </p>
+
+            </div>
+        </div>
     </c:if>
 
     <div class="box">

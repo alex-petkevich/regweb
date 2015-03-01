@@ -72,10 +72,10 @@
     </div>
     <!-- End Form -->
 
-    <div class="buttons">  <input type="submit" value="Сохранить" class="button" />
+        <div class="buttons">  <input type="submit" value="Сохранить" class="button" />
 
+        </div>
     </div>
-</div>
 
 </form:form>   <br /><br /><br />
 </body>

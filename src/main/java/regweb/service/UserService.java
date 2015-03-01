@@ -27,4 +27,6 @@ public interface UserService {
     public void addRole(String username,String role);
 
     public void removeRole(String username,String role);
+
+    public String parseSettings(String settings, String parameter);
 }

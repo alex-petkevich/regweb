@@ -8,9 +8,15 @@
 <head>
     <title>Форма регистрации</title>
     <script type="text/javascript" src="<spring:url value="/js/validation.js" />"></script>
+    <script type="text/javascript" src="<spring:url value="/js/moment.min.js" />"></script>
+    <script type="text/javascript" src="<spring:url value="/js/moment_ru.js" />"></script>
+    <script type="text/javascript" src="<spring:url value="/js/clndr.min.js" />"></script>
+    <script type="text/javascript" src="<spring:url value="/js/underscore-min.js" />"></script>
+    <link type="text/css" href="<spring:url value="/css/clndr.css" />" rel="stylesheet" />
 
-    <script>
+    <script type="text/javascript">
 
+        moment.locale('ru');
         var types = {
             minsk : {
                 other : "Визы с иной целью",
@@ -41,7 +47,47 @@
             },
         };
 
+        var eventsArray = [];
+
         $(function() {
+            var calendarInstance = $('.calendar').clndr({
+                clickEvents: {
+                    click: function(target){
+                        var new_el = {date: target.date};
+                        var index = -1;
+                        for (i=0;i<eventsArray.length;i++) {
+                           if (eventsArray[i].date != undefined && eventsArray[i].date.isSame(target.date)) {
+                               index = i;
+                           }
+                        }
+                        if (index >= 0)
+                            eventsArray.splice(index,1);
+                        else
+                            eventsArray.push(new_el);
+                        this.setEvents(eventsArray);
+                        $("#blocked_days").val(JSON.stringify(eventsArray));
+                    }
+                },
+                events: eventsArray,
+                startWithMonth: moment().add(1, 'month'),
+                <c:if test="${reg_from != ''}">
+                constraints: {
+                    startDate: '${reg_from}',
+                    endDate: '${reg_to}'
+                }
+                </c:if>
+            });
+
+            if ($("#blocked_days").val() != "") {
+                var datesArray = JSON.parse($("#blocked_days").val());
+                eventsArray = [];
+                for (i=0;i<datesArray.length;i++) {
+                    eventsArray.push({date: moment(datesArray[i].date)});
+                }
+                calendarInstance.setEvents(eventsArray);
+            }
+
+
             $( ".datepicker" ).datepicker({
                 showOtherMonths: true,
                 selectOtherMonths: true,
@@ -195,6 +241,7 @@
 </head>
 <body>
 
+
 <spring:url value="/addform" var="postUrl" />
 <c:choose>
 <c:when test="${empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
@@ -274,6 +321,7 @@
 <form:form method="post" action="${postUrl}" commandName="form" name="aspnetForm"  id="aspnetForm" onsubmit="javascript:return WebForm_OnSubmit();">
     <form:hidden path="id" />
     <input type="hidden" name="copy" id="copy_val" value="" />
+    <form:hidden path="blocked_days" />
 
     <div class="box">
         <div class="box-head">
@@ -297,6 +345,23 @@
         </div>
     </div>
 
+    <div class="box">
+        <div class="box-head">
+            <h2>Ограничения на даты визита</h2>
+        </div>
+        <div style="padding: 20px">
+
+            <h2>Отметьте даты, в которые регистрация <b>невозможна</b></h2><br />
+            <c:if test="${reg_from != ''}">
+            Регистрация открыта с ${reg_from} по ${reg_to}
+            </c:if>
+            <div class="calendar">
+            </div>
+
+
+
+        </div>
+    </div>
 
     <div class="box">
         <!-- Box Head -->

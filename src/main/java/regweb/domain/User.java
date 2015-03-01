@@ -44,6 +44,9 @@ public class User {
     @Column(name = "ENABLED")
     private boolean enabled;
 
+    @Column(name = "SETTINGS")
+    private String settings;
+
     @Transient
     private List<String> roles = new ArrayList<String>();
 
@@ -109,5 +112,13 @@ public class User {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getSettings() {
+        return settings;
+    }
+
+    public void setSettings(String settings) {
+        this.settings = settings;
     }
 }
