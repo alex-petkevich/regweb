@@ -50,44 +50,6 @@
         var eventsArray = [];
 
         $(function() {
-            var calendarInstance = $('.calendar').clndr({
-                clickEvents: {
-                    click: function(target){
-                        var new_el = {date: target.date};
-                        var index = -1;
-                        for (i=0;i<eventsArray.length;i++) {
-                           if (eventsArray[i].date != undefined && eventsArray[i].date.isSame(target.date)) {
-                               index = i;
-                           }
-                        }
-                        if (index >= 0)
-                            eventsArray.splice(index,1);
-                        else
-                            eventsArray.push(new_el);
-                        this.setEvents(eventsArray);
-                        $("#blocked_days").val(JSON.stringify(eventsArray));
-                    }
-                },
-                events: eventsArray,
-                startWithMonth: moment().add(1, 'month'),
-                <c:if test="${reg_from != ''}">
-                constraints: {
-                    startDate: '${reg_from}',
-                    endDate: '${reg_to}'
-                }
-                </c:if>
-            });
-
-            if ($("#blocked_days").val() != "") {
-                var datesArray = JSON.parse($("#blocked_days").val());
-                eventsArray = [];
-                for (i=0;i<datesArray.length;i++) {
-                    eventsArray.push({date: moment(datesArray[i].date)});
-                }
-                calendarInstance.setEvents(eventsArray);
-            }
-
-
             $( ".datepicker" ).datepicker({
                 showOtherMonths: true,
                 selectOtherMonths: true,
@@ -109,27 +71,6 @@
                 } else {
                     check_es(true);
                 }
-            });
-            $("#city").on('change',function() {
-                $("#type").empty();
-                $("#type").append('<option value="">=========</option>');
-                if ($(this).val() != "") {
-                    for (var key in types[$(this).val()]) {
-                        $("#type").append('<option value="'+key+'">' + types[$(this).val()][key] + '</option>');
-                    }
-                    if ($("#type_hid").val()!="") {
-                        $("#type").val($("#type_hid").val());
-                    }
-                }
-            });
-            if ($("#city").val()!="") {
-                $("#city").change();
-            }
-            $("#type").on('change',function() {
-                $("#type_hid").val();
-            });
-            $("#city").on('change',function() {
-                $("#city_hid").val();
             });
 
             $("#more_children").on('click',function(){
@@ -322,7 +263,16 @@
     <form:hidden path="id" />
     <input type="hidden" name="copy" id="copy_val" value="" />
     <form:hidden path="blocked_days" />
-
+    <script type="text/javascript">
+        if ($("#blocked_days").val() != "") {
+            var datesArray = JSON.parse($("#blocked_days").val());
+            eventsArray = [];
+            for (i=0;i<datesArray.length;i++) {
+                eventsArray.push({date: moment(datesArray[i].date)});
+            }
+            calendarInstance.setEvents(eventsArray);
+        }
+    </script>
     <div class="box">
         <div class="box-head">
             <h2>Выбор цели и города</h2>
@@ -344,6 +294,30 @@
             </select> <input type="hidden" name="type_hid" id="type_hid" value="${form.type}" />
         </div>
     </div>
+    <script type="text/javascript">
+        $("#city").on('change',function() {
+            $("#type").empty();
+            $("#type").append('<option value="">=========</option>');
+            if ($(this).val() != "") {
+                for (var key in types[$(this).val()]) {
+                    $("#type").append('<option value="'+key+'">' + types[$(this).val()][key] + '</option>');
+                }
+                if ($("#type_hid").val()!="") {
+                    $("#type").val($("#type_hid").val());
+                }
+            }
+        });
+        if ($("#city").val()!="") {
+            $("#city").change();
+        }
+        $("#type").on('change',function() {
+            $("#type_hid").val();
+        });
+        $("#city").on('change',function() {
+            $("#city_hid").val();
+        });
+
+    </script>
 
     <div class="box">
         <div class="box-head">
@@ -352,12 +326,31 @@
         <div style="padding: 20px">
 
             <h2>Отметьте даты, в которые регистрация <b>невозможна</b></h2><br />
-            <c:if test="${reg_from != ''}">
-            Регистрация открыта с ${reg_from} по ${reg_to}
-            </c:if>
             <div class="calendar">
             </div>
-
+            <script type="text/javascript">
+                var calendarInstance = $('.calendar').clndr({
+                    clickEvents: {
+                        click: function(target){
+                            var new_el = {date: target.date};
+                            var index = -1;
+                            for (i=0;i<eventsArray.length;i++) {
+                                if (eventsArray[i].date != undefined && eventsArray[i].date.isSame(target.date)) {
+                                    index = i;
+                                }
+                            }
+                            if (index >= 0)
+                                eventsArray.splice(index,1);
+                            else
+                                eventsArray.push(new_el);
+                            this.setEvents(eventsArray);
+                            $("#blocked_days").val(JSON.stringify(eventsArray));
+                        }
+                    },
+                    events: eventsArray,
+                    startWithMonth: moment().add(1, 'month')
+                });
+            </script>
 
 
         </div>

@@ -15,7 +15,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.velocity.VelocityEngineUtils;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,8 +43,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 @Controller
 class FormController {
@@ -99,8 +96,8 @@ class FormController {
 
                         Map<String, Object> model = new HashMap<String, Object>();
                         Form form = formService.getForm(Integer.parseInt(seluser));
-                        List<String> availableDates = getAvailableDates(form.getBlocked_days());
-                        model.put("availableDates",availableDates);
+                        List<String> inavailableDates = getInavailableDates(form.getBlocked_days());
+                        model.put("inavailableDates",inavailableDates);
                         model.put("form", form);
                         String textdoc = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, TEMPLATES_AUTOFILL_VM, properties.getProperty("source.encoding"), model);
                         String filename = getFieldname(form);
@@ -435,8 +432,8 @@ class FormController {
         if (id != null) {
             form = formService.getForm(id);
             String filename = getFieldname(form);
-            List<String> availableDates = getAvailableDates(form.getBlocked_days());
-            model.put("availableDates",availableDates);
+            List<String> inavailableDates = getInavailableDates(form.getBlocked_days());
+            model.put("inavailableDates",inavailableDates);
             model.put("form", form);
             response.setContentType("text/plain; charset="+properties.getProperty("source.encoding"));
             String headerKey = "Content-Disposition";
@@ -472,28 +469,12 @@ class FormController {
         return null;
     }
 
-    private List<String> getAvailableDates(String blocked_days) {
-        User userAdmin = userService.getUserByName("admin");
-        String from = userService.parseSettings(userAdmin.getSettings(), "from");
-        String to = userService.parseSettings(userAdmin.getSettings(), "to");
-
+    private List<String> getInavailableDates(String blocked_days) {
         List<String> result = new ArrayList<String>();
         List<Date> inaccessDates = getDatesFromField(blocked_days);
-        try {
-            if (from!=null && to!=null) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date fromDate = sdf.parse(from);
-                Date toDate = sdf.parse(to);
-                List<Date> dates = getDaysBetweenDates(fromDate,toDate);
-                for(Date date : dates) {
-                    if (!inaccessDates.contains(date)) {
-                        result.add(sdf.format(date));
-                    }
-                }
-
-            }
-        } catch (ParseException e) {
-           logger.warn("incorrect from-to dates period: {} {}",from,to);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        for(Date date : inaccessDates) {
+            result.add(sdf.format(date));
         }
 
         return result;
@@ -515,7 +496,7 @@ class FormController {
     }
 
     private String getFieldname(Form form) {
-        return (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() : form.getSurname_1() + "_" + form.getName_3()) + (form.getUser_id()!=null ? form.getUser_id() + "_"  : "" ) + ".txt";
+        return (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() : form.getSurname_1() + "_" + form.getName_3()) + "_" + (form.getUser_id()!=null ? form.getUser_id() + "_"  : "" ) + ".txt";
     }
 
 
@@ -551,9 +532,9 @@ class FormController {
         model.put("fingerprintList", Lists.fingerprintList);
 
         // fill the settings
-        User userAdmin = userService.getUserByName("admin");
-        model.put("reg_from", userService.parseSettings(userAdmin.getSettings(), "from"));
-        model.put("reg_to", userService.parseSettings(userAdmin.getSettings(),"to"));
+        //User userAdmin = userService.getUserByName("admin");
+        //model.put("reg_from", userService.parseSettings(userAdmin.getSettings(), "from"));
+        //model.put("reg_to", userService.parseSettings(userAdmin.getSettings(),"to"));
 
         return model;
     }

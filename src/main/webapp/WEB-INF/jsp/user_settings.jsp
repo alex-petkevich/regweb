@@ -47,43 +47,43 @@
                 <h2>Настройки системы</h2>
             </div>
             <!-- Form -->
-            <div class="form">
-                <p>
-                    <label>Даты начала и окончания регистрации: </label>
-                    с: <input type="text" name="reg_from" value="${reg_from}" class="field datepicker" />
-                    по: <input type="text" name="reg_to" value="${reg_to}" class="field datepicker" />
-                </p>
+        <%--<div class="form">
+            <p>
+                <label>Даты начала и окончания регистрации: </label>
+                с: <input type="text" name="reg_from" value="${reg_from}" class="field datepicker" />
+                по: <input type="text" name="reg_to" value="${reg_to}" class="field datepicker" />
+            </p>
 
-            </div>
-        </div>
-    </c:if>
-
-    <div class="box">
-    <!-- Box Head -->
-    <div class="box-head">
-        <h2>Персональные данные</h2>
+        </div>--%>
     </div>
-    <!-- Form -->
-    <div class="form">
-        <p>
-            <label>Email: </label>
-            <input type="text" name="email" value="${user.email}" class="field" />
-        </p>
-        <p>
-            <label>Пароль: </label>
-            <input type="password" name="password" value="" class="field" />
-        </p>
-        <p>
-            <label>Подтвердите пароль: </label>
-            <input type="password" name="password_confirm" value="" class="field" />
-        </p>
+</c:if>
 
-    </div>
-    <!-- End Form -->
+<div class="box">
+<!-- Box Head -->
+<div class="box-head">
+    <h2>Персональные данные</h2>
+</div>
+<!-- Form -->
+<div class="form">
+    <p>
+        <label>Email: </label>
+        <input type="text" name="email" value="${user.email}" class="field" />
+    </p>
+    <p>
+        <label>Пароль: </label>
+        <input type="password" name="password" value="" class="field" />
+    </p>
+    <p>
+        <label>Подтвердите пароль: </label>
+        <input type="password" name="password_confirm" value="" class="field" />
+    </p>
 
-    <div class="buttons">  <input type="submit" value="Сохранить" class="button" />
+</div>
+<!-- End Form -->
 
-    </div>
+<div class="buttons">  <input type="submit" value="Сохранить" class="button" />
+
+</div>
 </div>
 
 </form:form>   <br /><br /><br />

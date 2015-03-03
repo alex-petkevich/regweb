@@ -2,7 +2,7 @@
     <http access-denied-page="/error403.jsp">
         <intercept-url pattern="/login.jsp*" access="ROLE_ANONYMOUS" />
         <intercept-url pattern="/addnewacc*" access="ROLE_ANONYMOUS" />
-        <intercept-url pattern="/buildinfo" access="ROLE_ANONYMOUS" />
+        <intercept-url pattern="/buildinfo" access="ROLE_ANONYMOUS,ROLE_USER" />
         <intercept-url pattern="/*" access="ROLE_USER" />
         <form-login login-page="/login.jsp" default-target-url="/index" authentication-failure-url="/login.jsp?error=true" />
         <logout logout-url="/logout" logout-success-url="/login.jsp" />

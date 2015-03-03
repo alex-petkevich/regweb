@@ -105,8 +105,6 @@ public class UserController {
     public String saveUserSettings(@RequestParam(value="email",required = false)  String email,
                                    @RequestParam(value="password",required = false)  String password,
                                    @RequestParam(value="password_confirm",required = false)  String password_confirm,
-                                   @RequestParam(value="reg_from",required = false)  String reg_from,
-                                   @RequestParam(value="reg_to",required = false)  String reg_to,
                                    Map<String, Object> map) {
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
 
@@ -119,13 +117,13 @@ public class UserController {
             if (!password.equals(password_confirm)) {
                 map.put("error",true);
             }  else {
-                if ("admin".equals(user.getUsername())) {
+                /*if ("admin".equals(user.getUsername())) {
                     StringBuilder additional_settings = new StringBuilder();
                     additional_settings.append("from=").append(reg_from);
                     additional_settings.append("|");
                     additional_settings.append("to=").append(reg_to);
                     user.setSettings(additional_settings.toString());
-                }
+                }*/
                 user.setEmail(email);
                 if (!"".equals(password))
                     user.setPassword(password);

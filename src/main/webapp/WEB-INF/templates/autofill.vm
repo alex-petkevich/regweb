@@ -2,11 +2,11 @@
     <owner>$!form.user_id</owner>
     <city>$!form.city</city>
     <type>$!form.type</type>
-    <acceptableDates>
+    <notAcceptableDates>
     #foreach($date in $availableDates)
         <date>$date</date>
     #end
-    </acceptableDates>
+    </notAcceptableDates>
 </formMetaData>
 autofillForms@blueimp.net	0.9.8.2	$!form.passnum_13	(?:^https:\/\/rejestracja\.by\.e-konsulat\.gov\.pl)
 
@@ -72,7 +72,7 @@ Ctl00$cp$f$chk18Bezterminowo	(?:^on$)	(?:^ctl00\$cp\$f\$chk18Bezterminowo$)	(?:)
 Ctl00$cp$f$chk18Bezterminowo	(?:^on$)	(?:^ctl00\$cp\$f\$chk18Bezterminowo$)	(?:)	false	true
 #end
 #else
-Нет	(?:^Nie$)	(?:^ctl00\\$cp\\$f\\$rbl18\$)	(?:)	true	true
+Нет	(?:^Nie$)	(?:^ctl00\$cp\$f\$rbl18\$)	(?:)	true	true
 #end
 Ctl00$cp$f$ddl19WykonywanyZawod	(?:^$!form.profession_19$)	(?:^ctl00\$cp\$f\$ddl19WykonywanyZawod$)	(?:)	true	true
 Работодатель	(?:^$!form.employee_20$)	(?:^ctl00\$cp\$f\$rbl20$)	(?:)	true	true
