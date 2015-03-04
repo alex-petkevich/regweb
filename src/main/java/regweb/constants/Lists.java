@@ -7,8 +7,9 @@ import java.util.*;
  * Date: 31.03.13
  * Time: 0:54
  */
+@SuppressWarnings("serial")
 public class Lists {
-    public static final Map<String, String> sexList = Collections.unmodifiableMap(new LinkedHashMap<String, String>() {{
+   public static final Map<String, String> sexList = Collections.unmodifiableMap(new LinkedHashMap<String, String>() {{
         put("M", "Мужчина");
         put("F", "женщина");
     }});

@@ -133,8 +133,6 @@ public class UserController {
 
         }
 
-        map.put("reg_from", userService.parseSettings(user.getSettings(), "from"));
-        map.put("reg_to", userService.parseSettings(user.getSettings(),"to"));
         map.put("user", user);
         return "user_settings";
     }
@@ -163,7 +161,7 @@ public class UserController {
                               @RequestParam("password")  String password,
                               @RequestParam("password_confirm")  String password_confirm,
                               @RequestParam(value = "is_admin", required = false)  Integer is_admin,
-                              Map model) {
+                              Map<String, Integer> model) {
         model.put("is_admin", is_admin);
 
         if (result.hasErrors()) {

@@ -121,8 +121,9 @@ class FormController {
                         if (!Files.exists(currentDir))
                             Files.createDirectories(currentDir);
                         File temp = File.createTempFile(filename, ".txt");
+                        BufferedWriter fos = null;
                         try {
-                            BufferedWriter fos = new BufferedWriter(new OutputStreamWriter(
+                            fos = new BufferedWriter(new OutputStreamWriter(
                                     new FileOutputStream(temp), properties.getProperty("source.encoding")
                             ));
                             fos.write(textdoc);
@@ -131,6 +132,9 @@ class FormController {
                             temp.renameTo(newFile);
                         } catch (IOException e) {
                             logger.warn("Problem with file saving");
+                        } finally {
+                        	if (fos!=null)
+                        		fos.close();
                         }
                     }
                     File outFile = File.createTempFile("package", ".zip");
@@ -165,6 +169,7 @@ class FormController {
     }
 
 
+    @SuppressWarnings("unchecked")
     @RequestMapping(value = "/")
     public String listForms(@RequestParam(value = "sort", required = false) String sort,
                             @RequestParam(value = "dir", required = false) String dir,
@@ -179,7 +184,7 @@ class FormController {
         if (session.getAttribute("searchForm") == null) {
             session.setAttribute("searchForm", new HashMap<String, String>());
         }
-        Map<String, String> searchVal = (HashMap<String, String>) session.getAttribute("searchForm");
+		Map<String, String> searchVal = (HashMap<String, String>) session.getAttribute("searchForm");
 
         if (is_admin()) {
             if (user_id != null) {
@@ -273,7 +278,7 @@ class FormController {
     }
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importForm(FileUpload fileUpload, BindingResult result, Map model, Locale locale, @RequestParam("id") Integer id, MultipartHttpServletRequest request) {
+    public String importForm(FileUpload fileUpload, BindingResult result, Map<String, Object> model, Locale locale, @RequestParam("id") Integer id, MultipartHttpServletRequest request) {
 
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentic.getName();
@@ -323,7 +328,7 @@ class FormController {
     public String processForm(@Valid Form form,
                               BindingResult result,
                               @RequestParam("copy") String copy,
-                              @RequestParam(value = "is_children", required = false) String is_children, Map model) {
+                              @RequestParam(value = "is_children", required = false) String is_children, Map<String, Object> model) {
 
         model.putAll(fillDictionary());
 
@@ -365,7 +370,7 @@ class FormController {
     public String processNewAcc(@Valid Form form,
                               BindingResult result,
                               @RequestParam("copy") String copy,
-                              @RequestParam(value = "is_children", required = false) String is_children, Map model) {
+                              @RequestParam(value = "is_children", required = false) String is_children, Map<String, Object> model) {
 
         model.putAll(fillDictionary());
 
@@ -510,8 +515,8 @@ class FormController {
         return is_admin;
     }
 
-    private Map fillDictionary() {
-        Map model = new HashMap();
+    private Map<String, Object> fillDictionary() {
+        Map<String, Object> model = new HashMap<String, Object>();
 
         model.put("sexList", Lists.sexList);
         model.put("mStatusList", Lists.mStatusList);
@@ -555,7 +560,8 @@ class FormController {
         return res;
     }
 
-    private List<Date> getDatesFromField(String blocked) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+   private List<Date> getDatesFromField(String blocked) {
         List<Date> dateList = new ArrayList<Date>();
         if (blocked == null || "".equals(blocked)) {
             return dateList;
@@ -563,7 +569,7 @@ class FormController {
         try {
             JsonParserFactory factory= JsonParserFactory.getInstance();
             JSONParser parser=factory.newJsonParser();
-            Map jsonData=parser.parseJson(blocked);
+            Map<?, ?> jsonData=parser.parseJson(blocked);
             ArrayList<HashMap> rootElements = (ArrayList<HashMap>)jsonData.get("root");
             for(HashMap<String, String> date : rootElements) {
                 String cDate = date.get("date");
@@ -586,8 +592,7 @@ class FormController {
                         try {
                             Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
                                 @Override
-                                public FileVisitResult visitFile(Path file,
-                                                                 @SuppressWarnings("unused") BasicFileAttributes attrs)
+                                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
                                         throws IOException {
                                     Files.delete(file);
                                     return FileVisitResult.CONTINUE;
