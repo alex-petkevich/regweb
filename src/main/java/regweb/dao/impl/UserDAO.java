@@ -23,17 +23,6 @@ public class UserDAO implements IUserDAO {
    @Autowired
    private SessionFactory             sessionFactory;
 
-   private final Map<String, Integer> dbroles = new HashMap<String, Integer>() {
-
-                                                 private static final long serialVersionUID = -789112739255359613L;
-
-                                                 {
-                                                    put("ROLE_ANONYMOUS", 1);
-                                                    put("ROLE_USER", 2);
-                                                    put("ROLE_ADMIN", 3);
-                                                 }
-                                              };
-
    @Override
    public void save(User user) {
       sessionFactory.getCurrentSession().saveOrUpdate(user);

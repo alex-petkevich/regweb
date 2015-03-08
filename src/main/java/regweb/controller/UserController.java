@@ -212,8 +212,4 @@ public class UserController {
         return "redirect:/";
     }
 
-    public String displayRole(List<String> roles) {
-        return "xxx";
-    }
-
 }
