@@ -1,5 +1,6 @@
 package regweb.dao;
 
+import regweb.constants.Roles;
 import regweb.domain.User;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public interface IUserDAO {
 
     public User getUser(Integer id);
 
-    public void addRole(String username, String role);
+    public void addRole(String username, Roles role);
 
-    public void removeRole(String username, String role);
+    public void removeRole(String username, Roles role);
 }

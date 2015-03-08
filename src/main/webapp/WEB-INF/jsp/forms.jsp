@@ -111,9 +111,9 @@
                     </tr>
                     <c:forEach items="${formsList}" var="form">
                         <tr>
+                            <td width="13"><input type="checkbox" name="selusers" value="${form.id}" class="checkbox" /></td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.city}</td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.type}</td>
-                            <td width="13"><input type="checkbox" name="selusers" value="${form.id}" class="checkbox" /></td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>><fmt:formatDate dateStyle="full" pattern="dd.MM.yyyy HH:mm" value="${form.added}"/></td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.surname_1}</td>
                             <td<c:if test="${form.is_registered}"> class="reged"</c:if>>${form.name_3}</td>

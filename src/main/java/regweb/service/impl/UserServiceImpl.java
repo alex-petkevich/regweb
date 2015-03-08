@@ -3,6 +3,7 @@ package regweb.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import regweb.constants.Roles;
 import regweb.dao.IUserDAO;
 import regweb.domain.User;
 import regweb.service.UserService;
@@ -51,12 +52,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void addRole(String username, String role) {
+    public void addRole(String username, Roles role) {
         userDAO.addRole(username, role);
     }
 
     @Transactional
-    public void removeRole(String username, String role) {
+    public void removeRole(String username, Roles role) {
         userDAO.removeRole(username, role);
     }
 
