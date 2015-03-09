@@ -314,7 +314,7 @@ class FormController {
 
             int total;
             try {
-                total = formService.parseFromRoboHTML(fileUpload.getFileData().getInputStream(), userId);
+                total = formService.parseFromRoboHTML(fileUpload.getFileData().getInputStream(), userId, city, type);
                 return "redirect:/?totalConverted=" + total;
             } catch (IOException e) {
                 model.put("importError", messageSource.getMessage("errors.importReadError", null, locale));
