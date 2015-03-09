@@ -87,7 +87,9 @@
     $("#city").on('change',function() {
         $("#city_hid").val();
     });
-
+    <c:if test="${not empty type}">
+    $("#type").val('${type}');
+    </c:if>
 </script>
 
 <c:if test="${not empty param.totalConverted}">
