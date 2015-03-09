@@ -12,40 +12,12 @@
     <script type="text/javascript" src="<spring:url value="/js/moment_ru.js" />"></script>
     <script type="text/javascript" src="<spring:url value="/js/clndr.min.js" />"></script>
     <script type="text/javascript" src="<spring:url value="/js/underscore-min.js" />"></script>
+    <script type="text/javascript" src="<spring:url value="/js/types.js" />"></script>
     <link type="text/css" href="<spring:url value="/css/clndr.css" />" rel="stylesheet" />
 
     <script type="text/javascript">
 
         moment.locale('ru');
-        var types = {
-            minsk : {
-                other : "Визы с иной целью",
-                business : "Деловые",
-                tourism : "Туристические визы"
-            },
-            brest : {
-                tourism : "Шенген - туризм",
-                guests : "Шенген - гости",
-                sport : "Шенген - спорт",
-                business : "Шенген - деловая",
-                work : "Шенген - работа в РП",
-                culture : "Шенген - культура",
-                shopping : "Шенген - покупки",
-                other : "Шенген - другие (не покупки)",
-                drivers : "Шенген - водители TIR"
-            },
-            grodno : {
-                shopping : "Шенген - покупки",
-                tourism : "Шенген - туризм",
-                guests : "Шенген - гости",
-                sport : "Шенген - спорт",
-                culture : "Шенген - культура",
-                other : "Шенген - другие (не покупки)",
-                work : "Шенген - работа в РП",
-                business : "Шенген - деловая",
-                drivers : "Шенген - водители TIR"
-            },
-        };
 
         var eventsArray = [];
 
@@ -197,64 +169,6 @@
 
 
 
-    <spring:url value="/import" var="importUrl" />
-    <form:form modelAttribute="fileUpload"  method="post" action="${importUrl}"  enctype="multipart/form-data">
-        <input type="hidden" name="id" value="${form.id}" />
-        <!--
-        <div class="box">
-        <div class="box-head">
-        <h2>Импорт анкеты</h2>
-        </div>
-        <table>
-        <tr>
-        <td colspan="2">
-        <div class="errors"> ${importError}</div>
-
-        Импорт из PDF анкеты:    <form:input path="fileData" type="file"/>
-        </td>
-        </tr>
-        </table>
-        <div class="buttons">
-        <input type="submit" value="Сохранить" class="button" />
-
-        </div>
-
-        </div>       -->
-    </form:form>
-    <spring:url value="/import" var="importUrl" />
-    <form:form modelAttribute="fileUpload"  method="post" action="${importUrl}" onsubmit="return checkRoboSubmit()"  enctype="multipart/form-data">
-        <input type="hidden" name="id" value="${form.id}" />
-
-        <div class="box">
-            <div class="box-head">
-                <h2>Импорт анкеты</h2>
-            </div>
-            <table>
-                <tr>
-                    <td colspan="2">
-                        <div class="errors"> ${importError}</div>
-
-                        Импорт из Roboform XML:    <form:input path="fileData" type="file"/>
-                    </td>
-                </tr>
-            </table>
-            <div class="buttons">
-                <input type="submit" value="Сохранить" class="button" />
-
-            </div>
-
-        </div>
-    </form:form>
-    <c:if test="${not empty param.totalConverted}">
-        <div class="msg msg-ok">
-            <p><strong>Успешно сконвертировано анкет: ${param.totalConverted}</strong></p>
-        </div>
-    </c:if>
-    <c:if test="${not empty param.errorConvert}">
-        <div class="msg msg-error">
-            <p><strong>При конвертации найдены ошибки в исходных данных: <br /> ${sessionScope["errorImport"]}</strong></p>
-        </div>
-    </c:if>
 
     </c:otherwise>
 </c:choose>

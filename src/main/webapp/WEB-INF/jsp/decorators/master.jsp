@@ -38,6 +38,7 @@
                     <li><a href="<spring:url value="/users" />"><span>Пользователи</span></a></li>
                     <li><a href="<spring:url value="/adduser" />"><span>Добавить пользователя</span></a></li>
                 </sec:authorize>
+                <li><a href="<spring:url value="/import" />"><span>Импорт анкет</span></a></li>
 
             </ul>
         </div>

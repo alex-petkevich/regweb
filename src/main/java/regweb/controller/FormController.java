@@ -287,11 +287,21 @@ class FormController {
         return Paths.ADD;
     }
 
+    @RequestMapping(value = "/import", method = RequestMethod.GET)
+    public String importForm(Map<String, Object> model) {
+
+        model.putAll(fillDictionary());
+        model.put("city","minsk");
+
+        return Paths.IMPORT;
+    }
+
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importForm(FileUpload fileUpload, BindingResult result, Map<String, Object> model, Locale locale, @RequestParam("id") Integer id, MultipartHttpServletRequest request) {
+    public String importPost(FileUpload fileUpload, BindingResult result, Map<String, Object> model, Locale locale, @RequestParam("city") String city,@RequestParam("type") String type, MultipartHttpServletRequest request) {
 
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentic.getName();
+
         if (fileUpload.getFileData() != null && fileUpload.getFileData().getContentType().equals("application/pdf")) {
             try {
                 formService.parseFromPDF(fileUpload.getFileData().getInputStream());
@@ -320,8 +330,10 @@ class FormController {
 
         model.putAll(fillDictionary());
         model.put("form", new Form());
+        model.put("city",city);
+        model.put("type",type);
 
-        return Paths.ADD;
+        return Paths.IMPORT;
 
 
     }

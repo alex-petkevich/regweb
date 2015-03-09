@@ -10,6 +10,7 @@ import regweb.constants.Roles;
 import regweb.dao.IUserDAO;
 import regweb.domain.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,7 +104,11 @@ public class UserDAO implements IUserDAO {
    public void addRole(String username, Roles role) {
 
       List<String> roles = this.listUserRoles(username);
-      if (!roles.contains(role)) {
+      List<Roles> rolesEnum = new ArrayList<Roles>();
+       for(String roleStr : roles) {
+           rolesEnum.add(Roles.valueOf(roleStr));
+       }
+      if (!rolesEnum.contains(role)) {
          Query query = sessionFactory.getCurrentSession().createSQLQuery(
                "INSERT INTO users_roles(username,role_id) VALUES(?,?)");
          query.setParameter(0, username);
