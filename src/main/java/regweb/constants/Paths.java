@@ -8,4 +8,5 @@ public final class Paths {
     public static final String LOGIN_REDIRECT = "redirect:/login.jsp";
     public static final String FORMS = "forms";
     public static final String ADD = "add";
+    public static final String IMPORT = "import";
 }

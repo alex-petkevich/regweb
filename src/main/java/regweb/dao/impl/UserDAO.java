@@ -6,9 +6,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import regweb.constants.Roles;
 import regweb.dao.IUserDAO;
 import regweb.domain.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,17 +23,6 @@ public class UserDAO implements IUserDAO {
 
    @Autowired
    private SessionFactory             sessionFactory;
-
-   private final Map<String, Integer> dbroles = new HashMap<String, Integer>() {
-
-                                                 private static final long serialVersionUID = -789112739255359613L;
-
-                                                 {
-                                                    put("ROLE_ANONYMOUS", 1);
-                                                    put("ROLE_USER", 2);
-                                                    put("ROLE_ADMIN", 3);
-                                                 }
-                                              };
 
    @Override
    public void save(User user) {
@@ -83,8 +74,8 @@ public class UserDAO implements IUserDAO {
    public void removeUser(Integer id) {
       User user = (User) sessionFactory.getCurrentSession().get(User.class, id);
       if (null != user) {
-         this.removeRole(user.getUsername(), "ROLE_ADMIN");
-         this.removeRole(user.getUsername(), "ROLE_USER");
+         this.removeRole(user.getUsername(), Roles.ROLE_ADMIN);
+         this.removeRole(user.getUsername(), Roles.ROLE_USER);
          sessionFactory.getCurrentSession().delete(user);
       }
    }
@@ -110,24 +101,28 @@ public class UserDAO implements IUserDAO {
    }
 
    @Override
-   public void addRole(String username, String role) {
+   public void addRole(String username, Roles role) {
 
       List<String> roles = this.listUserRoles(username);
-      if (!roles.contains(role)) {
+      List<Roles> rolesEnum = new ArrayList<Roles>();
+       for(String roleStr : roles) {
+           rolesEnum.add(Roles.valueOf(roleStr));
+       }
+      if (!rolesEnum.contains(role)) {
          Query query = sessionFactory.getCurrentSession().createSQLQuery(
                "INSERT INTO users_roles(username,role_id) VALUES(?,?)");
          query.setParameter(0, username);
-         query.setParameter(1, dbroles.get(role));
+         query.setParameter(1, role.getValue());
          query.executeUpdate();
       }
    }
 
    @Override
-   public void removeRole(String username, String role) {
+   public void removeRole(String username, Roles role) {
       Query query = sessionFactory.getCurrentSession().createSQLQuery(
             "DELETE FROM users_roles WHERE username=? AND role_id=?");
       query.setParameter(0, username);
-      query.setParameter(1, dbroles.get(role));
+      query.setParameter(1, role.getValue());
       query.executeUpdate();
    }
 

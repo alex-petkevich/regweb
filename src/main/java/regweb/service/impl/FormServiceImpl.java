@@ -64,7 +64,7 @@ public class FormServiceImpl implements FormService {
 
     }
 
-  public int parseFromRoboHTML(InputStream fileStream, String userId) throws ImportExceptions {
+  public int parseFromRoboHTML(InputStream fileStream, String userId, String city, String type) throws ImportExceptions {
     RoboParser roboParser = new RoboParser();
 
     int total = 0;
@@ -88,6 +88,8 @@ public class FormServiceImpl implements FormService {
           else if (formIssues.size() == 0) {
             form.setAdded(new Date());
             form.setUser_id(userId);
+            form.setCity(city);
+            form.setType(type);
             this.save(form);
             total ++ ;
           } else {

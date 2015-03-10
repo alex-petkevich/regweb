@@ -26,6 +26,7 @@ import org.zeroturnaround.zip.ZipUtil;
 import regweb.constants.Actions;
 import regweb.constants.Lists;
 import regweb.constants.Paths;
+import regweb.constants.Roles;
 import regweb.domain.FileUpload;
 import regweb.domain.Form;
 import regweb.domain.User;
@@ -184,14 +185,12 @@ class FormController {
         if (session.getAttribute("searchForm") == null) {
             session.setAttribute("searchForm", new HashMap<String, String>());
         }
-		Map<String, String> searchVal = (HashMap<String, String>) session.getAttribute("searchForm");
+        Map<String, String> searchVal = (HashMap<String, String>) session.getAttribute("searchForm");
 
         if (is_admin()) {
             if (user_id != null) {
                 searchVal.put("user_id", user_id);
             }
-        } else {
-            searchVal.put("user_id", SecurityContextHolder.getContext().getAuthentication().getName());
         }
         if (text != null) {
             searchVal.put("text", text);
@@ -211,6 +210,9 @@ class FormController {
         if (clear != null && clear.equals("1")) {
             session.setAttribute("searchForm", null);
             searchVal.clear();
+        }
+        if (!is_admin()) {
+            searchVal.put("user_id", SecurityContextHolder.getContext().getAuthentication().getName());
         }
         String to_sort = "";
         String to_dir = "";
@@ -255,8 +257,11 @@ class FormController {
     }
 
     @RequestMapping(value = "/addform", method = RequestMethod.GET)
-    public String addForm(Map<String, Object> model) {
+    public String addForm(Map<String, Object> model, HttpServletResponse response) throws IOException {
         model.putAll(fillDictionary());
+        if ("".equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        }
         model.put("form", new Form());
         return Paths.ADD;
     }
@@ -264,24 +269,39 @@ class FormController {
     @RequestMapping(value = "/addnewacc", method = RequestMethod.GET)
     public String addNewAcc(Map<String, Object> model) {
         model.putAll(fillDictionary());
+        if (!"".equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+            return Paths.ROOT_REDIRECT;
+        }
         model.put("form", new Form());
         return Paths.ADD;
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editForm(Map<String, Object> model, @PathVariable("id") Integer id) {
-        model.putAll(fillDictionary());
-
+    public String editForm(Map<String, Object> model, @PathVariable("id") Integer id, HttpServletResponse response) throws IOException {
         Form form = formService.getForm(id);
+        if (!is_admin() && !form.getUser_id().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+        }
+        model.putAll(fillDictionary());
         model.put("form", form);
         return Paths.ADD;
     }
 
+    @RequestMapping(value = "/import", method = RequestMethod.GET)
+    public String importForm(Map<String, Object> model) {
+
+        model.putAll(fillDictionary());
+        model.put("city","minsk");
+
+        return Paths.IMPORT;
+    }
+
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public String importForm(FileUpload fileUpload, BindingResult result, Map<String, Object> model, Locale locale, @RequestParam("id") Integer id, MultipartHttpServletRequest request) {
+    public String importPost(FileUpload fileUpload, BindingResult result, Map<String, Object> model, Locale locale, @RequestParam("city") String city,@RequestParam("type") String type, MultipartHttpServletRequest request) {
 
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentic.getName();
+
         if (fileUpload.getFileData() != null && fileUpload.getFileData().getContentType().equals("application/pdf")) {
             try {
                 formService.parseFromPDF(fileUpload.getFileData().getInputStream());
@@ -294,7 +314,7 @@ class FormController {
 
             int total;
             try {
-                total = formService.parseFromRoboHTML(fileUpload.getFileData().getInputStream(), userId);
+                total = formService.parseFromRoboHTML(fileUpload.getFileData().getInputStream(), userId, city, type);
                 return "redirect:/?totalConverted=" + total;
             } catch (IOException e) {
                 model.put("importError", messageSource.getMessage("errors.importReadError", null, locale));
@@ -310,15 +330,21 @@ class FormController {
 
         model.putAll(fillDictionary());
         model.put("form", new Form());
+        model.put("city",city);
+        model.put("type",type);
 
-        return Paths.ADD;
+        return Paths.IMPORT;
 
 
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String deleteForm(Map<String, Object> model, @PathVariable("id") Integer id) {
+    public String deleteForm(Map<String, Object> model, @PathVariable("id") Integer id, HttpServletResponse response) throws IOException {
         if (id != null) {
+            Form form = formService.getForm(id);
+            if (!is_admin() && !form.getUser_id().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            }
             formService.removeForm(id);
         }
         return Paths.ROOT_REDIRECT;
@@ -403,7 +429,7 @@ class FormController {
             newUser.setEmail(form.getEmail_17());
             newUser.setEnabled(true);
             userService.save(newUser);
-            userService.addRole(newUser.getUsername(), "ROLE_USER");
+            userService.addRole(newUser.getUsername(), Roles.ROLE_USER);
             userId = newUser.getUsername();
             model.put("user",newUser);
 
@@ -435,6 +461,9 @@ class FormController {
     public String downloadForm(Map<String, Object> model, @PathVariable("id") Integer id, HttpServletResponse response) throws IOException {
         Form form;
         if (id != null) {
+            if (!is_admin()) {
+                response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            }
             form = formService.getForm(id);
             String filename = getFieldname(form);
             List<String> inavailableDates = getInavailableDates(form.getBlocked_days());
@@ -485,23 +514,8 @@ class FormController {
         return result;
     }
 
-    public static List<Date> getDaysBetweenDates(Date startdate, Date enddate)
-    {
-        List<Date> dates = new ArrayList<Date>();
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(startdate);
-
-        while (calendar.getTime().before(enddate))
-        {
-            Date result = calendar.getTime();
-            dates.add(result);
-            calendar.add(Calendar.DATE, 1);
-        }
-        return dates;
-    }
-
     private String getFieldname(Form form) {
-        return (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() : form.getSurname_1() + "_" + form.getName_3()) + "_" + (form.getUser_id()!=null ? form.getUser_id() + "_"  : "" ) + ".txt";
+        return (form.getFilename() != null && !form.getFilename().equals("") ? form.getFilename() : form.getSurname_1() + "_" + form.getName_3()) + "_" + (form.getUser_id()!=null ? form.getUser_id() : "" ) + ".txt";
     }
 
 
@@ -509,7 +523,7 @@ class FormController {
         boolean is_admin = false;
         Authentication authentic = SecurityContextHolder.getContext().getAuthentication();
         for (GrantedAuthority role : authentic.getAuthorities()) {
-            if (role.getAuthority().equals("ROLE_ADMIN"))
+            if (role.getAuthority().equals(Roles.ROLE_ADMIN.name()))
                 is_admin = true;
         }
         return is_admin;

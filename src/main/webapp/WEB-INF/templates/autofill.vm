@@ -3,7 +3,7 @@
     <city>$!form.city</city>
     <type>$!form.type</type>
     <notAcceptableDates>
-    #foreach($date in $availableDates)
+    #foreach($date in $inavailableDates)
         <date>$date</date>
     #end
     </notAcceptableDates>

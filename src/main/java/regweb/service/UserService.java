@@ -1,5 +1,6 @@
 package regweb.service;
 
+import regweb.constants.Roles;
 import regweb.domain.User;
 
 import java.util.List;
@@ -24,9 +25,9 @@ public interface UserService {
 
     public User getUser(Integer id);
 
-    public void addRole(String username,String role);
+    public void addRole(String username,Roles role);
 
-    public void removeRole(String username,String role);
+    public void removeRole(String username,Roles role);
 
     public String parseSettings(String settings, String parameter);
 }

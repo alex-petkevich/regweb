@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import regweb.constants.Roles;
 import regweb.domain.User;
 import regweb.service.UserService;
 
@@ -192,11 +193,11 @@ public class UserController {
             }
         }
         userService.save(user);
-        userService.addRole(user.getUsername(), "ROLE_USER");
+        userService.addRole(user.getUsername(), Roles.ROLE_USER);
         if (is_admin!=null && is_admin == 1) {
-            userService.addRole(user.getUsername(),"ROLE_ADMIN");
+            userService.addRole(user.getUsername(),Roles.ROLE_ADMIN);
         } else {
-            userService.removeRole(user.getUsername(), "ROLE_ADMIN");
+            userService.removeRole(user.getUsername(), Roles.ROLE_ADMIN);
         }
         return "redirect:/users";
     }
@@ -209,10 +210,6 @@ public class UserController {
             userService.removeUser(user.getId());
         }
         return "redirect:/";
-    }
-
-    public String displayRole(List<String> roles) {
-        return "xxx";
     }
 
 }
