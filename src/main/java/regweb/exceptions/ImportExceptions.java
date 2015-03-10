@@ -10,7 +10,7 @@ public class ImportExceptions extends Exception {
     * 
     */
    private static final long serialVersionUID = 1736091552839961994L;
-   final int                 total;
+   private final int         total;
 
    private ImportExceptions(int total, String text) {
 
